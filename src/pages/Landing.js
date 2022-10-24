@@ -10,8 +10,7 @@ const Landing = () => {
         <div className={styles.content}>
           <div className={styles.innerContent}>
             <h3 className={styles.cto}>
-              <span className={styles.highlight}>Hayalindeki</span> Avrupa
-              Ulkesinde
+              <span className={styles.highlight}>Hayalindeki</span> Ulkede
               <br />
               <span className={styles.highlight}>
                 Dunya
@@ -31,7 +30,7 @@ const Landing = () => {
         </div>
         <div className={styles.content}>
           <form className={styles.form}>
-            <h2>Giris Yap</h2>
+            <h3>Giris Yap</h3>
             <div className={styles["form-control"]}>
               <Input
                 id="email"
