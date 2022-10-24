@@ -10,12 +10,16 @@ const Landing = () => {
         <div className={styles.content}>
           <div className={styles.innerContent}>
             <h3 className={styles.cto}>
-              <span className={styles.color}>Hayalindeki</span> Avrupa Ulkesinde
+              <span className={styles.highlight}>Hayalindeki</span> Avrupa
+              Ulkesinde
               <br />
-              <span className={styles.color}>Dunya</span> Standartlarinda <br />
-              <span className={styles.color}>Egitim</span> Firsatini Yakalamaya
+              <span className={styles.highlight}>
+                Dunya
+              </span> Standartlarinda <br />
+              <span className={styles.highlight}>Egitim</span> Firsatini
+              Yakalamaya
               <br />
-              <span className={styles.color}>Hazir</span> Misiniz ?
+              <span className={styles.highlight}>Hazir</span> Misiniz ?
             </h3>
 
             <div className={styles.actions}>

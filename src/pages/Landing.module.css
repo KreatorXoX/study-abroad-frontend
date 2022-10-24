@@ -89,8 +89,9 @@ h2 {
   }
 }
 
-.color {
-  color: rgb(73, 210, 23);
+.highlight {
+  background: linear-gradient(180deg, transparent 50%, rgb(255, 200, 0) 100%);
+  display: inline;
   text-shadow: 4px 4px 2px rgba(0, 94, 255, 0.4);
 }
 
