@@ -15,11 +15,12 @@
 
 .nav-links a,
 p {
-  color: #fff;
+  color: rgb(0, 69, 147);
   text-decoration: none;
   padding: 0.5rem;
   cursor: pointer;
   margin: 0;
+  transition: all 0.15s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
 .nav-links a:hover,
@@ -28,8 +29,9 @@ p {
 .nav-links p:hover,
 .nav-links p:active,
 .nav-links p.active {
-  box-shadow: 0px 0px 300px 35px rgba(188, 65, 126, 1);
-  background-color: rgba(65, 81, 188, 0.4);
+  background-color: rgba(141, 156, 255, 0.2);
+  border: none;
+  border-bottom: 3px solid rgba(188, 65, 126, 1);
   border-top-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
@@ -43,7 +45,7 @@ p {
   .nav-links {
     flex-direction: row;
     margin-right: 4rem;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   .nav-links li {
@@ -52,19 +54,9 @@ p {
 
   .nav-links a,
   p {
-    color: white;
+    color: rgb(97, 97, 97);
+    font-weight: 700;
     text-decoration: none;
-  }
-  .nav-links a:hover,
-  .nav-links a:active,
-  .nav-links a.active,
-  .nav-links p:hover,
-  .nav-links p:active,
-  .nav-links p.active {
-    box-shadow: 0px 0px 10px 1.5px rgba(188, 65, 126, 1);
-    background-color: rgba(65, 81, 188, 0.4);
-    border-top-left-radius: 1rem;
-    border-bottom-right-radius: 1rem;
   }
 }
 
