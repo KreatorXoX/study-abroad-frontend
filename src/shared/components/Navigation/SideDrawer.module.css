@@ -4,13 +4,13 @@
   top: 0;
   z-index: 1100;
   height: 100vh;
-  width: 55%;
-  background: rgb(243, 243, 243);
+  width: 45%;
+  background: rgb(255, 255, 255);
   overflow: hidden;
   line-height: 2;
 }
 
-@media (max-width: 468px) {
+@media (max-width: 768px) {
   .side-drawer {
     width: 100%;
   }

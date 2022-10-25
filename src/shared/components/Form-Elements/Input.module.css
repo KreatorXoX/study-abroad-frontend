@@ -37,7 +37,7 @@
 .form-control select {
   width: 100%;
   font: inherit;
-  border: 1px solid rgb(113, 149, 128);
+  border: 1px solid rgba(236, 201, 86, 0.5);
   border-radius: 0.5rem;
   background: #f8f8f8;
   padding: 0.4rem 0.8rem;
@@ -59,7 +59,7 @@
   outline: none;
   background: #f2f1f1;
   border: none;
-  box-shadow: 0px 0px 4px #0060de;
+  box-shadow: 0px 0px 4px rgb(26, 139, 147);
 }
 
 .form-control--invalid label::after,
@@ -97,4 +97,10 @@
   .form-control--invalid p {
     font-size: 0.75rem;
   }
+}
+
+input,
+select,
+textarea {
+  color: #848484 !important;
 }
