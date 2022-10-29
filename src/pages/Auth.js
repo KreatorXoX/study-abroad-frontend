@@ -19,7 +19,7 @@ const Auth = () => {
           <Progressbar title={title} pageNum={pageNum} />
         </div>
         <div className={styles.mainContent}>
-          <div className={styles.form}>
+          <div className={styles.authForm}>
             <UserRegisterForm getInfos={getInfos} />
           </div>
         </div>

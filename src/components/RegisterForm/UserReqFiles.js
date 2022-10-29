@@ -6,7 +6,7 @@ const UserReqFiles = ({ values, handleChange, next, prev }) => {
   let canGoNext =
     values.transcript.isValid && values.degree.isValid && values.bio.isValid;
   return (
-    <form>
+    <form className="authForm">
       <div>
         <div>
           <Input

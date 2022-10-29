@@ -8,7 +8,7 @@ import Succes from "./Succes";
 import { useForm } from "../../hooks/form-hook";
 import { registerFormInitials } from "../../shared/utils/form initial data/RegisterInitials";
 
-const UserRegisterForm = ({ getInfos }) => {
+const UserRegisterForm = ({ getInfos, classes }) => {
   const { formState, inputHandler, page, setPage, title } =
     useForm(registerFormInitials);
 
@@ -28,6 +28,7 @@ const UserRegisterForm = ({ getInfos }) => {
           values={formState.inputs}
           next={nextStep}
           handleChange={inputHandler}
+          className={classes}
         />
       );
     case 1:

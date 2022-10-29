@@ -4,7 +4,7 @@ import Input from "../../shared/components/Form-Elements/Input";
 import Button from "../../shared/components/Form-Elements/Button";
 const ConfirmForm = ({ values, next, prev, handleChange }) => {
   return (
-    <form>
+    <form className="authForm">
       <div>
         <div>
           <Input

@@ -10,7 +10,7 @@ const UserPersonalDetails = ({ values, handleChange, next }) => {
     values.email.isValid &&
     values.password.isValid;
   return (
-    <form>
+    <form className="authForm">
       <div>
         <div>
           <Input
