@@ -23,7 +23,7 @@ const NavLinks = () => {
           <NavLink to="/contact">Contact Us</NavLink>
         </li>
         <li>
-          <Link to="/auth">Login</Link>
+          <Link to="/login">Login</Link>
         </li>
         <li>
           <Link to="/register">Register</Link>

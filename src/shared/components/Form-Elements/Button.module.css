@@ -5,8 +5,8 @@
   --success: rgba(104, 184, 149, 0.8);
   --success-hover: rgba(104, 184, 149, 1);
 
-  --warning: rgba(220, 110, 20, 0.8);
-  --warning-hover: rgba(220, 110, 20, 1);
+  --warning: rgba(236, 201, 86, 0.8);
+  --warning-hover: rgb(236, 201, 86);
 
   --regular: rgba(0, 94, 255, 0.6);
   --regular-hover: rgba(0, 94, 255, 0.8);

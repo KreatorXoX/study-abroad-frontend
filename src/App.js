@@ -7,6 +7,7 @@ import Employees from "./pages/Employees";
 import Students from "./pages/Students";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
+import Login from "./pages/Login";
 function App() {
   return (
     <>
@@ -32,8 +33,8 @@ function App() {
             <Route path="/contact" exact>
               <Contact />
             </Route>
-            <Route path="/auth" exact>
-              <Auth />
+            <Route path="/login" exact>
+              <Login />
             </Route>
             <Route path="/register" exact>
               <Auth />

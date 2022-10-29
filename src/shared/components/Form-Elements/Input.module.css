@@ -28,8 +28,9 @@
 .form-control label {
   font-weight: bold;
   margin-bottom: 0.5rem;
-  color: #ffffff;
+  color: rgb(12, 69, 102);
   display: block;
+  text-align: left;
 }
 
 .form-control input,
@@ -64,14 +65,15 @@
 
 .form-control--invalid label::after,
 .form-control--invalid p {
-  /* content: "*"; */
+  content: "  *";
   color: rgb(255, 169, 169);
   font-weight: bold;
   margin: 0;
+  text-align: left;
 }
 .form-control--invalid p {
   position: relative;
-  /* right: 1em; */
+
   margin: 0;
   padding: 0;
   padding-top: 0.25rem;

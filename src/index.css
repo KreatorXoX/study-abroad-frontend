@@ -31,7 +31,10 @@ body {
   min-height: 80vh;
   background-color: antiquewhite;
 } */
-
+.successImage {
+  max-width: 50rem;
+  width: 100%;
+}
 /*Error Page*/
 .error-page {
   text-align: center;

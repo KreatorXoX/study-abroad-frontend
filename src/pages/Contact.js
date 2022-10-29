@@ -32,7 +32,6 @@ const Contact = () => {
                   type="email"
                   //label="Email"
                   placeholder="Email : ex@example.com"
-                  v
                   errorText="Enter a valid email"
                   onInputChange={() => {}}
                   validators={[VALIDATOR_EMAIL()]}
