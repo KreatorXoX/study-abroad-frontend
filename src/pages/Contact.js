@@ -1,10 +1,17 @@
 import React from "react";
+import { useForm } from "../hooks/form-hook";
+import { ContactInitials } from "../shared/utils/form initial data/ContactUsInitials";
 import Input from "../shared/components/Form-Elements/Input";
 import Button from "../shared/components/Form-Elements/Button";
 import contactUs from "../assets/images/contactUs.jpg";
 import { VALIDATOR_EMAIL, VALIDATOR_REQUIRE } from "../shared/utils/validators";
 import styles from "./Contact.module.css";
 const Contact = () => {
+  const { formState, inputHandler } = useForm(ContactInitials);
+  const contactSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(formState.inputs);
+  };
   return (
     <div className="container">
       <div className={styles.content}>
@@ -24,16 +31,16 @@ const Contact = () => {
         </div>
         <div className={styles.botRow}>
           <div className={styles.form}>
-            <form>
+            <form onSubmit={contactSubmitHandler}>
               <h3 className={styles.formTitle}>Contact Us</h3>
               <div>
                 <Input
                   id="email"
                   type="email"
-                  //label="Email"
-                  placeholder="Email : ex@example.com"
+                  label="Email"
+                  placeholder="ex@example.com"
                   errorText="Enter a valid email"
-                  onInputChange={() => {}}
+                  onInputChange={inputHandler}
                   validators={[VALIDATOR_EMAIL()]}
                 />
               </div>
@@ -41,10 +48,10 @@ const Contact = () => {
                 <Input
                   id="fullname"
                   type="text"
-                  // label="Password"
-                  placeholder="Full Name"
+                  label="Full Name"
+                  placeholder="Enter your full name"
                   errorText="Enter a valid name"
-                  onInputChange={() => {}}
+                  onInputChange={inputHandler}
                   validators={[VALIDATOR_REQUIRE()]}
                 />
               </div>
@@ -53,15 +60,19 @@ const Contact = () => {
                   id="message"
                   type="text"
                   element="textarea"
-                  // label="Password"
+                  label="Your Message"
                   placeholder="Enter your message here"
                   errorText="Please don't leave this section empty."
-                  onInputChange={() => {}}
+                  initialValue={
+                    "I'd like to get information about your service."
+                  }
+                  initialValid={true}
+                  onInputChange={inputHandler}
                   validators={[VALIDATOR_REQUIRE()]}
                 />
               </div>
               <div className={styles.formAction}>
-                <Button type="submit" success mid>
+                <Button type="submit" disabled={!formState.isValid} success mid>
                   Send
                 </Button>
               </div>

@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import Success from "./components/RegisterForm/Succes";
 import Landing from "./pages/Landing";
 import Profile from "./user/pages/Profile";
 import Countries from "./pages/Countries";
 import Employees from "./pages/Employees";
 import Students from "./pages/Students";
 import Contact from "./pages/Contact";
-import Auth from "./pages/Auth";
+import Register from "./pages/Register";
 import Login from "./pages/Login";
 function App() {
   return (
@@ -37,7 +38,10 @@ function App() {
               <Login />
             </Route>
             <Route path="/register" exact>
-              <Auth />
+              <Register />
+            </Route>
+            <Route path="/success" exact>
+              <Success />
             </Route>
             <Redirect to="/" />
           </Switch>

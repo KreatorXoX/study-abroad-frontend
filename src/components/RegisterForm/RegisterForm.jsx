@@ -1,19 +1,33 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Button from "../../shared/components/Form-Elements/Button";
 import Input from "../../shared/components/Form-Elements/Input";
 import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
-import { LoginInitials } from "../../shared/utils/form initial data/LoginInitials";
+import { registerInitials } from "../../shared/utils/form initial data/RegisterInitials";
 import { useForm } from "../../hooks/form-hook";
 
-const LoginForm = () => {
-  const { formState, inputHandler } = useForm(LoginInitials);
+const RegisterForm = () => {
+  const history = useHistory();
+
+  const { formState, inputHandler } = useForm(registerInitials);
   const loginHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs);
+    history.push("/success");
   };
   return (
     <form onSubmit={loginHandler}>
       <div>
+        <div>
+          <Input
+            id="fullname"
+            type="text"
+            label="Full Name"
+            errorText="This field is required"
+            onInputChange={inputHandler}
+            validators={[VALIDATOR_REQUIRE()]}
+          />
+        </div>
         <div>
           <Input
             id="email"
@@ -42,12 +56,12 @@ const LoginForm = () => {
           gap: "1rem",
         }}
       >
-        <Button large disabled={!formState.isValid} type="button">
-          Login
+        <Button large disabled={!formState.isValid} type="submit">
+          Register
         </Button>
       </div>
     </form>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

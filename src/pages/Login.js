@@ -13,6 +13,9 @@ const Login = () => {
             <p>One Step Closer</p>
           </div>
           <div className="loginForm">
+            <h2 style={{ color: "rgb(12, 69, 102)", textAlign: "left" }}>
+              Login Form
+            </h2>
             <LoginForm />
           </div>
         </div>

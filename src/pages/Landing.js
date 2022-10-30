@@ -1,7 +1,7 @@
 import React from "react";
 
 import Button from "../shared/components/Form-Elements/Button";
-import SidePicture from "../assets/images/bg.jpg";
+import SidePicture from "../assets/images/BG.jpg";
 import styles from "./Landing.module.css";
 import Slider from "../shared/components/UI-Elements/Slider";
 const Landing = () => {

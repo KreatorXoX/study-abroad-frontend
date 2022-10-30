@@ -2,36 +2,28 @@
   background-color: #fff;
   height: 90.8vh;
   display: grid;
-  grid-template-areas:
-    "top top top"
-    "bot bot bot"
-    "bot bot bot";
+  grid-template-areas: "form";
   align-items: center;
   margin-top: 4em;
   row-gap: 0;
 }
-.topRow {
-  text-align: center;
-  grid-area: top;
-  justify-self: center;
-  align-self: end;
 
-  width: 80%;
-}
-.botRow {
-  grid-area: bot;
+.formRow {
+  grid-area: form;
   justify-self: center;
   width: 80%;
 }
 .sideBar {
   display: none;
+  background-image: url("../assets/images/register.svg");
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: right top;
 }
-.topRow img {
-  width: 65%;
-}
-.contactInfo {
+
+.sideInfo {
   width: 100%;
-  color: #fff;
+  color: rgb(12, 69, 102);
   text-align: center;
   margin-bottom: 2em;
 }
@@ -45,20 +37,17 @@
   color: rgb(12, 69, 102);
   text-transform: uppercase;
   text-decoration: underline;
-}
-.formAction {
-  display: flex;
-  justify-content: flex-end;
+  text-align: center;
 }
 
 @media (min-width: 968px) {
   .content {
     margin-top: 5rem;
-    grid-template-columns: 0.5fr 1fr 1fr;
+    grid-template-columns: 0.25fr 1fr;
     grid-template-areas:
-      "side bot top"
-      "side bot top"
-      "side bot top";
+      "side form"
+      "side form"
+      "side form";
   }
   .sideBar {
     grid-area: side;
@@ -70,12 +59,5 @@
     min-width: 13rem;
     height: 100%;
     background-color: rgba(0, 94, 255, 0.6);
-  }
-  .topRow {
-    justify-self: center;
-    align-self: center;
-  }
-  .topRow img {
-    width: 100%;
   }
 }
