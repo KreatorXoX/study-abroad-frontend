@@ -1,19 +1,32 @@
 .loginContent {
   user-select: none;
-  width: 100%;
+  width: 90%;
   max-width: 45rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  margin: auto;
-  box-shadow: 0px 0px 5px 0px rgba(174, 105, 243, 0.382);
-
+  place-content: center;
+  place-items: center;
   border-radius: 1rem;
   padding: 2em 1em;
+}
+.loginForm {
+  width: 80%;
 }
 .loginSide,
 .loginForm {
   animation: animate 0.66s;
+}
+.no-mini {
+  display: none;
+}
+.loginFormPlacement {
+  height: calc(100vh - 5rem);
+  margin-top: 5rem;
+  width: 100%;
+  display: flex;
+  place-items: center;
+  place-content: center;
 }
 
 .loginSide img {
@@ -49,8 +62,15 @@
 @media (min-width: 968px) {
   .loginContent {
     grid-template-columns: 0.5fr 1fr;
+    box-shadow: 0px 0px 5px 1px rgba(24, 27, 207, 0.5);
   }
   .slider {
+    display: block;
+  }
+  .loginFormPlacement {
+    height: calc(80vh - 5rem);
+  }
+  .no-mini {
     display: block;
   }
 }
