@@ -3,9 +3,9 @@
   height: 90.8vh;
   display: grid;
   grid-template-areas:
-    "top top top"
-    "bot bot bot"
-    "bot bot bot";
+    'top top top'
+    'bot bot bot'
+    'bot bot bot';
   align-items: center;
   margin-top: 4em;
   row-gap: 0;
@@ -56,9 +56,9 @@
     margin-top: 5rem;
     grid-template-columns: 0.5fr 1fr 1fr;
     grid-template-areas:
-      "side bot top"
-      "side bot top"
-      "side bot top";
+      'side bot top'
+      'side bot top'
+      'side bot top';
   }
   .sideBar {
     grid-area: side;

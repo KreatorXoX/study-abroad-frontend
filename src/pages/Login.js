@@ -2,17 +2,17 @@ import React from 'react'
 import LoginImage from '../assets/images/loginImage.jpg'
 import LoginForm from '../components/LoginForm/LoginForm'
 import Slider from '../shared/components/UI-Elements/Slider'
-import './Login.css'
+import styles from './Login.module.css'
 const Login = () => {
   return (
     <div className='container'>
-      <div className='loginFormPlacement'>
-        <div className='loginContent'>
-          <div className='loginSide'>
+      <div className={styles.loginFormPlacement}>
+        <div className={styles.loginContent}>
+          <div className={styles.loginSide}>
             <img src={LoginImage} alt='loginForm' />
-            <p className='no-mini'>One Step Closer</p>
+            <p className={styles['no-mini']}>One Step Closer</p>
           </div>
-          <div className='loginForm'>
+          <div className={styles.loginForm}>
             <h2 style={{ color: 'rgb(12, 69, 102)', textAlign: 'left' }}>
               Login Form
             </h2>
@@ -20,7 +20,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className='slider'>
+      <div className={styles.slider}>
         <Slider />
       </div>
     </div>

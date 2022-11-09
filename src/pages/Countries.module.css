@@ -1,0 +1,126 @@
+.bgSec {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  width: 100%;
+  margin-top: 5rem;
+  height: calc(100vh - 5rem);
+  background-color: #f8f8f8;
+}
+.content {
+  width: 90%;
+  max-width: 90rem;
+  display: grid;
+  gap: 1.5rem;
+  margin: auto;
+  place-items: center;
+  place-content: center;
+  border-radius: 1rem;
+  padding: 2em 1em;
+  height: 100%;
+  align-content: space-evenly;
+  color: #003776;
+
+  text-align: center;
+}
+.contentInfo {
+  width: 100%;
+}
+h2,
+h3 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.countriesContent {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.country {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  margin-top: 1rem;
+  display: flex;
+  place-items: center;
+  place-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease-in;
+}
+.country:hover {
+  box-shadow: 0 0 4px 1px #003776;
+}
+.country:active {
+  box-shadow: inset 0 0 0px 2px #003776;
+}
+.country::after {
+  content: attr(data-label);
+  position: absolute;
+  top: -30%;
+  left: calc(- 50%);
+}
+.foot {
+  display: none;
+}
+@media (min-width: 769px) {
+  .content {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    width: 100%;
+    color: #fff;
+  }
+  .bgSec {
+    background: linear-gradient(
+      -135deg,
+      rgba(0, 55, 118) 0%,
+      rgba(0, 55, 118, 0.8) 20%,
+      rgba(0, 55, 118, 0.6) 40%,
+      rgba(0, 55, 118, 0.4) 60%,
+      rgba(0, 55, 118, 0.2) 80%,
+      rgba(0, 55, 118, 0) 100%
+    );
+  }
+  iframe {
+    height: 300px;
+  }
+
+  .countriesContent {
+    margin-bottom: 14rem;
+  }
+  .foot {
+    display: flex;
+    width: 100%;
+    height: 5rem;
+    justify-content: center;
+    gap: 20%;
+    max-width: 40rem;
+    place-content: center;
+    place-items: center;
+  }
+  .icon {
+    background-color: #f8ae21;
+    border-radius: 50%;
+    padding: 0.5em 0.75em;
+    position: relative;
+  }
+  label {
+    position: absolute;
+    text-align: center;
+    font-size: 0.9rem;
+    width: 100%;
+    top: -50%;
+    width: 10rem;
+    left: -65%;
+    color: #003776;
+    font-weight: bold;
+  }
+  .country:hover {
+    box-shadow: 0 0 4px 1px #fff;
+  }
+  .country:active {
+    box-shadow: inset 0 0 0px 2px #fff;
+  }
+}
