@@ -2,7 +2,7 @@
   background-color: #fff;
   height: 90.8vh;
   display: grid;
-  grid-template-areas: 'form';
+  grid-template-areas: "form";
   align-items: center;
   margin-top: 4em;
   row-gap: 0;
@@ -16,18 +16,18 @@
 }
 .sideBar {
   display: none;
-  background-image: url('../assets/images/register.svg');
+  background-image: url("../assets/images/register.svg");
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-position: right top;
 }
 
-.sideInfo {
+/* .sideInfo {
   width: 100%;
   color: rgb(12, 69, 102);
   text-align: center;
   margin-bottom: 2em;
-}
+} */
 
 .form {
   padding: 1em 0.75em;
@@ -35,7 +35,7 @@
   box-shadow: 0px 0px 10px 0px rgb(212, 237, 232);
 }
 .formTitle {
-  color: rgb(12, 69, 102);
+  color: #003776;
   text-transform: uppercase;
   text-decoration: underline;
   text-align: center;
@@ -46,9 +46,9 @@
     margin-top: 5rem;
     grid-template-columns: 0.25fr 1fr;
     grid-template-areas:
-      'side form'
-      'side form'
-      'side form';
+      "side form"
+      "side form"
+      "side form";
   }
   .sideBar {
     grid-area: side;
@@ -59,6 +59,5 @@
     width: 100%;
     min-width: 13rem;
     height: 100%;
-    background-color: rgba(0, 94, 255, 0.6);
   }
 }

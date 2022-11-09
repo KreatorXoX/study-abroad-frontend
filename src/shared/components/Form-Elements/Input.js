@@ -69,7 +69,7 @@ const Input = (props) => {
         onChange={changeHandler}
         onBlur={touchHandler}
         value={inputState.value}
-        disabled={props.disabled || props.defaultText === "No available bus"}
+        disabled={props.disabled || props.defaultText === "No school available"}
       >
         <option value={"default"}>{props.defaultText}</option>
 

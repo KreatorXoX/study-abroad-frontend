@@ -26,8 +26,7 @@
 .contentInfo {
   width: 100%;
 }
-h2,
-h3 {
+.titles {
   font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
@@ -83,8 +82,8 @@ h3 {
       rgba(0, 55, 118, 0) 100%
     );
   }
-  iframe {
-    height: 300px;
+  .video {
+    height: 300px !important;
   }
 
   .countriesContent {
@@ -106,7 +105,7 @@ h3 {
     padding: 0.5em 0.75em;
     position: relative;
   }
-  label {
+  .label {
     position: absolute;
     text-align: center;
     font-size: 0.9rem;

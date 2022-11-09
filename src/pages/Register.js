@@ -7,14 +7,14 @@ const Register = () => {
     <div className="container">
       <div className={styles.content}>
         <div className={styles.sideBar}>
-          <div className={styles.sideInfo}>
+          {/* <div className={styles.sideInfo}>
             <h3>Together We</h3>
             <strong>Stand</strong>
           </div>
           <div className={styles.sideInfo}>
             <h3>Together We</h3>
             <strong>Strong</strong>
-          </div>
+          </div> */}
         </div>
 
         <div className={styles.formRow}>
