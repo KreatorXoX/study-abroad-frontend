@@ -3,6 +3,7 @@
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   justify-content: center;
+  width: 100%;
 }
 @media (max-width: 468px) {
   .content {
@@ -15,7 +16,7 @@
 }
 
 .form-control {
-  margin: 1rem 0;
+  margin: 0.75rem 0;
 }
 
 .form-control label,
@@ -27,7 +28,7 @@
 
 .form-control label {
   font-weight: bold;
-  margin-bottom: 0.5rem;
+
   color: #003776;
   display: block;
   text-align: left;
@@ -36,6 +37,7 @@
 .form-control input,
 .form-control textarea,
 .form-control select {
+  margin-top: 0.5rem;
   width: 100%;
   font: inherit;
   border: 1px solid rgba(236, 201, 86, 0.5);

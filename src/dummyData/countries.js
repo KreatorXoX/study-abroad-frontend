@@ -1,6 +1,8 @@
 import bel from "../assets/images/bel.png";
 import gbr from "../assets/images/gbr.png";
 import dnk from "../assets/images/dnk.png";
+import kent from "../assets/images/kent.svg";
+import zart from "../assets/images/zart.svg";
 export const data = {
   countries: [
     {
@@ -11,14 +13,14 @@ export const data = {
         {
           id: "4",
           name: "Kent University",
-          logo: "someurl",
+          logo: kent,
           info: "Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione.",
           video: "youtubeUrl",
         },
         {
           id: "5",
           name: "Zart University",
-          logo: "someurl",
+          logo: zart,
           info: "Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione.",
           video: "youtubeUrl",
         },
@@ -32,14 +34,14 @@ export const data = {
         {
           id: "6",
           name: "Schurtz University",
-          logo: "someurl",
+          logo: kent,
           info: "Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione.",
           video: "youtubeUrl",
         },
         {
           id: "7",
           name: "Beer University",
-          logo: "someurl",
+          logo: zart,
           info: "Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione.",
           video: "youtubeUrl",
         },
@@ -53,14 +55,14 @@ export const data = {
         {
           id: "8",
           name: "Schurtz University",
-          logo: "someurl",
+          logo: kent,
           info: "Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione.",
           video: "youtubeUrl",
         },
         {
           id: "9",
           name: "Beer University",
-          logo: "someurl",
+          logo: zart,
           info: "Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione.",
           video: "youtubeUrl",
         },

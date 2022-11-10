@@ -85,6 +85,7 @@ const Input = (props) => {
         onBlur={touchHandler}
         value={inputState.value}
         disabled={props.disabled}
+        style={props.style}
       />
     );
 

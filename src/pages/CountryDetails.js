@@ -36,8 +36,12 @@ const CountryDetails = () => {
                   />
                 </div>
                 <Button
-                  danger
-                  style={{ padding: "0.5rem 3rem", margin: "2rem" }}
+                  dark
+                  style={{
+                    padding: "0.5rem 2rem",
+                    margin: "2rem",
+                    marginTop: "2.5rem",
+                  }}
                 >
                   Show
                 </Button>
@@ -59,15 +63,28 @@ const CountryDetails = () => {
             ></iframe>
           </div>
 
-          <h2>Life in {country.name} </h2>
+          <h2>
+            Life in <span>{country.name}</span>{" "}
+          </h2>
         </div>
       </div>
       <div className={styles.row2}>
-        <h2>Universities You Can Apply in {country.name}</h2>
+        <h2>
+          Universities You Can Apply in <span> {country.name}</span>
+        </h2>
         <div className={styles.universities}>
           {country.schools.map((school) => (
             <div key={school.id} className={styles.schoolCard}>
-              <p alt="school">{school.logo}</p>
+              <img alt="school" src={school.logo} />
+              <Button
+                style={{
+                  width: "100%",
+                  fontSize: "0.9rem",
+                  padding: "0.25rem 0",
+                }}
+              >
+                Apply
+              </Button>
             </div>
           ))}
         </div>

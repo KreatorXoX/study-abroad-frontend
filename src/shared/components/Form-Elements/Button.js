@@ -11,6 +11,8 @@ const Button = (props) => {
       ? styles.success
       : props.warning
       ? styles.warning
+      : props.dark
+      ? styles.dark
       : styles.regular
   } ${props.mid ? styles.mid : props.large ? styles.large : styles.sm} ${
     props.invert ? styles.invert : ""

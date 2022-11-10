@@ -1,17 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,900&display=swap");
+
 .rows {
+  font-family: "Montserrat", sans-serif;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
-  height: 100%;
+  grid-template-rows: 1fr 0.5fr 0.5fr;
+  height: calc(100vh - 5rem);
   width: 90%;
   max-width: 90rem;
-  margin: 2rem auto;
+  margin: 0rem auto;
   padding: 0.5rem;
+}
+@media (min-width: 968px) {
+  .rows {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.65fr;
+  }
+  .row1 {
+    grid-template-columns: 1fr 0.75fr !important;
+    gap: 5rem;
+  }
+  .video {
+    height: 14rem !important;
+    max-width: 80% !important;
+  }
+  .col2 {
+    display: block !important;
+  }
 }
 .row1 {
   display: grid;
-  grid-template-columns: 1fr 0.75fr;
-  gap: 5rem;
+  grid-template-columns: 1fr;
   place-content: center;
   place-items: center;
   background-image: linear-gradient(
@@ -24,25 +43,78 @@
   background-repeat: no-repeat;
   padding: 1rem;
 }
+.col1 h2 {
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-style: italic;
+  font-weight: 900;
+  color: #003776;
+}
+
+.col1 p {
+  font-size: clamp(0.5rem, 3vw, 1.25rem);
+  color: rgb(97, 97, 97);
+  font-weight: bold;
+}
 
 .col2 {
   width: 100%;
   display: flex;
   flex-direction: column;
   text-align: center;
+  color: #003776;
+}
+.col2 h2 span {
+  font-style: italic;
+  font-weight: 900;
+  color: #003776;
+}
+.col2 {
+  display: none;
+}
+.row2 {
+  margin: 1rem 0;
+}
+.row2 h2 {
+  color: #003776;
+}
+.row2 h2 span {
+  font-style: italic;
+  font-weight: 900;
+  color: #003776;
 }
 .video {
   width: 80%;
-  height: 14rem;
+  max-width: 20rem;
+  height: 10rem;
 }
+
 .dropdown {
-  width: 70%;
+  width: 100%;
+  display: flex;
+  place-items: center;
 }
 .searchUni {
-  width: 90%;
+  width: 100%;
 }
 
 .searchForm {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+}
+
+.universities {
+  display: flex;
+  justify-content: flex-start;
+  place-items: center;
+  gap: 1rem;
+}
+.schoolCard img {
+  height: 100%;
+  width: 10rem;
+}
+.schoolCard {
+  height: 5rem;
+  box-shadow: 0 0 2px 1px rgb(236, 201, 86);
+  border-radius: 1rem;
 }

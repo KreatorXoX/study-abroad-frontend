@@ -10,9 +10,19 @@
 
   --regular: rgba(0, 94, 255, 0.6);
   --regular-hover: rgba(0, 94, 255, 0.8);
+
+  --dark: rgba(97, 97, 97, 0.8);
+  --dark-hover: rgb(97, 97, 97, 1);
 }
 
 /*Colors*/
+.dark {
+  background-color: var(--dark);
+  color: white;
+}
+.dark:hover {
+  background-color: var(--dark-hover);
+}
 .danger {
   background-color: var(--danger);
   color: white;

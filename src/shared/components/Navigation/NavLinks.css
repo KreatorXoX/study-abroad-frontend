@@ -14,12 +14,13 @@
 }
 
 .nav-links a,
-p {
+.nav-links p {
   color: rgb(0, 69, 147);
   text-decoration: none;
   padding: 0.5rem;
   cursor: pointer;
   margin: 0;
+  font-weight: bold;
   transition: all 0.15s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
@@ -53,7 +54,7 @@ p {
   }
 
   .nav-links a,
-  p {
+  .nav-links p {
     color: rgb(97, 97, 97);
     font-weight: 700;
     text-decoration: none;
