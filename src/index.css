@@ -117,3 +117,11 @@ body {
   opacity: 0;
   transition: all 200ms;
 }
+
+.successPage {
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+  cursor: pointer;
+}

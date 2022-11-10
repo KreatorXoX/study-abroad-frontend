@@ -1,24 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,900&display=swap');
 
 .rows {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 0.5fr 0.5fr;
+  grid-template-rows: 1fr 1fr;
   height: calc(100vh - 5rem);
-  width: 90%;
+  width: 100%;
   max-width: 90rem;
   margin: 0rem auto;
   padding: 0.5rem;
+  gap: 1rem;
 }
 @media (min-width: 968px) {
   .rows {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 0.65fr;
+    grid-template-rows: 1fr 0.5fr !important;
+    width: 90% !important;
   }
   .row1 {
     grid-template-columns: 1fr 0.75fr !important;
     gap: 5rem;
+  }
+  .row2 {
+    text-align: left !important;
   }
   .video {
     height: 14rem !important;
@@ -27,17 +32,24 @@
   .col2 {
     display: block !important;
   }
+  .searchForm {
+    flex-direction: row !important;
+  }
+  .formAction {
+    width: 40% !important;
+  }
 }
 .row1 {
   display: grid;
   grid-template-columns: 1fr;
   place-content: center;
   place-items: center;
+  gap: 0;
   background-image: linear-gradient(
       rgba(190, 218, 255, 0.8),
       rgba(255, 255, 255, 0.8)
     ),
-    url("https://img.freepik.com/free-vector/set-famous-landmark-vectors_53876-77150.jpg?w=1800&t=st=1668018863~exp=1668019463~hmac=38bbf57836ddebe707c3e824d83303ba0d1914750fdd1cab1af6506e38b7b080");
+    url('https://img.freepik.com/free-vector/set-famous-landmark-vectors_53876-77150.jpg?w=1800&t=st=1668018863~exp=1668019463~hmac=38bbf57836ddebe707c3e824d83303ba0d1914750fdd1cab1af6506e38b7b080');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -48,6 +60,7 @@
   font-style: italic;
   font-weight: 900;
   color: #003776;
+  margin-top: 0;
 }
 
 .col1 p {
@@ -73,6 +86,7 @@
 }
 .row2 {
   margin: 1rem 0;
+  text-align: center;
 }
 .row2 h2 {
   color: #003776;
@@ -100,21 +114,31 @@
 .searchForm {
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.formAction {
+  width: 100%;
+  text-align-last: end;
+  margin-top: 0.5rem;
+  place-content: center;
 }
 
 .universities {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   place-items: center;
   gap: 1rem;
 }
 .schoolCard img {
   height: 100%;
-  width: 10rem;
+  width: 70%;
 }
 .schoolCard {
+  max-width: 10rem;
+  min-width: 7rem;
   height: 5rem;
   box-shadow: 0 0 2px 1px rgb(236, 201, 86);
   border-radius: 1rem;
+  text-align: center;
 }

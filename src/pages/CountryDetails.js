@@ -1,14 +1,19 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { selectOptions } from "../shared/utils/form initial data/SchoolSelectOptions";
-import Input from "../shared/components/Form-Elements/Input";
-import Button from "../shared/components/Form-Elements/Button";
-import { data } from "../dummyData/countries";
-import styles from "./CountryDetails.module.css";
-const CountryDetails = () => {
-  const cId = useParams().cid;
-  const country = data.countries.find((country) => country.id === cId);
+import React from 'react'
+import { useParams } from 'react-router-dom'
 
+import Input from '../shared/components/Form-Elements/Input'
+import Button from '../shared/components/Form-Elements/Button'
+import { data } from '../dummyData/countries'
+import styles from './CountryDetails.module.css'
+
+const CountryDetails = () => {
+  const cId = useParams().cid
+  const country = data.countries.find(country => country.id === cId)
+  const selectOptions = country.schools.map(school => (
+    <>
+      <option value={school.id}>{school.name}</option>
+    </>
+  ))
   return (
     <div className={styles.rows}>
       <div className={styles.row1}>
@@ -25,26 +30,21 @@ const CountryDetails = () => {
               <form className={styles.searchForm}>
                 <div className={styles.dropdown}>
                   <Input
-                    id="schoolName"
-                    element="select"
+                    id='schoolName'
+                    element='select'
                     options={selectOptions}
-                    type="text"
-                    defaultText={"Please pick a school name"}
+                    type='text'
+                    defaultText={'Please pick a school name'}
                     onInputChange={() => {}}
                     validators={[]}
                     initialValid
                   />
                 </div>
-                <Button
-                  dark
-                  style={{
-                    padding: "0.5rem 2rem",
-                    margin: "2rem",
-                    marginTop: "2.5rem",
-                  }}
-                >
-                  Show
-                </Button>
+                <div className={styles.formAction}>
+                  <Button mid dark>
+                    Show
+                  </Button>
+                </div>
               </form>
             </div>
           </div>
@@ -53,18 +53,18 @@ const CountryDetails = () => {
           <div>
             <iframe
               className={styles.video}
-              width="80%"
-              height="100%"
-              src="https://www.youtube.com/embed/z1848wsndXU"
+              width='80%'
+              height='100%'
+              src='https://www.youtube.com/embed/z1848wsndXU'
               title="Belçika'da Gezilecek Yerler: Gezimanya Ghent Rehberi"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              frameBorder='0'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
               allowFullScreen
             ></iframe>
           </div>
 
           <h2>
-            Life in <span>{country.name}</span>{" "}
+            Life in <span>{country.name}</span>{' '}
           </h2>
         </div>
       </div>
@@ -73,14 +73,14 @@ const CountryDetails = () => {
           Universities You Can Apply in <span> {country.name}</span>
         </h2>
         <div className={styles.universities}>
-          {country.schools.map((school) => (
+          {country.schools.map(school => (
             <div key={school.id} className={styles.schoolCard}>
-              <img alt="school" src={school.logo} />
+              <img alt='school' src={school.logo} />
               <Button
                 style={{
-                  width: "100%",
-                  fontSize: "0.9rem",
-                  padding: "0.25rem 0",
+                  width: '100%',
+                  fontSize: '0.9rem',
+                  padding: '0.25rem 0'
                 }}
               >
                 Apply
@@ -90,7 +90,7 @@ const CountryDetails = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CountryDetails;
+export default CountryDetails

@@ -71,7 +71,8 @@ h1 {
   background-size: 200%;
   border-radius: 1rem;
   padding: 0.1em 0.25em;
-  transition: all 1s cubic-bezier(0.57, 0.21, 0.69, 1);
+  transition: background-position 1s cubic-bezier(0.57, 0.21, 0.69, 1),
+    color 1s cubic-bezier(0.7, 0.1, 0.9, 0.5);
 }
 .highlight:hover {
   background-position: -100%;

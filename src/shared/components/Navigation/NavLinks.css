@@ -30,9 +30,9 @@
 .nav-links p:hover,
 .nav-links p:active,
 .nav-links p.active {
-  background-color: rgba(141, 156, 255, 0.2);
+  background-color: rgba(209, 209, 209, 0.2);
   border: none;
-  border-bottom: 3px solid rgba(188, 65, 126, 1);
+  border-bottom: 3px solid rgb(116, 159, 255);
   border-top-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
