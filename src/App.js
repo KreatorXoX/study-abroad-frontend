@@ -10,6 +10,7 @@ import Contact from './pages/Contact'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import CountryDetails from './pages/CountryDetails'
+import University from './pages/University'
 function App() {
   return (
     <>
@@ -28,6 +29,9 @@ function App() {
             </Route>
             <Route path='/countries/:cid' exact>
               <CountryDetails />
+            </Route>
+            <Route path='/universities/:uid' exact>
+              <University />
             </Route>
             <Route path='/employees' exact>
               <Employees />

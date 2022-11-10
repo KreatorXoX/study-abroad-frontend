@@ -11,7 +11,7 @@ const CountryDetails = () => {
   const country = data.countries.find(country => country.id === cId)
   const selectOptions = country.schools.map(school => (
     <>
-      <option value={school.id}>{school.name}</option>
+      <option value={school.id * Math.random() * 1000}>{school.name}</option>
     </>
   ))
   return (
@@ -64,7 +64,7 @@ const CountryDetails = () => {
           </div>
 
           <h2>
-            Life in <span>{country.name}</span>{' '}
+            Life in <span>{country.name}</span>
           </h2>
         </div>
       </div>
@@ -77,6 +77,8 @@ const CountryDetails = () => {
             <div key={school.id} className={styles.schoolCard}>
               <img alt='school' src={school.logo} />
               <Button
+                to={`/universities/${school.id}`}
+                exact={'true'}
                 style={{
                   width: '100%',
                   fontSize: '0.9rem',
