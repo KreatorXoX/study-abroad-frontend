@@ -1,19 +1,34 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-
-import Input from '../shared/components/Form-Elements/Input'
-import Button from '../shared/components/Form-Elements/Button'
-import { data } from '../dummyData/countries'
-import styles from './CountryDetails.module.css'
+import React from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { useForm } from "../hooks/form-hook";
+import Input from "../shared/components/Form-Elements/Input";
+import Button from "../shared/components/Form-Elements/Button";
+import { data } from "../dummyData/countries";
+import styles from "./CountryDetails.module.css";
 
 const CountryDetails = () => {
-  const cId = useParams().cid
-  const country = data.countries.find(country => country.id === cId)
-  const selectOptions = country.schools.map(school => (
+  const { formState, inputHandler } = useForm({
+    universityId: {
+      value: "",
+      isValid: false,
+    },
+  });
+  const history = useHistory();
+  const cId = useParams().cid;
+  const country = data.countries.find((country) => country.id === cId);
+  const selectOptions = country.schools.map((school) => (
     <>
-      <option value={school.id * Math.random() * 1000}>{school.name}</option>
+      <option key={school.id * Math.random() * 1000} value={school.id}>
+        {school.name}
+      </option>
     </>
-  ))
+  ));
+  const universityHandler = (e) => {
+    e.preventDefault();
+    history.push(
+      `/universities/${country.id}/${formState.inputs.universityId.value}`
+    );
+  };
   return (
     <div className={styles.rows}>
       <div className={styles.row1}>
@@ -27,21 +42,25 @@ const CountryDetails = () => {
               dicta sunt explicabo.
             </p>
             <div className={styles.searchUni}>
-              <form className={styles.searchForm}>
+              <form onSubmit={universityHandler} className={styles.searchForm}>
                 <div className={styles.dropdown}>
                   <Input
-                    id='schoolName'
-                    element='select'
+                    id="universityId"
+                    element="select"
                     options={selectOptions}
-                    type='text'
-                    defaultText={'Please pick a school name'}
-                    onInputChange={() => {}}
+                    type="text"
+                    defaultText={"Please pick a school name"}
+                    onInputChange={inputHandler}
                     validators={[]}
-                    initialValid
                   />
                 </div>
                 <div className={styles.formAction}>
-                  <Button mid dark>
+                  <Button
+                    disabled={!formState.isValid}
+                    type="submit"
+                    mid
+                    success
+                  >
                     Show
                   </Button>
                 </div>
@@ -53,12 +72,12 @@ const CountryDetails = () => {
           <div>
             <iframe
               className={styles.video}
-              width='80%'
-              height='100%'
-              src='https://www.youtube.com/embed/z1848wsndXU'
-              title="Belçika'da Gezilecek Yerler: Gezimanya Ghent Rehberi"
-              frameBorder='0'
-              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              width="80%"
+              height="100%"
+              src="https://www.youtube.com/embed/gfUSAEJINRY"
+              title="BRUSSELS City Tour / Belgium"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
           </div>
@@ -73,16 +92,16 @@ const CountryDetails = () => {
           Universities You Can Apply in <span> {country.name}</span>
         </h2>
         <div className={styles.universities}>
-          {country.schools.map(school => (
+          {country.schools.map((school) => (
             <div key={school.id} className={styles.schoolCard}>
-              <img alt='school' src={school.logo} />
+              <img alt="school" src={school.logo} />
               <Button
-                to={`/universities/${school.id}`}
-                exact={'true'}
+                to={`/universities/${country.id}/${school.id}`}
+                exact={"true"}
                 style={{
-                  width: '100%',
-                  fontSize: '0.9rem',
-                  padding: '0.25rem 0'
+                  width: "100%",
+                  fontSize: "0.9rem",
+                  padding: "0.25rem 0",
                 }}
               >
                 Apply
@@ -92,7 +111,7 @@ const CountryDetails = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CountryDetails
+export default CountryDetails;
