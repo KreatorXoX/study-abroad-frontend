@@ -1,19 +1,29 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useAuthStore } from "../../store/authStore";
 import Button from "../../shared/components/Form-Elements/Button";
 import Input from "../../shared/components/Form-Elements/Input";
-import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_EMAIL,
+} from "../../shared/utils/validators";
 import { registerInitials } from "../../shared/utils/form initial data/RegisterInitials";
 import { useForm } from "../../hooks/form-hook";
 
 const RegisterForm = () => {
   const history = useHistory();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const { formState, inputHandler } = useForm(registerInitials);
   const loginHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs);
-    history.push("/success");
+    setUser({
+      name: formState.inputs.email.value,
+      role: "user",
+      authenticated: true,
+    });
+    history.replace("/");
   };
   return (
     <form onSubmit={loginHandler}>
@@ -31,11 +41,11 @@ const RegisterForm = () => {
         <div>
           <Input
             id="email"
-            type="text"
+            type="email"
             label="Email"
             errorText="This field is required"
             onInputChange={inputHandler}
-            validators={[VALIDATOR_REQUIRE()]}
+            validators={[VALIDATOR_EMAIL()]}
           />
         </div>
         <div>
@@ -56,7 +66,7 @@ const RegisterForm = () => {
           gap: "1rem",
         }}
       >
-        <Button large disabled={!formState.isValid} type="submit">
+        <Button large warning disabled={!formState.isValid} type="submit">
           Register
         </Button>
       </div>

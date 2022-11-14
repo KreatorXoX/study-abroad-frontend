@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,900&display=swap");
 
 .rows {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
@@ -23,7 +23,7 @@
       rgba(190, 218, 255, 0.8),
       rgba(255, 255, 255, 0.8)
     ),
-    url('https://www.studyacrossthepond.com/sites/default/files/Kent.png');
+    url("https://www.studyacrossthepond.com/sites/default/files/Kent.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -34,19 +34,17 @@
   font-size: clamp(1.5rem, 3vw, 3rem);
   font-style: italic;
   font-weight: 900;
-  color: #003776;
-  margin: 0;
+  color: var(--p-navy);
 }
 .col1 h3 {
   font-size: clamp(1rem, 3vw, 2rem);
   font-style: italic;
   font-weight: 900;
-  color: #960c0c;
-  margin-top: -5px;
+  color: var(--danger-hover);
 }
 .col1 p {
   font-size: clamp(0.5rem, 3vw, 1.25rem);
-  color: rgb(97, 97, 97);
+  color: var(--p-dark);
   font-weight: bold;
 }
 .col2 {
@@ -54,12 +52,12 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  color: #003776;
+  color: var(--p-navy);
 }
 .col2 h2 span {
   font-style: italic;
   font-weight: 900;
-  color: #003776;
+  color: var(--p-navy);
 }
 
 .col2 {
@@ -97,7 +95,7 @@
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 2px;
-  color: #fff;
+  color: var(--white);
   transition: transform 0.75s cubic-bezier(0.6, -0.28, 0.735, 0.045);
   font-size: 1.25rem;
 }
@@ -115,26 +113,26 @@
 .item {
   width: 20rem;
   height: 20rem;
-  background-color: #003776;
+  background-color: var(--p-navy);
   position: relative;
 }
 .item:nth-last-child(1) {
   margin-bottom: 1rem;
 }
 .item1 {
-  background-image: url('https://media.www.kent.ac.uk/se/15112/UKM_7K7A2034_DrillHallLibrary_800w.jpg');
+  background-image: url("https://media.www.kent.ac.uk/se/15112/UKM_7K7A2034_DrillHallLibrary_800w.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 .item2 {
-  background-image: url('https://media.www.kent.ac.uk/se/14836/ResearchInnovation_800w.jpg');
+  background-image: url("https://media.www.kent.ac.uk/se/14836/ResearchInnovation_800w.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 .item3 {
-  background-image: url('https://media.www.kent.ac.uk/se/14837/engagementimpactcivicmission_800w.jpg');
+  background-image: url("https://media.www.kent.ac.uk/se/14837/engagementimpactcivicmission_800w.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -145,7 +143,7 @@
 }
 .item::after,
 .item::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 30px;
   right: 30px;
@@ -154,13 +152,13 @@
   transition: all 1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 .item::after {
-  border-right: 1px solid #f8ae21;
-  border-left: 1px solid #f8ae21;
+  border-right: 1px solid var(--warning-hover);
+  border-left: 1px solid var(--warning-hover);
   transform: scale(1, 0);
 }
 .item::before {
-  border-top: 1px solid #f8ae21;
-  border-bottom: 1px solid #f8ae21;
+  border-top: 1px solid var(--warning-hover);
+  border-bottom: 1px solid var(--warning-hover);
   transform: scale(0, 1);
   z-index: 1;
 }
@@ -174,7 +172,7 @@
 }
 
 .item:hover .overlayDescription {
-  color: #fff;
+  color: var(--white);
   opacity: 1;
 }
 

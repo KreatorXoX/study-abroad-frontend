@@ -1,0 +1,171 @@
+.content {
+  margin-top: 5rem;
+  height: calc(100vh - 5rem);
+  background-color: var(--off-white);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.5fr 1fr;
+  color: var(--p-navy);
+  max-width: 90rem;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 0;
+}
+.borderTop {
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+  border-bottom: 1px dashed var(--p-navy);
+  width: 100%;
+}
+.borderBot {
+  position: absolute;
+  bottom: -3rem;
+  left: 0;
+  border-bottom: 1px dashed var(--p-navy);
+  width: 100%;
+}
+.profile {
+  padding-top: 1rem;
+  display: flex;
+  place-items: center;
+  place-content: flex-start;
+  flex-direction: column;
+  text-align: center;
+}
+.profile p {
+  margin: 0;
+}
+
+.profileAvatar {
+  display: none;
+}
+.profileInfo {
+  margin-bottom: 1rem;
+}
+
+.profileLinks {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+}
+.link {
+  position: relative;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+}
+.link:hover {
+  scale: 1.05;
+}
+.link:active {
+  scale: 0.95;
+}
+.icon {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  color: var(--warning-hover);
+}
+.application {
+  position: relative;
+  display: flex;
+  place-items: center;
+  place-content: center;
+}
+
+.application > .borderTop {
+  position: absolute;
+  top: 0;
+  left: 5%;
+  border-bottom: 1px dashed var(--p-navy);
+  width: 90%;
+}
+.arrow {
+  display: none;
+}
+@media (min-width: 968px) {
+  .content {
+    grid-template-columns: 0.6fr 1fr;
+    grid-template-rows: auto;
+    padding-top: 5rem;
+  }
+  .profileDetails {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+  .profileInfo {
+    display: flex;
+    flex-direction: column;
+    place-items: flex-start;
+    place-content: center;
+    padding-left: 1rem;
+  }
+
+  .profileAvatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: var(--warning-hover);
+    display: flex;
+    place-content: center;
+    place-items: center;
+  }
+  .profile h2 {
+    font-size: 1rem;
+  }
+  .borderTop {
+    width: 100%;
+    top: -2rem;
+    left: 0;
+    border-bottom: solid 1px var(--p-navy);
+  }
+  .profileLinks {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  .profile {
+    max-width: 20rem;
+    align-items: flex-start;
+
+    margin-left: 2rem;
+    padding-right: 2rem;
+    border-right: 1px dashed var(--warning-hover);
+  }
+
+  .link {
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    place-items: center;
+    padding-left: 4rem;
+  }
+  .link:hover {
+    scale: none;
+  }
+
+  .icon {
+    position: absolute;
+    top: 0;
+    left: -8rem;
+    width: 100%;
+  }
+  .arrow {
+    position: absolute;
+    top: 20%;
+    left: 16rem;
+    display: inline-block;
+    color: var(--p-dark);
+  }
+  .arrow:hover {
+    scale: 1.2;
+  }
+  .borderBot {
+    display: none;
+  }
+}

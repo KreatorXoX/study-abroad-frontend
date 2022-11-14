@@ -18,8 +18,7 @@
   z-index: 0;
   opacity: 0;
   transition: 500ms;
-  background-color: rgb(209, 209, 209);
-  user-select: none;
+  background-color: var(--off-white);
 }
 
 .card--active {
@@ -45,7 +44,7 @@
   top: 50%;
   transform: translate(0, -50%);
   font-size: 2rem;
-  color: rgba(0, 94, 255, 0.6);
+  color: var(--p-dark);
   cursor: pointer;
   user-select: none;
 }

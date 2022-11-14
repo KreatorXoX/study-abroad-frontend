@@ -1,17 +1,13 @@
-import React from 'react'
-import { useParams, useHistory } from 'react-router-dom'
-import { useForm } from '../hooks/form-hook'
-import Input from '../shared/components/Form-Elements/Input'
-import Button from '../shared/components/Form-Elements/Button'
-import { data } from '../dummyData/countries'
-import styles from './University.module.css'
+import React from "react";
+import { useParams } from "react-router-dom";
+import { data } from "../dummyData/countries";
+import styles from "./University.module.css";
 
 const University = () => {
-  const history = useHistory()
-  const uid = useParams().uid
-  const cid = useParams().cid
-  const country = data.countries.find(c => c.id === cid)
-  const university = country.schools.find(u => u.id === uid)
+  const uid = useParams().uid;
+  const cid = useParams().cid;
+  const country = data.countries.find((c) => c.id === cid);
+  const university = country.schools.find((u) => u.id === uid);
 
   return (
     <div className={styles.rows}>
@@ -19,7 +15,7 @@ const University = () => {
         <div className={styles.col1}>
           <div>
             <h2>{university.name}</h2>
-            <h3>Cui servire regnare est</h3>
+            <h3>{university.motto}</h3>
             <div className={styles.searchUni}>
               <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
@@ -34,12 +30,12 @@ const University = () => {
           <div>
             <iframe
               className={styles.video}
-              width='80%'
-              height='100%'
-              src='https://www.youtube.com/embed/gfUSAEJINRY'
-              title='BRUSSELS City Tour / Belgium'
-              frameBorder='0'
-              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              width="80%"
+              height="100%"
+              src="https://www.youtube.com/embed/gfUSAEJINRY"
+              title="BRUSSELS City Tour / Belgium"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
           </div>
@@ -79,7 +75,7 @@ const University = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default University
+export default University;

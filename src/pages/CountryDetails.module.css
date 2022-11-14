@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,900&display=swap");
 
 .rows {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
@@ -49,7 +49,7 @@
       rgba(190, 218, 255, 0.8),
       rgba(255, 255, 255, 0.8)
     ),
-    url('https://img.freepik.com/free-vector/set-famous-landmark-vectors_53876-77150.jpg?w=1800&t=st=1668018863~exp=1668019463~hmac=38bbf57836ddebe707c3e824d83303ba0d1914750fdd1cab1af6506e38b7b080');
+    url("https://img.freepik.com/free-vector/set-famous-landmark-vectors_53876-77150.jpg?w=1800&t=st=1668018863~exp=1668019463~hmac=38bbf57836ddebe707c3e824d83303ba0d1914750fdd1cab1af6506e38b7b080");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -59,13 +59,13 @@
   font-size: clamp(1.5rem, 3vw, 3rem);
   font-style: italic;
   font-weight: 900;
-  color: #003776;
+  color: var(--p-navy);
   margin-top: 0;
 }
 
 .col1 p {
   font-size: clamp(0.5rem, 3vw, 1.25rem);
-  color: rgb(97, 97, 97);
+  color: var(--p-dark);
   font-weight: bold;
 }
 
@@ -74,12 +74,11 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  color: #003776;
+  color: var(--p-navy);
 }
 .col2 h2 span {
   font-style: italic;
   font-weight: 900;
-  color: #003776;
 }
 .col2 {
   display: none;
@@ -89,12 +88,11 @@
   text-align: center;
 }
 .row2 h2 {
-  color: #003776;
+  color: var(--p-navy);
 }
 .row2 h2 span {
   font-style: italic;
   font-weight: 900;
-  color: #003776;
 }
 .video {
   width: 80%;
@@ -138,7 +136,7 @@
   max-width: 10rem;
   min-width: 7rem;
   height: 5rem;
-  box-shadow: 0 0 2px 1px rgb(236, 201, 86);
+  box-shadow: 0 0 2px 1px var(--warning-hover);
   border-radius: 1rem;
   text-align: center;
 }

@@ -1,0 +1,42 @@
+.layout {
+  width: 100%;
+  height: 100%;
+  padding: 0 1rem;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.applicationDetail {
+  display: flex;
+  justify-content: space-between;
+  place-items: center;
+  width: 20rem;
+  margin-top: 1rem;
+  padding: 0.25rem 1rem;
+  border-radius: 2rem;
+  color: var(--white);
+}
+.pending {
+  background-color: var(--warning-hover);
+}
+.accepted {
+  background-color: var(--success-hover);
+}
+.declined {
+  background-color: var(--danger-hover);
+}
+
+.task {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.taskActions {
+  display: flex;
+  gap: 1rem;
+}
+.formAction {
+  display: flex;
+  justify-content: flex-end;
+}

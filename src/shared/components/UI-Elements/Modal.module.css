@@ -4,7 +4,7 @@
   top: 22vh;
   left: 10%;
   width: 80%;
-  background: white;
+  background: var(--white);
   border-radius: 0.5rem;
   font-size: 0.75rem;
 }
@@ -15,18 +15,14 @@
   width: 100%;
   padding: 0.25rem;
   background: rgba(137, 43, 226, 0.806);
-  color: white;
-}
-
-.modalHeader h2 {
-  margin: 0.5rem;
+  color: var(--white);
 }
 
 .modalContent {
   padding: 1rem 0.5rem;
 }
 .modalContent p {
-  color: black !important;
+  color: var(--p-dark) !important;
   font-weight: 700;
 }
 

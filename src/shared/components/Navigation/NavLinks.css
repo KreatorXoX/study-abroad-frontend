@@ -15,12 +15,12 @@
 
 .nav-links a,
 .nav-links p {
-  color: rgb(0, 69, 147);
+  color: var(--p-navy);
   text-decoration: none;
   padding: 0.5rem;
   cursor: pointer;
   margin: 0;
-  font-weight: bold;
+  font-weight: 600;
   transition: all 0.15s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
@@ -30,9 +30,9 @@
 .nav-links p:hover,
 .nav-links p:active,
 .nav-links p.active {
-  background-color: rgba(209, 209, 209, 0.2);
+  background-color: var(--off-white);
   border: none;
-  border-bottom: 3px solid rgb(116, 159, 255);
+  border-bottom: 3px solid var(--regular);
   border-top-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
@@ -51,13 +51,6 @@
 
   .nav-links li {
     margin: 0 1rem;
-  }
-
-  .nav-links a,
-  .nav-links p {
-    color: rgb(97, 97, 97);
-    font-weight: 700;
-    text-decoration: none;
   }
 }
 
