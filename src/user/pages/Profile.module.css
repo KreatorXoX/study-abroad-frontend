@@ -1,11 +1,10 @@
 .content {
-  margin-top: 5rem;
-  height: calc(100vh - 5rem);
   background-color: var(--off-white);
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.5fr 1fr;
+  grid-template-rows: 5rem 1fr;
   color: var(--p-navy);
+  width: 100%;
   max-width: 90rem;
   margin-left: auto;
   margin-right: auto;
@@ -37,7 +36,7 @@
   margin: 0;
 }
 
-.profileAvatar {
+.profileDetails {
   display: none;
 }
 .profileInfo {
@@ -75,6 +74,7 @@
   display: flex;
   place-items: center;
   place-content: center;
+  width: 100%;
 }
 
 .application > .borderTop {
@@ -89,9 +89,9 @@
 }
 @media (min-width: 968px) {
   .content {
-    grid-template-columns: 0.6fr 1fr;
+    grid-template-columns: 0.1fr 1fr;
     grid-template-rows: auto;
-    padding-top: 5rem;
+    padding-top: 2rem;
   }
   .profileDetails {
     display: flex;
@@ -130,7 +130,7 @@
     margin-top: 2rem;
   }
   .profile {
-    max-width: 20rem;
+    width: 20rem;
     align-items: flex-start;
 
     margin-left: 2rem;

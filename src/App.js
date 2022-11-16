@@ -14,8 +14,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <MainNavigation />
         <main>
-          <MainNavigation />
           <Switch>
             <Route path="/" exact>
               <Landing />

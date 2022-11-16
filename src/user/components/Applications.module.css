@@ -11,8 +11,8 @@
   display: flex;
   justify-content: space-between;
   place-items: center;
-  width: 20rem;
-  margin-top: 1rem;
+  width: 100%;
+  margin: 2rem 0;
   padding: 0.25rem 1rem;
   border-radius: 2rem;
   color: var(--white);
@@ -32,11 +32,37 @@
   display: flex;
   justify-content: space-between;
 }
+.layout form {
+  width: 100%;
+  max-width: 45rem;
+}
 .taskActions {
   display: flex;
-  gap: 1rem;
+  gap: 5rem;
 }
 .formAction {
   display: flex;
   justify-content: flex-end;
+}
+.formControl {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+.taskActions label {
+  position: absolute;
+  top: -120%;
+  left: -100%;
+  color: var(--p-dark);
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  place-items: center;
+}
+.calendar {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  max-width: 100rem;
 }

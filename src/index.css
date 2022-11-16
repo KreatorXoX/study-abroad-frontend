@@ -58,14 +58,9 @@ p {
   margin: 0;
   padding: 0;
 }
-
-.container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: var(--white);
+main {
+  min-height: calc(100vh - 5rem);
+  display: flex;
 }
 
 .successImage {

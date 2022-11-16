@@ -4,8 +4,7 @@
   font-family: "Montserrat", sans-serif;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
-  height: calc(100vh - 5rem);
+  grid-template-rows: 0.3fr 1fr;
   width: 100%;
   max-width: 90rem;
   margin: 0rem auto;

@@ -7,6 +7,7 @@ const Applications = () => {
       {applications.map((application) => {
         return (
           <div
+            key={application.id}
             className={`${styles.applicationDetail} ${
               application.status === "pending"
                 ? styles.pending
@@ -15,6 +16,7 @@ const Applications = () => {
                 : styles.accepted
             }`}
           >
+            <img src={application.logo} width="100" height="50" alt="school" />
             <div>{application.name}</div>
             <div>{application.status}</div>
             <div>{application.date.toLocaleDateString()}</div>
