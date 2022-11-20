@@ -57,7 +57,7 @@ const Day = ({ day }) => {
                   setOpenModal(true);
                 }}
               >
-                <span> {u.title}</span>
+                <p className={styles.pTag}> {u.title}</p>
               </div>
             ) : (
               ""

@@ -4,14 +4,16 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  border-radius: 1rem;
-  padding: 0.5em;
+  border-radius: 0.5rem;
+  padding: 0.25em;
   background-color: #ccc;
+  color: var(--p-dark);
+  font-weight: 600;
 }
 
 .cardImage {
-  height: 10rem;
-  width: 8rem;
+  height: 5rem;
+  width: 5rem;
 }
 .cardName {
   text-align: center;
@@ -25,7 +27,7 @@
 }
 
 .cardImage img {
-  border-radius: 1rem;
+  border-radius: 50%;
   height: 100%;
   width: 100%;
   object-fit: cover;

@@ -20,7 +20,7 @@ const LoginForm = () => {
     console.log(formState.inputs);
     setUser({
       name: formState.inputs.email.value,
-      role: "user",
+      role: "admin",
       authenticated: true,
     });
     history.replace("/");

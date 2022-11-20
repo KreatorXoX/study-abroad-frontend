@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import Button from "../shared/components/Form-Elements/Button";
 import AuthImage from "../assets/images/loginImage.jpg";
 import LoginForm from "../components/LoginForm/LoginForm";
@@ -20,6 +21,17 @@ const Auth = () => {
             onClick={() => setIsLogin(!isLogin)}
           >
             <p className={styles.white}>{isLogin ? "Register" : "Login"}</p>
+          </Button>
+          <Button
+            style={{
+              backgroundColor: "transparent",
+              borderBottom: "1px solid var(--danger)",
+              color: "var(--p-dark)",
+            }}
+            to="/"
+            warning
+          >
+            Reset Password
           </Button>
         </div>
         <div className={styles.authForm}>

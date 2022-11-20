@@ -1,5 +1,10 @@
 import React, { useState } from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
+import Modal from "../../shared/components/UI-Elements/Modal";
 import { useAuthStore } from "../../store/authStore";
+
 import Button from "../../shared/components/Form-Elements/Button";
 import { tasks } from "../../dummyData/tasks";
 
@@ -7,7 +12,8 @@ import styles from "./Applications.module.css";
 const Tasks = () => {
   const user = useAuthStore((state) => state.user);
   const [taskData, setTaskData] = useState({});
-
+  const [openModal, setOpenModal] = useState(false);
+  const [addTask, setAddTask] = useState("");
   const changeHandler = (e) => {
     const value = e.target.checked;
     const id = e.target.name;
@@ -25,10 +31,16 @@ const Tasks = () => {
   const deleteTaskHandler = (id) => {
     console.log(`task ${id} deleted`);
   };
+  const addTaskHandler = (e) => {
+    e.preventDefault();
+    setOpenModal(false);
+    console.log(addTask);
+    setAddTask("");
+  };
   return (
     <div className={styles.layout}>
-      <form onSubmit={formHandler}>
-        {tasks.map((task) => {
+      <form className={styles.taskForm} onSubmit={formHandler}>
+        {tasks.map((task, idx) => {
           const classes =
             task.status.student && task.status.consultant
               ? styles.accepted
@@ -37,30 +49,39 @@ const Tasks = () => {
               : styles.pending;
           return (
             <div
+              data-idx={idx}
               key={task.id}
-              className={`${styles.applicationDetail} ${classes}`}
+              className={`${styles.taskDetail} ${classes}`}
             >
+              {idx === 0 && (
+                <>
+                  <div className={styles.taskLabel1}></div>
+                  <div className={styles.taskLabel2}></div>
+                </>
+              )}
               <div className={styles.task}>
-                <div>{task.name}</div>
+                <div style={{ display: "flex", placeItems: "center" }}>
+                  {task.name}
+                </div>
                 <div className={styles.taskActions}>
                   <div className={styles.formControl}>
-                    <label htmlFor={`student${task.id}`}>Student</label>
                     <input
                       name={`student${task.id}`}
                       id={`student${task.id}`}
                       onChange={changeHandler}
                       type="checkbox"
                       defaultChecked={task.status.student}
+                      disabled={task.status.student}
                     />
                   </div>
                   <div className={styles.formControl}>
-                    <label htmlFor={`consultant${task.id}`}>Consultant</label>
                     <input
                       name={`consultant${task.id}`}
                       id={`consultant${task.id}`}
                       onChange={changeHandler}
                       type="checkbox"
                       defaultChecked={task.status.consultant}
+                      disabled={task.status.consultant}
                     />
                   </div>
                 </div>
@@ -69,8 +90,9 @@ const Tasks = () => {
                 <Button
                   style={{
                     margin: "0",
-                    backgroundColor: "#AA4A44",
                     marginLeft: "1rem",
+                    backgroundColor: "var(--white)",
+                    color: "var(--danger)",
                   }}
                   onClick={deleteTaskHandler.bind(null, task.id)}
                 >
@@ -86,6 +108,85 @@ const Tasks = () => {
           </Button>
         </div>
       </form>
+      <div
+        style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
+      >
+        <Button
+          onClick={() => {
+            setOpenModal(true);
+          }}
+          mid
+          success
+        >
+          Add Task
+        </Button>
+        {openModal && (
+          <Modal
+            onSubmit={addTaskHandler}
+            show={openModal}
+            header={"Add New Task"}
+            headerButton={
+              <>
+                <div>
+                  <p
+                    style={{ backgroundColor: "transparent" }}
+                    onClick={() => {
+                      setOpenModal(false);
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      size="2x"
+                      style={{ color: "white", cursor: "pointer" }}
+                      icon={faXmarkCircle}
+                    />
+                  </p>
+                </div>
+              </>
+            }
+            footer={
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "2rem",
+                }}
+              >
+                <Button
+                  style={{ margin: "0" }}
+                  mid
+                  danger
+                  onClick={() => {
+                    setOpenModal(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  disabled={addTask.length < 3}
+                  success
+                  mid
+                  style={{ margin: "0" }}
+                  type="submit"
+                >
+                  Save
+                </Button>
+              </div>
+            }
+          >
+            <div className={styles.singleInput}>
+              <input
+                type="text"
+                value={addTask}
+                onChange={(e) => {
+                  setAddTask(e.target.value);
+                }}
+                placeholder="Task Name"
+                rows={4}
+              />
+            </div>
+          </Modal>
+        )}
+      </div>
     </div>
   );
 };

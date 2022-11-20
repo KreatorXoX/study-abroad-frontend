@@ -69,7 +69,7 @@ const Input = (props) => {
         onChange={changeHandler}
         onBlur={touchHandler}
         value={inputState.value}
-        disabled={props.disabled || props.defaultText === "No school available"}
+        disabled={props.disabled || props.defaultText === "Nothing available"}
       >
         <option value={"default"}>{props.defaultText}</option>
 
@@ -88,6 +88,7 @@ const Input = (props) => {
         style={props.style}
       />
     );
+  console.log(inputState.isValid);
 
   return (
     <div className={styles.content}>

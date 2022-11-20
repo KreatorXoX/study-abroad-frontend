@@ -126,3 +126,7 @@
   border-color: var(--disabled-bg);
   color: var(--disabled-p);
 }
+.btn:focus {
+  outline: none;
+  border: none;
+}

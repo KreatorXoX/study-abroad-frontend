@@ -6,16 +6,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 45rem;
 }
-.applicationDetail {
+.applicationDetail,
+.taskDetail {
   display: flex;
   justify-content: space-between;
   place-items: center;
   width: 100%;
-  margin: 2rem 0;
-  padding: 0.25rem 1rem;
+  margin: 1rem 0;
+  padding: 0.25rem 0.5rem;
   border-radius: 2rem;
   color: var(--white);
+}
+
+.applicationDetail img {
+  width: 3rem;
+  height: 3rem;
+}
+.applicationDetail div {
+  display: flex;
+  place-content: center;
+  place-items: center;
+  text-align: center;
 }
 .pending {
   background-color: var(--warning-hover);
@@ -28,17 +41,22 @@
 }
 
 .task {
+  display: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
+.taskForm {
+  margin-top: 3rem;
+}
+
 .layout form {
   width: 100%;
   max-width: 45rem;
 }
 .taskActions {
   display: flex;
-  gap: 5rem;
+  gap: 4em;
 }
 .formAction {
   display: flex;
@@ -46,14 +64,8 @@
 }
 .formControl {
   position: relative;
-  margin-bottom: 0.5rem;
 }
-.taskActions label {
-  position: absolute;
-  top: -120%;
-  left: -100%;
-  color: var(--p-dark);
-}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -65,4 +77,67 @@
   grid-template-columns: 1fr;
   width: 100%;
   max-width: 100rem;
+}
+.settings {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  gap: 4rem;
+}
+.settings h4 {
+  font-size: 1.25rem;
+  color: var(--danger-hover);
+}
+@media (min-width: 968px) {
+  .settings {
+    flex-direction: row;
+    width: 100%;
+    gap: 2rem;
+  }
+}
+
+.singleInput input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--warning);
+  padding-bottom: 0.5em;
+}
+.singleInput input:focus {
+  outline: none;
+}
+
+[data-idx="0"] {
+  position: relative;
+}
+.taskLabel1,
+.taskLabel2 {
+  position: absolute;
+  color: var(--p-dark);
+  border: 1px solid var(--warning);
+  padding: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.taskLabel1 {
+  right: 4.5em;
+  top: -3.2em;
+  background-image: url("https://img.freepik.com/free-photo/pretty-smiling-joyfully-female-with-fair-hair-dressed-casually-looking-with-satisfaction_176420-15187.jpg?w=740&t=st=1668963674~exp=1668964274~hmac=8104b8139626cf939865b37bb2d568a409924a3695a24f835e591f89cb9d91fa");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.taskLabel2 {
+  right: 9.7em;
+  top: -3.2em;
+  background-image: url("https://img.freepik.com/free-photo/studio-portrait-bearded-man-posing-beige-background-looking-into-camera-with-broad-smile-his-face_295783-16582.jpg?w=1380&t=st=1668962600~exp=1668963200~hmac=1d23c2110f4ae876f45c91e50b56163a351f03060a154d846db3639ed676e04c");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.stdList {
+  width: 100%;
+  margin: 2rem auto;
 }

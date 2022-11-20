@@ -98,13 +98,13 @@
   flex-direction: column;
   width: 85%;
 }
-label {
+.formInput label {
   font-size: 0.8rem;
   color: rgb(97, 97, 97, 0.8);
   font-weight: bold;
 }
-input,
-textarea {
+.formInput input,
+.formInput textarea {
   margin: 0.5em;
   border: none;
   border-bottom: 1px solid #ccc;
@@ -115,13 +115,13 @@ textarea {
   font-weight: 600;
   transition: border 0.2s ease-in-out;
 }
-input:active,
-input:focus,
-textarea:active,
-textarea:focus {
+.formInput input:active,
+.formInput input:focus,
+.formInput textarea:active,
+.formInput textarea:focus {
   border-bottom: 1px solid rgba(118, 150, 255, 0.85);
 }
-input::placeholder,
-textarea::placeholder {
+.formInput input::placeholder,
+.formInput textarea::placeholder {
   color: #ccc;
 }

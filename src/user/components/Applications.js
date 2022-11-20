@@ -16,10 +16,10 @@ const Applications = () => {
                 : styles.accepted
             }`}
           >
-            <img src={application.logo} width="100" height="50" alt="school" />
+            <img src={application.logo} alt="school" />
             <div>{application.name}</div>
             <div>{application.status}</div>
-            <div>{application.date.toLocaleDateString()}</div>
+            <div>{application.date.toDateString()}</div>
           </div>
         );
       })}

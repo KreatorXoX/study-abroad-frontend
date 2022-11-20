@@ -1,9 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
-import styles from './Button.module.css'
+import styles from "./Button.module.css";
 
-const Button = props => {
+const Button = (props) => {
   let buttonClasses = `${styles.btn} ${
     props.danger
       ? styles.danger
@@ -15,15 +15,15 @@ const Button = props => {
       ? styles.dark
       : styles.regular
   } ${props.mid ? styles.mid : props.large ? styles.large : styles.sm} ${
-    props.invert ? styles.invert : ''
-  }`
+    props.invert ? styles.invert : ""
+  }`;
 
   if (props.href) {
     return (
       <a className={buttonClasses} href={props.href}>
         {props.children}
       </a>
-    )
+    );
   }
   if (props.to) {
     return (
@@ -35,19 +35,20 @@ const Button = props => {
       >
         {props.children}
       </Link>
-    )
+    );
   }
   return (
     <button
       onClick={props.onClick}
-      type={props.type || 'button'}
+      type={props.type || "button"}
       className={buttonClasses}
       disabled={props.disabled}
       style={props.style}
+      autoFocus={props.autoFocus}
     >
       {props.children}
     </button>
-  )
+  );
 
   // const component = (
   //   <button
@@ -61,6 +62,6 @@ const Button = props => {
   // );
 
   // return component;
-}
+};
 
-export default Button
+export default Button;

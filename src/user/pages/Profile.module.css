@@ -2,30 +2,14 @@
   background-color: var(--off-white);
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 5rem 1fr;
+  grid-template-rows: 0.24fr 1fr;
   color: var(--p-navy);
   width: 100%;
   max-width: 90rem;
-  margin-left: auto;
-  margin-right: auto;
-  gap: 0;
+  margin: 1rem auto;
 }
-.borderTop {
-  position: absolute;
-  top: -0.5rem;
-  left: 0;
-  border-bottom: 1px dashed var(--p-navy);
-  width: 100%;
-}
-.borderBot {
-  position: absolute;
-  bottom: -3rem;
-  left: 0;
-  border-bottom: 1px dashed var(--p-navy);
-  width: 100%;
-}
+
 .profile {
-  padding-top: 1rem;
   display: flex;
   place-items: center;
   place-content: flex-start;
@@ -44,46 +28,34 @@
 }
 
 .profileLinks {
-  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 2rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .link {
-  position: relative;
   font-weight: bold;
   cursor: pointer;
   display: flex;
+  place-content: center;
+  width: 6rem;
 }
-.link:hover {
-  scale: 1.05;
-}
-.link:active {
-  scale: 0.95;
-}
+
 .icon {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  width: 100%;
   color: var(--warning-hover);
+  width: 25px;
+}
+.active {
+  border-bottom: 1px solid var(--regular);
 }
 .application {
-  position: relative;
   display: flex;
   place-items: center;
   place-content: center;
   width: 100%;
 }
 
-.application > .borderTop {
-  position: absolute;
-  top: 0;
-  left: 5%;
-  border-bottom: 1px dashed var(--p-navy);
-  width: 90%;
-}
 .arrow {
   display: none;
 }
@@ -91,7 +63,7 @@
   .content {
     grid-template-columns: 0.1fr 1fr;
     grid-template-rows: auto;
-    padding-top: 2rem;
+    margin-top: 2rem;
   }
   .profileDetails {
     display: flex;
@@ -109,7 +81,7 @@
     width: 75px;
     height: 75px;
     border-radius: 50%;
-    background-color: var(--warning-hover);
+    background-color: transparent, var(--warning-hover);
     display: flex;
     place-content: center;
     place-items: center;
@@ -117,22 +89,17 @@
   .profile h2 {
     font-size: 1rem;
   }
-  .borderTop {
-    width: 100%;
-    top: -2rem;
-    left: 0;
-    border-bottom: solid 1px var(--p-navy);
-  }
+
   .profileLinks {
     flex-direction: column;
     width: 100%;
     align-items: center;
     margin-top: 2rem;
+    gap: 2rem;
   }
   .profile {
     width: 20rem;
     align-items: flex-start;
-
     margin-left: 2rem;
     padding-right: 2rem;
     border-right: 1px dashed var(--warning-hover);
@@ -143,29 +110,18 @@
     height: 2rem;
     display: flex;
     place-items: center;
-    padding-left: 4rem;
-  }
-  .link:hover {
-    scale: none;
+    justify-content: space-between;
   }
 
-  .icon {
-    position: absolute;
-    top: 0;
-    left: -8rem;
-    width: 100%;
+  .linkTag {
+    display: flex;
+    gap: 2rem;
+    place-content: center;
+    place-items: center;
   }
+
   .arrow {
-    position: absolute;
-    top: 20%;
-    left: 16rem;
     display: inline-block;
     color: var(--p-dark);
-  }
-  .arrow:hover {
-    scale: 1.2;
-  }
-  .borderBot {
-    display: none;
   }
 }
