@@ -1,77 +1,83 @@
-import React, { useEffect } from "react";
+import React from 'react'
 
-import { useAuthStore } from "../../store/authStore";
-import { useForm } from "../../hooks/form-hook";
-import Button from "../../shared/components/Form-Elements/Button";
-import Input from "../../shared/components/Form-Elements/Input";
+import { useAuthStore } from '../../store/authStore'
+import { useForm } from '../../hooks/form-hook'
+import Button from '../../shared/components/Form-Elements/Button'
+import Input from '../../shared/components/Form-Elements/Input'
 
-import { employees } from "../../dummyData/employees";
+import { employees } from '../../dummyData/employees'
 
-import styles from "./Applications.module.css";
+import styles from './Applications.module.css'
+import { VALIDATOR_REQUIRE } from '../../shared/utils/validators'
 const Settings = () => {
-  const { formState, inputHandler, SetData } = useForm();
+  const { formState: consultId, inputHandler: consultInputHandler } = useForm({
+    consultId: {
+      value: '',
+      isValid: false
+    }
+  })
+  const { formState, inputHandler } = useForm({
+    oldPassword: {
+      value: '',
+      isValid: false
+    },
+    password1: {
+      value: '',
+      isValid: false
+    },
+    password2: {
+      value: '',
+      isValid: false
+    }
+  })
 
-  const user = useAuthStore((state) => state.user);
-
-  useEffect(() => {
-    SetData(
-      {
-        consultId: {
-          value: "",
-          isValid: false,
-        },
-        oldPassword: {
-          value: "",
-          isValid: false,
-        },
-        newPassword: {
-          value: "",
-          isValid: false,
-        },
-        newPassword2: {
-          value: "",
-          isValid: false,
-        },
-      },
-      false
-    );
-  }, [SetData]);
+  const user = useAuthStore(state => state.user)
 
   const options = (
     <>
-      {employees.map((emp) => (
+      {employees.map(emp => (
         <option key={emp.id} value={emp.id}>
           {emp.name}
         </option>
       ))}
     </>
-  );
-  const consultHandler = (e) => {
-    e.preventDefault();
-    console.log(formState.inputs.consultId);
-  };
-  const passChangeHandler = (e) => {
-    e.preventDefault();
-    console.log(formState.inputs);
-  };
+  )
+  const match =
+    formState.inputs.password1.value === formState.inputs.password2.value
+  const consultHandler = e => {
+    e.preventDefault()
+    if (consultId.inputs.consultId.value === 'default') return
+    else console.log(consultId.inputs)
+  }
+  const passChangeHandler = e => {
+    e.preventDefault()
+    console.log(formState.inputs)
+  }
+
   return (
     // admin or the url userId is equal to the logged in user.
     <div className={styles.layout}>
       <div className={styles.settings}>
-        {user.role === "admin" && (
+        {user.role === 'admin' && (
           <div>
             <h4>Assign Consultant</h4>
             <form onSubmit={consultHandler}>
               <Input
-                id="consultId"
-                element="select"
-                onInputChange={inputHandler}
+                id='consultId'
+                element='select'
+                onInputChange={consultInputHandler}
                 options={options}
                 validators={[]}
-                defaultText="Assign Consultant"
+                defaultText='Assign Consultant'
                 initialValid
+                initialValue='default'
               />
-              <Button type="submit">Save</Button>
+              <Button
+                disabled={consultId.inputs.consultId.value === 'default'}
+                type='submit'
+              >
+                Save
+              </Button>
             </form>
           </div>
         )}
@@ -79,30 +85,34 @@ const Settings = () => {
           <h4>Update Password</h4>
           <form onSubmit={passChangeHandler}>
             <Input
-              id="oldPassword"
-              type="password"
-              placeholder="Old Password"
+              id='oldPassword'
+              type='password'
+              placeholder='Old Password'
               onInputChange={inputHandler}
-              validators={[]}
+              validators={[VALIDATOR_REQUIRE()]}
               initialValid
             />
             <Input
-              id="newPassword"
-              type="password"
-              placeholder="New Password"
+              id='password1'
+              type='password'
+              placeholder='New Password'
               onInputChange={inputHandler}
-              validators={[]}
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText='Required field'
               initialValid
             />
             <Input
-              id="newPassword2"
-              type="password"
-              placeholder="Repeat Password"
+              id='password2'
+              type='password'
+              placeholder='Repeat Password'
               onInputChange={inputHandler}
-              validators={[]}
-              initialValid
+              errorText='Required field'
+              validators={[VALIDATOR_REQUIRE()]}
             />
-            <Button type="submit">Change</Button>
+            {!match && <p style={{ color: 'red' }}>Password doesnt match</p>}
+            <Button disabled={!formState.isValid || !match} type='submit'>
+              Change
+            </Button>
           </form>
         </div>
 
@@ -112,7 +122,7 @@ const Settings = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Settings;
+export default Settings

@@ -1,55 +1,57 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect } from 'react'
 
-import { validate } from "../../utils/validators";
+import { validate } from '../../utils/validators'
 
-import styles from "./Input.module.css";
+import styles from './Input.module.css'
 
 const inputReducer = (state, action) => {
   switch (action.type) {
-    case "CHANGE":
+    case 'CHANGE':
       return {
         ...state,
         value: action.val,
-        isValid: validate(action.val, action.validators),
-      };
-    case "TOUCH":
+        isValid: validate(action.val, action.validators)
+      }
+    case 'TOUCH':
       return {
         ...state,
-        isTouched: true,
-      };
+        isTouched: true
+      }
     default:
-      return state;
+      return state
   }
-};
-const Input = (props) => {
+}
+const Input = props => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: props.initialValue || "",
+    value: props.initialValue || '',
     isValid: props.initialValid || false,
-    isTouched: false,
-  });
+    isTouched: false
+  })
 
-  const { id, onInputChange } = props;
-  const { value, isValid } = inputState;
+  const { id, onInputChange } = props
+  const { value, isValid } = inputState
 
   useEffect(() => {
-    onInputChange(id, value, isValid);
-  }, [id, value, isValid, onInputChange]);
+    onInputChange(id, value, isValid)
+  }, [id, value, isValid, onInputChange])
 
-  const changeHandler = (event) => {
+  const changeHandler = event => {
     dispatch({
-      type: "CHANGE",
+      type: 'CHANGE',
       val: event.target.value,
-
-      validators: props.validators,
-    });
-  };
+      id: event.target.id,
+      validators: props.validators
+    })
+  }
 
   const touchHandler = () => {
-    dispatch({ type: "TOUCH" });
-  };
+    dispatch({
+      type: 'TOUCH'
+    })
+  }
 
   let component =
-    props.element === "textarea" ? (
+    props.element === 'textarea' ? (
       <textarea
         id={props.id}
         rows={props.rows || 3}
@@ -60,7 +62,7 @@ const Input = (props) => {
         value={inputState.value}
         type={props.hidden}
       />
-    ) : props.element === "select" ? (
+    ) : props.element === 'select' ? (
       <select
         id={props.id}
         type={props.type}
@@ -69,9 +71,9 @@ const Input = (props) => {
         onChange={changeHandler}
         onBlur={touchHandler}
         value={inputState.value}
-        disabled={props.disabled || props.defaultText === "Nothing available"}
+        disabled={props.disabled || props.defaultText === 'Nothing available'}
       >
-        <option value={"default"}>{props.defaultText}</option>
+        <option value={'default'}>{props.defaultText}</option>
 
         {props.options}
       </select>
@@ -87,21 +89,18 @@ const Input = (props) => {
         disabled={props.disabled}
         style={props.style}
       />
-    );
-  console.log(inputState.isValid);
+    )
 
   return (
     <div className={styles.content}>
       <div
-        className={`${styles["form-control"]} ${
+        className={`${styles['form-control']} ${
           styles[
-            `${
-              !inputState.isValid &&
+            `${!inputState.isValid &&
               inputState.isTouched &&
-              "form-control--invalid"
-            }`
+              'form-control--invalid'}`
           ]
-        } ${styles[`${props.disabled && "form-control--disabled"}`]}`}
+        } ${styles[`${props.disabled && 'form-control--disabled'}`]}`}
       >
         <label htmlFor={props.id}>{props.label}</label>
         {component}
@@ -110,7 +109,7 @@ const Input = (props) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Input;
+export default Input

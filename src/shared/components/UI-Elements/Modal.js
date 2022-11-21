@@ -1,12 +1,12 @@
-import React from "react";
-import { createPortal } from "react-dom";
-import { CSSTransition } from "react-transition-group";
+import React from 'react'
+import { createPortal } from 'react-dom'
+import { CSSTransition } from 'react-transition-group'
 
-import Backdrop from "./Backdrop";
+import Backdrop from './Backdrop'
 
-import styles from "./Modal.module.css";
+import styles from './Modal.module.css'
 
-const ModalOverlay = (props) => {
+const ModalOverlay = props => {
   const content = (
     <div className={styles.modal}>
       <header className={styles.modalHeader}>
@@ -14,16 +14,18 @@ const ModalOverlay = (props) => {
         {props.headerButton}
       </header>
       <form
-        onSubmit={props.onSubmit ? props.onSubmit : (e) => e.preventDefault()}
+        onSubmit={props.onSubmit ? props.onSubmit : e => e.preventDefault()}
       >
         <div className={styles.modalContent}>{props.children}</div>
-        <footer className={styles.modalFooter}>{props.footer}</footer>
+        <footer className={styles.modalFooter} style={props.footerStyle}>
+          {props.footer}
+        </footer>
       </form>
     </div>
-  );
-  return createPortal(content, document.getElementById("modalPortal"));
-};
-const Modal = (props) => {
+  )
+  return createPortal(content, document.getElementById('modalPortal'))
+}
+const Modal = props => {
   return (
     <>
       {props.show && <Backdrop onClick={props.onClick} />}
@@ -32,12 +34,12 @@ const Modal = (props) => {
         mountOnEnter
         unmountOnExit
         timeout={300}
-        classNames="modal"
+        classNames='modal'
       >
         <ModalOverlay {...props} />
       </CSSTransition>
     </>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal

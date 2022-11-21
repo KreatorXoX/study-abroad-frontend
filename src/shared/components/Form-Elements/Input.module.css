@@ -27,11 +27,11 @@
 }
 
 .form-control label {
-  font-weight: bold;
-
+  font-weight: 600;
   color: var(--p-navy);
   display: block;
   text-align: left;
+  font-size: 1rem;
 }
 
 .form-control input,
@@ -46,8 +46,8 @@
   background: var(--off-white);
   padding: 0.4rem 0.8rem;
   color: var(-p-dark);
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 800;
 }
 
 .form-control input::placeholder,
@@ -68,7 +68,7 @@
 
 .form-control--invalid label::after,
 .form-control--invalid p {
-  content: "  *";
+  /* content: '  *'; */
   color: var(--disabled-p);
   font-weight: bold;
   margin: 0;
@@ -99,7 +99,8 @@
   .form-control input::placeholder,
   .form-control--invalid select,
   .form-control--invalid select ::placeholder,
-  .form-control--invalid p {
+  .form-control--invalid p,
+  .form-control label {
     font-size: 0.85rem;
   }
 }
