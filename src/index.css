@@ -149,10 +149,10 @@ main {
   transition: all 200ms;
 }
 
-.successPage {
+.updateForm {
   display: flex;
+  width: 100%;
   flex-direction: column;
-  place-content: center;
+  margin-top: 2rem;
   place-items: center;
-  cursor: pointer;
 }

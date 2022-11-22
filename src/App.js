@@ -8,6 +8,9 @@ import CountryDetails from "./pages/CountryDetails";
 import University from "./pages/University";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import UniversityUpdateForm from "./components/UniversityForm/UniversityUpdateForm";
+import CountryUpdateForm from "./components/CountryForm/CountryUpdateForm";
+import EmployeeUpdateForm from "./components/EmployeeForm/EmployeeUpdateForm";
 
 function App() {
   return (
@@ -36,6 +39,24 @@ function App() {
             </Route>
             <Route path="/cms" exact>
               <Admin />
+            </Route>
+            <Route path="/cms/universities" exact>
+              <Admin />
+            </Route>
+            <Route path="/cms/universities/:uid" exact>
+              <UniversityUpdateForm />
+            </Route>
+            <Route path="/cms/countries" exact>
+              <Admin />
+            </Route>
+            <Route path="/cms/countries/:cid" exact>
+              <CountryUpdateForm />
+            </Route>
+            <Route path="/cms/employees" exact>
+              <Admin />
+            </Route>
+            <Route path="/cms/employees/:eid" exact>
+              <EmployeeUpdateForm />
             </Route>
             <Route path="/contact" exact>
               <Contact />

@@ -1,83 +1,96 @@
-import React from 'react'
+import React, { useState } from "react";
 
-import { useAuthStore } from '../../store/authStore'
-import { useForm } from '../../hooks/form-hook'
-import Button from '../../shared/components/Form-Elements/Button'
-import Input from '../../shared/components/Form-Elements/Input'
+import { useAuthStore } from "../../store/authStore";
+import { useForm } from "../../hooks/form-hook";
+import Button from "../../shared/components/Form-Elements/Button";
+import Input from "../../shared/components/Form-Elements/Input";
 
-import { employees } from '../../dummyData/employees'
+import { employees } from "../../dummyData/employees";
 
-import styles from './Applications.module.css'
-import { VALIDATOR_REQUIRE } from '../../shared/utils/validators'
+import styles from "./Applications.module.css";
+import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
 const Settings = () => {
-  const { formState: consultId, inputHandler: consultInputHandler } = useForm({
+  const [consults, setConsults] = useState();
+  const { formState: consultId, arrayInputHandler } = useForm({
     consultId: {
-      value: '',
-      isValid: false
-    }
-  })
+      value: [],
+      isValid: false,
+    },
+  });
   const { formState, inputHandler } = useForm({
     oldPassword: {
-      value: '',
-      isValid: false
+      value: "",
+      isValid: false,
     },
     password1: {
-      value: '',
-      isValid: false
+      value: "",
+      isValid: false,
     },
     password2: {
-      value: '',
-      isValid: false
-    }
-  })
+      value: "",
+      isValid: false,
+    },
+  });
 
-  const user = useAuthStore(state => state.user)
+  const user = useAuthStore((state) => state.user);
 
   const options = (
     <>
-      {employees.map(emp => (
+      {employees.map((emp) => (
         <option key={emp.id} value={emp.id}>
           {emp.name}
         </option>
       ))}
     </>
-  )
+  );
   const match =
-    formState.inputs.password1.value === formState.inputs.password2.value
-  const consultHandler = e => {
-    e.preventDefault()
-    if (consultId.inputs.consultId.value === 'default') return
-    else console.log(consultId.inputs)
-  }
-  const passChangeHandler = e => {
-    e.preventDefault()
-    console.log(formState.inputs)
-  }
+    formState.inputs.password1.value === formState.inputs.password2.value;
+
+  const addConsultHandler = () => {
+    setConsults(consultId.inputs.consultId.value);
+    console.log(consults);
+  };
+  const consultHandler = (e) => {
+    e.preventDefault();
+    if (consultId.inputs.consultId.value === "default") return;
+    else console.log(consultId.inputs);
+  };
+  const passChangeHandler = (e) => {
+    e.preventDefault();
+    console.log(formState.inputs);
+  };
 
   return (
     // admin or the url userId is equal to the logged in user.
     <div className={styles.layout}>
       <div className={styles.settings}>
-        {user.role === 'admin' && (
+        {user.role === "admin" && (
           <div>
             <h4>Assign Consultant</h4>
+            <ul>
+              {consults?.map((cons) => (
+                <li key={cons}>
+                  {cons} <span>x</span>
+                </li>
+              ))}
+            </ul>
             <form onSubmit={consultHandler}>
               <Input
-                id='consultId'
-                element='select'
-                onInputChange={consultInputHandler}
+                id="consultId"
+                element="select"
+                onInputChange={arrayInputHandler}
                 options={options}
                 validators={[]}
-                defaultText='Assign Consultant'
+                defaultText="Assign Consultant"
                 initialValid
-                initialValue='default'
               />
               <Button
-                disabled={consultId.inputs.consultId.value === 'default'}
-                type='submit'
+                disabled={consultId.inputs.consultId.value.length < 1}
+                type="submit"
               >
                 Save
               </Button>
+              <Button onClick={addConsultHandler}>Add +</Button>
             </form>
           </div>
         )}
@@ -85,32 +98,32 @@ const Settings = () => {
           <h4>Update Password</h4>
           <form onSubmit={passChangeHandler}>
             <Input
-              id='oldPassword'
-              type='password'
-              placeholder='Old Password'
+              id="oldPassword"
+              type="password"
+              placeholder="Old Password"
               onInputChange={inputHandler}
               validators={[VALIDATOR_REQUIRE()]}
               initialValid
             />
             <Input
-              id='password1'
-              type='password'
-              placeholder='New Password'
+              id="password1"
+              type="password"
+              placeholder="New Password"
               onInputChange={inputHandler}
               validators={[VALIDATOR_REQUIRE()]}
-              errorText='Required field'
+              errorText="Required field"
               initialValid
             />
             <Input
-              id='password2'
-              type='password'
-              placeholder='Repeat Password'
+              id="password2"
+              type="password"
+              placeholder="Repeat Password"
               onInputChange={inputHandler}
-              errorText='Required field'
+              errorText="Required field"
               validators={[VALIDATOR_REQUIRE()]}
             />
-            {!match && <p style={{ color: 'red' }}>Password doesnt match</p>}
-            <Button disabled={!formState.isValid || !match} type='submit'>
+            {!match && <p style={{ color: "red" }}>Password doesnt match</p>}
+            <Button disabled={!formState.isValid || !match} type="submit">
               Change
             </Button>
           </form>
@@ -122,7 +135,7 @@ const Settings = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;

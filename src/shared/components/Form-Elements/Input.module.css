@@ -35,8 +35,9 @@
 }
 
 .form-control input,
+.form-control select,
 .form-control textarea,
-.form-control select {
+.form-control option {
   margin-top: 0.5rem;
   width: 100%;
   font: inherit;
@@ -45,14 +46,14 @@
   border-radius: 0.5rem;
   background: var(--off-white);
   padding: 0.4rem 0.8rem;
-  color: var(-p-dark);
+  color: var(--p-dark);
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .form-control input::placeholder,
 .form-control textarea::placeholder {
-  color: var(--dark);
+  color: var(-dark);
   font-size: 1rem;
   font-weight: 400;
 }
@@ -70,13 +71,13 @@
 .form-control--invalid p {
   /* content: '  *'; */
   color: var(--disabled-p);
-  font-weight: bold;
+  font-size: 0.85rem;
+  font-weight: 600;
   margin: 0;
   text-align: left;
 }
 .form-control--invalid p {
   position: relative;
-
   margin: 0;
   padding: 0;
   padding-top: 0.25rem;
@@ -97,16 +98,7 @@
   .form-control input,
   .form-control select,
   .form-control input::placeholder,
-  .form-control--invalid select,
-  .form-control--invalid select ::placeholder,
-  .form-control--invalid p,
   .form-control label {
     font-size: 0.85rem;
   }
-}
-
-input,
-select,
-textarea {
-  color: var(--dark) !important;
 }

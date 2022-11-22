@@ -5,7 +5,7 @@ import Card from "../../shared/components/UI-Elements/Card";
 import SearchBar from "../../shared/components/UI-Elements/SearchBar";
 import { students } from "../../dummyData/students";
 import styles from "./UserList.module.css";
-const Students = () => {
+const StudentsList = () => {
   /* depeding on who is signed in, we gonna fetch different type of students */
   return (
     <div className={styles.listPage}>
@@ -28,4 +28,4 @@ const Students = () => {
   );
 };
 
-export default Students;
+export default StudentsList;

@@ -1,11 +1,11 @@
 import React from "react";
-import Students from "../../components/Cms/Students";
+import StudentsList from "../../components/Cms/StudentsList";
 import styles from "./Applications.module.css";
 const MyStudents = () => {
   return (
     <div className={styles.layout}>
       <div className={styles.stdList}>
-        <Students />
+        <StudentsList />
       </div>
     </div>
   );
