@@ -11,7 +11,7 @@ import styles from "./Applications.module.css";
 import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
 const Settings = () => {
   const [consults, setConsults] = useState();
-  const { formState: consultId, arrayInputHandler } = useForm({
+  const { formState: consultFormState, arrayInputHandler } = useForm({
     consultId: {
       value: [],
       isValid: false,
@@ -47,13 +47,11 @@ const Settings = () => {
     formState.inputs.password1.value === formState.inputs.password2.value;
 
   const addConsultHandler = () => {
-    setConsults(consultId.inputs.consultId.value);
-    console.log(consults);
+    setConsults(consultFormState.inputs.consultId.value);
   };
-  const consultHandler = (e) => {
+  const saveConsultHandler = (e) => {
     e.preventDefault();
-    if (consultId.inputs.consultId.value === "default") return;
-    else console.log(consultId.inputs);
+    console.log(consultFormState.inputs);
   };
   const passChangeHandler = (e) => {
     e.preventDefault();
@@ -74,7 +72,7 @@ const Settings = () => {
                 </li>
               ))}
             </ul>
-            <form onSubmit={consultHandler}>
+            <form onSubmit={saveConsultHandler}>
               <Input
                 id="consultId"
                 element="select"
@@ -82,10 +80,9 @@ const Settings = () => {
                 options={options}
                 validators={[]}
                 defaultText="Assign Consultant"
-                initialValid
               />
               <Button
-                disabled={consultId.inputs.consultId.value.length < 1}
+                disabled={consultFormState.inputs.consultId.value.length < 1}
                 type="submit"
               >
                 Save

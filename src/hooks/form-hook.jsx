@@ -24,6 +24,7 @@ const formReducer = (state, action) => {
       let formValid = true;
       for (let inputId in state.inputs) {
         if (state.inputs[inputId] === undefined) continue;
+
         if (inputId === action.inputId) {
           formValid = formValid && action.isValid;
         } else {
@@ -35,9 +36,13 @@ const formReducer = (state, action) => {
         inputs: {
           ...state.inputs,
           [action.inputId]: {
-            value: state.inputs[action.inputId].value.includes(action.value)
-              ? [...state.inputs[action.inputId].value]
-              : [...state.inputs[action.inputId].value, action.value],
+            value:
+              action.value === "" ||
+              action.value === "default" ||
+              undefined ||
+              state.inputs[action.inputId].value.includes(action.value)
+                ? [...state.inputs[action.inputId].value]
+                : [...state.inputs[action.inputId].value, action.value],
             isValid: action.isValid,
           },
         },

@@ -5,12 +5,12 @@ import Button from "../../shared/components/Form-Elements/Button";
 import Input from "../../shared/components/Form-Elements/Input";
 import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
 import { useForm } from "../../hooks/form-hook";
-
+import { data } from "../../dummyData/countries";
 const CountryUpdateForm = () => {
   const { formState, inputHandler } = useForm({});
   const history = useHistory();
   const cId = useParams().cid;
-
+  const country = data.countries.find((c) => c.id === cId);
   const updateHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs);
@@ -28,6 +28,7 @@ const CountryUpdateForm = () => {
               errorText="This field is required"
               onInputChange={inputHandler}
               validators={[VALIDATOR_REQUIRE()]}
+              initialValue={country.name}
             />
           </div>
           <div>

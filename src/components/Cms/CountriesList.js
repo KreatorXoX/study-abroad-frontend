@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 import Button from "../../shared/components/Form-Elements/Button";
 import Card from "../../shared/components/UI-Elements/Card";
@@ -43,8 +42,10 @@ const CountriesList = () => {
                 image={country.flag}
                 actions={
                   <>
-                    <Button to={`cms/countries/${country.id}`}>Edit</Button>
-                    <Button>Del</Button>
+                    <Button warning to={`cms/countries/${country.id}`}>
+                      Edit
+                    </Button>
+                    <Button danger>Del</Button>
                   </>
                 }
               />

@@ -7,12 +7,12 @@ import {
   VALIDATOR_EMAIL,
 } from "../../shared/utils/validators";
 import { useForm } from "../../hooks/form-hook";
-
+import { employees } from "../../dummyData/employees";
 const EmployeeUpdateForm = ({ setShowForm }) => {
   const history = useHistory();
   const empId = useParams().eid;
-  const { formState, inputHandler } = useForm({});
-
+  const { formState, inputHandler } = useForm({}, true);
+  const empl = employees.find((e) => e.id === empId);
   const addEmpHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs);
@@ -30,7 +30,9 @@ const EmployeeUpdateForm = ({ setShowForm }) => {
               label="Full Name"
               errorText="This field is required"
               onInputChange={inputHandler}
-              validators={[VALIDATOR_REQUIRE()]}
+              validators={[]}
+              initialValue={empl.name}
+              initialValid={true}
             />
           </div>
           <div>
@@ -40,7 +42,7 @@ const EmployeeUpdateForm = ({ setShowForm }) => {
               label="Email"
               errorText="This field is required"
               onInputChange={inputHandler}
-              validators={[VALIDATOR_EMAIL()]}
+              validators={[]}
             />
           </div>
           <div>
@@ -50,7 +52,7 @@ const EmployeeUpdateForm = ({ setShowForm }) => {
               label="Password"
               errorText="This field is required"
               onInputChange={inputHandler}
-              validators={[VALIDATOR_REQUIRE()]}
+              validators={[]}
             />
           </div>
           <div>
