@@ -40,20 +40,11 @@ function App() {
             <Route path="/cms" exact>
               <Admin />
             </Route>
-            <Route path="/cms/universities" exact>
-              <Admin />
-            </Route>
             <Route path="/cms/universities/:uid" exact>
               <UniversityUpdateForm />
             </Route>
-            <Route path="/cms/countries" exact>
-              <Admin />
-            </Route>
             <Route path="/cms/countries/:cid" exact>
               <CountryUpdateForm />
-            </Route>
-            <Route path="/cms/employees" exact>
-              <Admin />
             </Route>
             <Route path="/cms/employees/:eid" exact>
               <EmployeeUpdateForm />

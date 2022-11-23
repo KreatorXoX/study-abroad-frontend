@@ -44,6 +44,7 @@ const UniversitiesList = () => {
                   key={school.id}
                   name={school.name}
                   image={school.logo}
+                  imgStyle={{ borderRadius: "0", objectFit: "contain" }}
                   actions={
                     <>
                       <Button warning to={`cms/universities/${school.id}`}>
