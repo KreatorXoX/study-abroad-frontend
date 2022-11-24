@@ -1,0 +1,25 @@
+.content {
+  width: 100%;
+}
+.tabs {
+  padding: 2rem 0;
+  display: flex;
+  place-items: center;
+  place-content: center;
+  gap: 2rem;
+  border-bottom: 1px solid var(--p-navy);
+}
+.page {
+  width: 100%;
+  margin: 2rem auto;
+}
+.tab {
+  padding: 0.5em 1em;
+  background-color: var(--regular-hover);
+  color: var(--white);
+  border-radius: 2rem;
+  cursor: pointer;
+}
+.tab:is(.active) {
+  background-color: var(--p-navy);
+}

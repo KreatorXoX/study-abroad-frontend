@@ -1,0 +1,196 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,900&display=swap");
+
+.rows {
+  font-family: "Montserrat", sans-serif;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.3fr 1fr;
+  width: 100%;
+  max-width: 90rem;
+  margin: 0rem auto;
+  padding: 0.5rem;
+  gap: 1rem;
+}
+
+.row1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-content: center;
+  place-items: center;
+  gap: 0;
+  background-image: linear-gradient(
+      rgba(190, 218, 255, 0.8),
+      rgba(255, 255, 255, 0.8)
+    ),
+    url("https://www.studyacrossthepond.com/sites/default/files/Kent.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 4rem 2rem;
+  height: 100%;
+}
+.col1 h2 {
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-style: italic;
+  font-weight: 900;
+  color: var(--p-navy);
+}
+.col1 h3 {
+  font-size: clamp(1rem, 3vw, 2rem);
+  font-style: italic;
+  font-weight: 900;
+  color: var(--danger-hover);
+}
+.col1 p {
+  font-size: clamp(0.5rem, 3vw, 1.25rem);
+  color: var(--p-dark);
+  font-weight: bold;
+}
+.col2 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: var(--p-navy);
+}
+.col2 h2 span {
+  font-style: italic;
+  font-weight: 900;
+  color: var(--p-navy);
+}
+
+.col2 {
+  display: none;
+}
+
+.video {
+  width: 80%;
+  max-width: 20rem;
+  height: 10rem;
+}
+
+.row2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+  place-content: center;
+}
+.overlay {
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+  background-color: rgba(0, 0, 0, 0.85);
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.45s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  padding: 1rem;
+  position: relative;
+  text-align: center;
+}
+.overlayTitle {
+  position: absolute;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--white);
+  transition: transform 0.75s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  font-size: 1.25rem;
+}
+.overlayDescription {
+  margin: 0;
+  text-transform: capitalize;
+  font-size: 1rem;
+  font-weight: 400;
+  color: transparent;
+  line-height: 1.3;
+  opacity: 0;
+  transition: color 1s cubic-bezier(0.6, -0.28, 0.735, 0.045),
+    opacity 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.item {
+  width: 20rem;
+  height: 20rem;
+  background-color: var(--p-navy);
+  position: relative;
+}
+.item:nth-last-child(1) {
+  margin-bottom: 1rem;
+}
+.item1 {
+  background-image: url("https://media.www.kent.ac.uk/se/15112/UKM_7K7A2034_DrillHallLibrary_800w.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.item2 {
+  background-image: url("https://media.www.kent.ac.uk/se/14836/ResearchInnovation_800w.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.item3 {
+  background-image: url("https://media.www.kent.ac.uk/se/14837/engagementimpactcivicmission_800w.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.item:hover::after,
+.item:hover::before {
+  transform: scale(1, 1);
+}
+.item::after,
+.item::before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  bottom: 30px;
+  left: 30px;
+  transition: all 1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.item::after {
+  border-right: 1px solid var(--warning-hover);
+  border-left: 1px solid var(--warning-hover);
+  transform: scale(1, 0);
+}
+.item::before {
+  border-top: 1px solid var(--warning-hover);
+  border-bottom: 1px solid var(--warning-hover);
+  transform: scale(0, 1);
+  z-index: 1;
+}
+
+.item:hover .overlay {
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+.item:hover .overlayTitle {
+  transform: translateY(-4.5rem);
+}
+
+.item:hover .overlayDescription {
+  color: var(--white);
+  opacity: 1;
+}
+
+@media (min-width: 968px) {
+  .rows {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.75fr 1fr !important;
+    width: 90% !important;
+  }
+  .row1 {
+    grid-template-columns: 1fr 0.75fr !important;
+    gap: 5rem;
+  }
+
+  .video {
+    height: 14rem !important;
+    max-width: 80% !important;
+  }
+  .col2 {
+    display: block !important;
+  }
+}

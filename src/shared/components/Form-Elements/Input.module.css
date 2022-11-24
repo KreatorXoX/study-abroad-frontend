@@ -3,6 +3,7 @@
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   justify-content: center;
+  width: 100%;
 }
 @media (max-width: 468px) {
   .content {
@@ -15,7 +16,7 @@
 }
 
 .form-control {
-  margin: 1rem 0;
+  margin: 0.75rem 0;
 }
 
 .form-control label,
@@ -26,30 +27,33 @@
 }
 
 .form-control label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: rgb(12, 69, 102);
+  font-weight: 600;
+  color: var(--p-navy);
   display: block;
   text-align: left;
+  font-size: 1rem;
 }
 
 .form-control input,
+.form-control select,
 .form-control textarea,
-.form-control select {
+.form-control option {
+  margin-top: 0.5rem;
   width: 100%;
   font: inherit;
-  border: 1px solid rgba(236, 201, 86, 0.5);
+  border: none;
+  box-shadow: 0 0 2px 0.5px var(--warning);
   border-radius: 0.5rem;
-  background: #f8f8f8;
+  background: var(--off-white);
   padding: 0.4rem 0.8rem;
-  color: #2a2d31;
-  font-size: 1.125rem;
-  font-weight: 500;
+  color: var(--p-dark);
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .form-control input::placeholder,
 .form-control textarea::placeholder {
-  color: #7c8085;
+  color: var(-dark);
   font-size: 1rem;
   font-weight: 400;
 }
@@ -58,22 +62,22 @@
 .form-control textarea:focus,
 .form-control select:focus {
   outline: none;
-  background: #f2f1f1;
+  background: var(--off-white);
   border: none;
-  box-shadow: 0px 0px 4px rgb(26, 139, 147);
+  box-shadow: 0px 0px 4px var(--success);
 }
 
 .form-control--invalid label::after,
 .form-control--invalid p {
-  content: "  *";
-  color: rgb(255, 169, 169);
-  font-weight: bold;
+  /* content: '  *'; */
+  color: var(--disabled-p);
+  font-size: 0.85rem;
+  font-weight: 600;
   margin: 0;
   text-align: left;
 }
 .form-control--invalid p {
   position: relative;
-
   margin: 0;
   padding: 0;
   padding-top: 0.25rem;
@@ -82,27 +86,19 @@
 .form-control--invalid input,
 .form-control--invalid textarea,
 .form-control--invalid select {
-  box-shadow: 0px 0px 5px rgb(255, 52, 52) !important;
+  box-shadow: 0px 0px 5px var(--danger-hover) !important;
   border: none;
 }
 .form-control--disabled input {
-  background-color: #cccc;
-  color: rgb(110, 110, 110);
+  background-color: var(--disabled-bg);
+  color: var(--disabled-p);
 }
 
 @media (max-width: 968px) {
   .form-control input,
   .form-control select,
   .form-control input::placeholder,
-  .form-control--invalid select,
-  .form-control--invalid select ::placeholder,
-  .form-control--invalid p {
-    font-size: 0.75rem;
+  .form-control label {
+    font-size: 0.85rem;
   }
-}
-
-input,
-select,
-textarea {
-  color: #848484 !important;
 }

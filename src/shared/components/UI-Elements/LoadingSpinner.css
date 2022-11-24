@@ -10,8 +10,9 @@
   height: 46px;
   margin: 1px;
   border-radius: 50%;
-  border: 5px solid rgb(255, 200, 0);
-  border-color: rgb(255, 200, 0) transparent rgb(255, 200, 0) transparent;
+  border: 5px solid var(--warning-hover);
+  border-color: var(--warning-hover) transparent var(--warning-hover)
+    transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 .loading-spinner {
@@ -22,7 +23,7 @@
   height: 100%;
 }
 .loading-spinner__overlay {
-  background: rgba(114, 114, 114, 0.9);
+  background: var(--dark);
   display: flex;
   justify-content: center;
   align-items: center;
