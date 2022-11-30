@@ -1,42 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
-import Modal from '../../shared/components/UI-Elements/Modal'
-import { useAuthStore } from '../../store/authStore'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
+import Modal from "../../shared/components/UI-Elements/Modal";
+import { useAuthStore } from "../../store/authStore";
 
-import Button from '../../shared/components/Form-Elements/Button'
-import { tasks } from '../../dummyData/tasks'
+import Button from "../../shared/components/Form-Elements/Button";
+import { tasks } from "../../dummyData/tasks";
 
-import styles from './Applications.module.css'
+import styles from "./Applications.module.css";
 const Tasks = () => {
-  const user = useAuthStore(state => state.user)
-  const [taskData, setTaskData] = useState({})
-  const [openModal, setOpenModal] = useState(false)
-  const [addTask, setAddTask] = useState('')
-  const changeHandler = e => {
-    const value = e.target.checked
-    const id = e.target.name
+  const user = useAuthStore((state) => state.user);
+  const [taskData, setTaskData] = useState({});
+  const [openModal, setOpenModal] = useState(false);
+  const [addTask, setAddTask] = useState("");
+  const changeHandler = (e) => {
+    const value = e.target.checked;
+    const id = e.target.name;
 
-    setTaskData(state => ({
+    setTaskData((state) => ({
       ...state,
-      [id]: value
-    }))
-  }
+      [id]: value,
+    }));
+  };
 
-  const formHandler = e => {
-    e.preventDefault()
-    console.log(taskData)
-  }
-  const deleteTaskHandler = id => {
-    console.log(`task ${id} deleted`)
-  }
-  const addTaskHandler = e => {
-    e.preventDefault()
-    setOpenModal(false)
-    console.log(addTask)
-    setAddTask('')
-  }
+  const formHandler = (e) => {
+    e.preventDefault();
+    console.log(taskData);
+  };
+  const deleteTaskHandler = (id) => {
+    console.log(`task ${id} deleted`);
+  };
+  const addTaskHandler = (e) => {
+    e.preventDefault();
+    setOpenModal(false);
+    console.log(addTask);
+    setAddTask("");
+  };
   return (
     <div className={styles.layout}>
       <form className={styles.taskForm} onSubmit={formHandler}>
@@ -46,7 +46,7 @@ const Tasks = () => {
               ? styles.accepted
               : !task.status.student && !task.status.consultant
               ? styles.declined
-              : styles.pending
+              : styles.pending;
           return (
             <div
               data-idx={idx}
@@ -60,7 +60,7 @@ const Tasks = () => {
                 </>
               )}
               <div className={styles.task}>
-                <div style={{ display: 'flex', placeItems: 'center' }}>
+                <div style={{ display: "flex", placeItems: "center" }}>
                   {task.name}
                 </div>
                 <div className={styles.taskActions}>
@@ -69,7 +69,7 @@ const Tasks = () => {
                       name={`student${task.id}`}
                       id={`student${task.id}`}
                       onChange={changeHandler}
-                      type='checkbox'
+                      type="checkbox"
                       defaultChecked={task.status.student}
                       disabled={task.status.student}
                     />
@@ -79,20 +79,20 @@ const Tasks = () => {
                       name={`consultant${task.id}`}
                       id={`consultant${task.id}`}
                       onChange={changeHandler}
-                      type='checkbox'
+                      type="checkbox"
                       defaultChecked={task.status.consultant}
                       disabled={task.status.consultant}
                     />
                   </div>
                 </div>
               </div>
-              {user && user.role === 'admin' && (
+              {user && user.role === "admin" && (
                 <Button
                   style={{
-                    margin: '0',
-                    marginLeft: '1rem',
-                    backgroundColor: 'var(--white)',
-                    color: 'var(--danger)'
+                    margin: "0",
+                    marginLeft: "1rem",
+                    backgroundColor: "var(--white)",
+                    color: "var(--danger)",
                   }}
                   onClick={deleteTaskHandler.bind(null, task.id)}
                 >
@@ -100,20 +100,20 @@ const Tasks = () => {
                 </Button>
               )}
             </div>
-          )
+          );
         })}
         <div className={styles.formAction}>
-          <Button type='submit' mid>
+          <Button type="submit" mid>
             Save
           </Button>
         </div>
       </form>
       <div
-        style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}
+        style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
       >
         <Button
           onClick={() => {
-            setOpenModal(true)
+            setOpenModal(true);
           }}
           mid
           success
@@ -124,19 +124,19 @@ const Tasks = () => {
           <Modal
             onSubmit={addTaskHandler}
             show={openModal}
-            header={'Add New Task'}
+            header={"Add New Task"}
             headerButton={
               <>
                 <div>
                   <p
-                    style={{ backgroundColor: 'transparent' }}
+                    style={{ backgroundColor: "transparent" }}
                     onClick={() => {
-                      setOpenModal(false)
+                      setOpenModal(false);
                     }}
                   >
                     <FontAwesomeIcon
-                      size='2x'
-                      style={{ color: 'white', cursor: 'pointer' }}
+                      size="2x"
+                      style={{ color: "white", cursor: "pointer" }}
                       icon={faXmarkCircle}
                     />
                   </p>
@@ -144,24 +144,24 @@ const Tasks = () => {
               </>
             }
             footerStyle={{
-              padding: '0',
-              border: 'none',
-              marginBottom: '1rem'
+              padding: "0",
+              border: "none",
+              marginBottom: "1rem",
             }}
             footer={
               <div
                 style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  gap: '2rem'
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "2rem",
                 }}
               >
                 <Button
-                  style={{ margin: '0' }}
+                  style={{ margin: "0" }}
                   mid
                   danger
                   onClick={() => {
-                    setOpenModal(false)
+                    setOpenModal(false);
                   }}
                 >
                   Cancel
@@ -170,8 +170,8 @@ const Tasks = () => {
                   disabled={addTask.length < 3}
                   success
                   mid
-                  style={{ margin: '0' }}
-                  type='submit'
+                  style={{ margin: "0" }}
+                  type="submit"
                 >
                   Save
                 </Button>
@@ -180,19 +180,19 @@ const Tasks = () => {
           >
             <div className={styles.singleInput}>
               <input
-                type='text'
+                type="text"
                 value={addTask}
-                onChange={e => {
-                  setAddTask(e.target.value)
+                onChange={(e) => {
+                  setAddTask(e.target.value);
                 }}
-                placeholder='Task Name'
+                placeholder="Task Name"
               />
             </div>
           </Modal>
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Tasks
+export default Tasks;
