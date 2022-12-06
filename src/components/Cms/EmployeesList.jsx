@@ -1,35 +1,21 @@
 import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { getUsersByRole } from "../../api/usersApi";
+import { useUsersByRole } from "../../api/usersApi";
 import Button from "../../shared/components/Form-Elements/Button";
 import Card from "../../shared/components/UI-Elements/Card";
+import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
 import SearchBar from "../../shared/components/UI-Elements/SearchBar";
-
 import EmployeeForm from "../EmployeeForm/EmployeeForm";
-import { employees } from "../../dummyData/employees";
 
 import styles from "./UserList.module.css";
 const EmployeesList = () => {
   const [showForm, setShowForm] = useState(false);
-  const role = "employee";
-  const {
-    data: emps,
-    isLoading,
-    isError,
-    error,
-  } = useQuery(["employees", role], getUsersByRole, {
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-  });
 
-  if (isError) {
-    return <p>Error</p>;
-  }
+  const { isLoading, data: emps } = useUsersByRole("employee");
 
   if (isLoading) {
-    return <p>...Loading</p>;
+    return <LoadingSpinner asOverlay />;
   }
-  console.log(emps);
+
   return (
     <div className={styles.listPage}>
       {showForm && (
@@ -54,7 +40,7 @@ const EmployeesList = () => {
             </Button>
           </div>
           <div className={styles.list}>
-            {emps.map((emp) => (
+            {emps?.map((emp) => (
               <Card
                 key={emp._id}
                 name={emp.username}
@@ -63,7 +49,7 @@ const EmployeesList = () => {
                 }
                 actions={
                   <>
-                    <Button warning to={`/cms/employees/${emp.id}`}>
+                    <Button warning to={`/cms/employees/${emp._id}`}>
                       Edit
                     </Button>
                     <Button danger>Del</Button>

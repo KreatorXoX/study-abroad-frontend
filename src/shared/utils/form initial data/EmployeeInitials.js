@@ -1,5 +1,5 @@
 export const empInitials = {
-  fullname: {
+  username: {
     value: "",
     isValid: false,
   },

@@ -108,9 +108,7 @@ const Tasks = () => {
           </Button>
         </div>
       </form>
-      <div
-        style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
-      >
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
           onClick={() => {
             setOpenModal(true);

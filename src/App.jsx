@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import Landing from "./pages/Landing";
 import Profile from "./user/pages/Profile";
@@ -15,6 +16,7 @@ import EmployeeUpdateForm from "./components/EmployeeForm/EmployeeUpdateForm";
 function App() {
   return (
     <>
+      <ToastContainer />
       <BrowserRouter>
         <MainNavigation />
         <main>

@@ -2,36 +2,42 @@ import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Button from "../../shared/components/Form-Elements/Button";
 import Input from "../../shared/components/Form-Elements/Input";
+import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
 } from "../../shared/utils/validators";
 import { useForm } from "../../hooks/form-hook";
-import { employees } from "../../dummyData/employees";
+import { useUserById } from "../../api/usersApi";
 const EmployeeUpdateForm = ({ setShowForm }) => {
   const history = useHistory();
   const empId = useParams().eid;
+  const { isLoading, data: empl } = useUserById(empId);
   const { formState, inputHandler } = useForm({}, true);
-  const empl = employees.find((e) => e.id === empId);
+
   const addEmpHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs);
     setShowForm(false);
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
   return (
     <div className="updateForm">
-      <h2>Update {empId}</h2>
+      <h2>Update Profile</h2>
       <form onSubmit={addEmpHandler}>
         <div>
           <div>
             <Input
-              id="fullname"
+              id="username"
               type="text"
-              label="Full Name"
+              label="Username"
               errorText="This field is required"
               onInputChange={inputHandler}
               validators={[]}
-              initialValue={empl.name}
+              initialValue={empl?.username}
               initialValid={true}
             />
           </div>
@@ -83,7 +89,7 @@ const EmployeeUpdateForm = ({ setShowForm }) => {
             Back
           </Button>
           <Button mid success disabled={!formState.isValid} type="submit">
-            Save emp
+            Update
           </Button>
         </div>
       </form>

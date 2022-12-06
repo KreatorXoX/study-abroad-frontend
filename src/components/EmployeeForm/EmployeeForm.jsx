@@ -6,11 +6,13 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
 } from "../../shared/utils/validators";
+import { useAddEmployee } from "../../api/usersApi";
 import { empInitials } from "../../shared/utils/form initial data/EmployeeInitials";
 import { useForm } from "../../hooks/form-hook";
 
 const EmployeeForm = ({ setShowForm }) => {
   const { formState, inputHandler, SetData } = useForm();
+  const { mutate: addEmployee } = useAddEmployee();
 
   useEffect(() => {
     SetData(empInitials, false);
@@ -19,6 +21,8 @@ const EmployeeForm = ({ setShowForm }) => {
   const addEmpHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs);
+    const newUser = { username, email, password };
+    addEmployee(newUser);
     setShowForm(false);
   };
   return (
@@ -26,9 +30,9 @@ const EmployeeForm = ({ setShowForm }) => {
       <div>
         <div>
           <Input
-            id="fullname"
+            id="username"
             type="text"
-            label="Full Name"
+            label="Username"
             errorText="This field is required"
             onInputChange={inputHandler}
             validators={[VALIDATOR_REQUIRE()]}
