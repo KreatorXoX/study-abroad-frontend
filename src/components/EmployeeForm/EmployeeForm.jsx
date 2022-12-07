@@ -20,8 +20,15 @@ const EmployeeForm = ({ setShowForm }) => {
 
   const addEmpHandler = (e) => {
     e.preventDefault();
-    console.log(formState.inputs);
-    const newUser = { username, email, password };
+
+    const newUser = {
+      username: formState.inputs.username.value,
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+      image: formState.inputs.image.value,
+      role: "employee",
+    };
+
     addEmployee(newUser);
     setShowForm(false);
   };

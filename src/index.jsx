@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import {
@@ -11,9 +11,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 
+let err = false;
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => {
+      err = true;
       let errMsg;
       if (error.response.data) {
         errMsg = `${error.response.data.message} ${error.response.status}`;
@@ -31,6 +33,12 @@ const queryClient = new QueryClient({
       });
     },
   }),
+  defaultOptions: {
+    queries: {
+      retry: false,
+      enabled: !err,
+    },
+  },
 });
 
 ReactDOM.createRoot(document.getElementById("root")).render(

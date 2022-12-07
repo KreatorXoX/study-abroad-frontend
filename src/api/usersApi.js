@@ -38,6 +38,7 @@ export const useUsersByRole = (role) => {
   return useQuery({
     queryKey: [`users-${role}`],
     queryFn: () => getUsersByRole(role),
+    initialData: [],
   });
 };
 
@@ -70,8 +71,10 @@ export const useAddEmployee = () => {
       const previousEmployeelist = queryClient.getQueryData(["users-employee"]);
 
       queryClient.setQueryData(["users-employee"], (old) => {
-        console.log(old);
-        return [...old, newUser];
+        if (old) {
+          return [...old, newUser];
+        }
+        return [newUser];
       });
 
       return { previousEmployeelist };

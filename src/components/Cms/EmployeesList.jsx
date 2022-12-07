@@ -10,7 +10,7 @@ import styles from "./UserList.module.css";
 const EmployeesList = () => {
   const [showForm, setShowForm] = useState(false);
 
-  const { isLoading, data: emps } = useUsersByRole("employee");
+  const { isLoading, data: emps, isError, error } = useUsersByRole("employee");
 
   if (isLoading) {
     return <LoadingSpinner asOverlay />;
