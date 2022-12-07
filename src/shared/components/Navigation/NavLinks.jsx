@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
+import Dropdown from "./Dropdown";
 import { useAuthStore } from "../../../store/authStore";
 
 import "./NavLinks.css";
 
 const NavLinks = () => {
+  const [toggleItems, setToggleItems] = useState(false);
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
 
+  const items = (
+    <>
+      <li>
+        <NavLink to="/cms/employees">Employees</NavLink>
+      </li>
+      <li>
+        <NavLink to="/cms/students">Students</NavLink>
+      </li>
+      <li>
+        <NavLink to="/cms/countries">Countries</NavLink>
+      </li>
+      <li>
+        <NavLink to="/cms/universities">Universities</NavLink>
+      </li>
+    </>
+  );
   return (
     <>
       <ul className="nav-links">
@@ -20,13 +38,24 @@ const NavLinks = () => {
           <NavLink to="/countries">Countries</NavLink>
         </li>
         {user && user.role === "admin" && (
-          <li>
-            <NavLink to="/cms">Admin</NavLink>
-          </li>
+          <span
+            onMouseEnter={() => {
+              setToggleItems((prev) => !prev);
+            }}
+            onMouseLeave={() => {
+              setToggleItems((prev) => !prev);
+            }}
+            className="dropdownContent"
+          >
+            Admin CMS
+            <Dropdown show={toggleItems} dropdownItems={items} />
+          </span>
         )}
+
         <li>
           <NavLink to="/contact">Contact Us</NavLink>
         </li>
+
         {user.authenticated && (
           <li>
             <Link to="/" onClick={() => setUser({})}>

@@ -37,8 +37,7 @@ const getUsersByRole = async (role) => {
 export const useUsersByRole = (role) => {
   return useQuery({
     queryKey: [`users-${role}`],
-    queryFn: () => getUsersByRole(role),
-    initialData: [],
+    queryFn: async ({ signal }) => getUsersByRole(role, { signal }),
   });
 };
 

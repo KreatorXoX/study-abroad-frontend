@@ -8,7 +8,10 @@ import Contact from "./pages/Contact";
 import CountryDetails from "./pages/CountryDetails";
 import University from "./pages/University";
 import Auth from "./pages/Auth";
-import Admin from "./pages/Admin";
+import EmployeesList from "./components/Cms/EmployeesList";
+import StudentsList from "./components/Cms/StudentsList";
+import CountriesList from "./components/Cms/CountriesList";
+import UniversitiesList from "./components/Cms/UniversitiesList";
 import UniversityUpdateForm from "./components/UniversityForm/UniversityUpdateForm";
 import CountryUpdateForm from "./components/CountryForm/CountryUpdateForm";
 import EmployeeUpdateForm from "./components/EmployeeForm/EmployeeUpdateForm";
@@ -39,8 +42,17 @@ function App() {
             <Route path="/universities/:cid/:uid" exact>
               <University />
             </Route>
-            <Route path="/cms" exact>
-              <Admin />
+            <Route path="/cms/employees" exact>
+              <EmployeesList />
+            </Route>
+            <Route path="/cms/students" exact>
+              <StudentsList />
+            </Route>
+            <Route path="/cms/countries" exact>
+              <CountriesList />
+            </Route>
+            <Route path="/cms/universities" exact>
+              <UniversitiesList />
             </Route>
             <Route path="/cms/universities/:uid" exact>
               <UniversityUpdateForm />

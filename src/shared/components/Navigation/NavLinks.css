@@ -54,6 +54,26 @@
   }
 }
 
+.dropdownContent {
+  position: relative;
+  font-weight: 600;
+  color: var(--p-navy);
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-top-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  text-decoration: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  margin: 0;
+  font-weight: 600;
+  transition: all 0.15s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+.dropdownContent:hover {
+  background-color: var(--off-white);
+  border-bottom: 3px solid var(--regular);
+}
+
 /*for the dropdown cms content not used anymore*/
 /* 
 .dropdown-items {
