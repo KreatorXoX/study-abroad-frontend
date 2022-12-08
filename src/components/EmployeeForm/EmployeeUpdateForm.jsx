@@ -8,26 +8,36 @@ import {
   VALIDATOR_EMAIL,
 } from "../../shared/utils/validators";
 import { useForm } from "../../hooks/form-hook";
-import { useUserById } from "../../api/usersApi";
-const EmployeeUpdateForm = ({ setShowForm }) => {
+import { useUserById, useUpdateEmployee } from "../../api/usersApi";
+
+const EmployeeUpdateForm = (props) => {
   const history = useHistory();
   const empId = useParams().eid;
   const { isLoading, data: empl } = useUserById(empId);
-  const { formState, inputHandler } = useForm({}, true);
+  const { mutate: updateEmployee } = useUpdateEmployee();
 
-  const addEmpHandler = (e) => {
+  const { formState, inputHandler } = useForm();
+
+  const updateEmpHandler = (e) => {
     e.preventDefault();
-    console.log(formState.inputs);
-    setShowForm(false);
+    const updatedUser = {
+      id: empl._id,
+      username: formState.inputs.username.value,
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+      active: empl.active,
+    };
+    updateEmployee(updatedUser);
+    history.goBack();
   };
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner asOverlay />;
   }
   return (
     <div className="updateForm">
       <h2>Update Profile</h2>
-      <form onSubmit={addEmpHandler}>
+      <form onSubmit={updateEmpHandler}>
         <div>
           <div>
             <Input
@@ -49,6 +59,8 @@ const EmployeeUpdateForm = ({ setShowForm }) => {
               errorText="This field is required"
               onInputChange={inputHandler}
               validators={[]}
+              initialValue={empl?.email}
+              initialValid={true}
             />
           </div>
           <div>
@@ -59,6 +71,7 @@ const EmployeeUpdateForm = ({ setShowForm }) => {
               errorText="This field is required"
               onInputChange={inputHandler}
               validators={[]}
+              initialValid={true}
             />
           </div>
           <div>
@@ -69,6 +82,7 @@ const EmployeeUpdateForm = ({ setShowForm }) => {
               errorText=""
               onInputChange={inputHandler}
               validators={[]}
+              initialValid={true}
             />
           </div>
         </div>

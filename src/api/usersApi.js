@@ -26,7 +26,7 @@ const toastErrorOpt = {
 };
 
 const usersApi = axios.create({
-  baseURL: "http://localhost:5000/api/users",
+  baseURL: "http://localhost:5000/api/user",
 });
 
 // get users by their role
@@ -86,7 +86,83 @@ export const useAddEmployee = () => {
         ["users-employee"],
         context.previousEmployeelist
       );
-      toast.error(`${err.response.data.message}`, toastErrorOpt);
+      let errMsg;
+      if (err.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        errMsg = err.response.data.message;
+      } else if (err.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+
+        errMsg = err.request.message;
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        errMsg = err.message;
+      }
+      toast.error(errMsg, toastErrorOpt);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["users-employee"] });
+    },
+  });
+};
+
+// PATCH USER
+const updateEmployee = async (updatedUser) => {
+  const result = await usersApi.patch("/", {
+    ...updatedUser,
+  });
+  return result.data;
+};
+export const useUpdateEmployee = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (user) => updateEmployee(user),
+    onMutate: async (user) => {
+      await queryClient.cancelQueries({ queryKey: ["users-employee"] });
+      const previousUserslist = queryClient.getQueryData(["users-employee"]);
+      queryClient.setQueryData(["users-employee"], (old) => {
+        if (old) {
+          return [...old, user];
+        } else {
+          return [user];
+        }
+      });
+      return { previousUserslist };
+    },
+    onSuccess: ({ message }) => {
+      toast.success(message, toastSuccessOpt);
+    },
+    onError: (err, user, context) => {
+      queryClient.setQueryData(["users-employee"], context.previousUserslist);
+      toast.error(err.message, toastErrorOpt);
+    },
+    onSettled: ({ id }) => {
+      console.log(id);
+      queryClient.invalidateQueries({
+        queryKey: ["users-employee"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [`userID-${id}`],
+      });
+    },
+  });
+};
+
+// DELETE USER
+const deleteEmployee = async (id) => {
+  console.log(id);
+  const result = await usersApi.delete("/", { data: { id: id } });
+  return result.data;
+};
+export const useRemoveEmployee = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id) => deleteEmployee(id),
+    onError: (err) => {
+      toast.error(err.message, toastErrorOpt);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["users-employee"] });

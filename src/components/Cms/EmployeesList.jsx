@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { useUsersByRole } from "../../api/usersApi";
+import { useUsersByRole, useRemoveEmployee } from "../../api/usersApi";
 import Button from "../../shared/components/Form-Elements/Button";
 import Card from "../../shared/components/UI-Elements/Card";
 import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
 import SearchBar from "../../shared/components/UI-Elements/SearchBar";
 import EmployeeForm from "../EmployeeForm/EmployeeForm";
-
 import styles from "./UserList.module.css";
 const EmployeesList = () => {
   const [showForm, setShowForm] = useState(false);
-
   const { isLoading, data: emps, isError, error } = useUsersByRole("employee");
+  const { mutate: removeEmployee } = useRemoveEmployee();
 
   if (isLoading) {
     return <LoadingSpinner asOverlay />;
@@ -52,7 +51,14 @@ const EmployeesList = () => {
                     <Button warning to={`/cms/employees/${emp._id}`}>
                       Edit
                     </Button>
-                    <Button danger>Del</Button>
+                    <Button
+                      onClick={() => {
+                        removeEmployee(emp._id);
+                      }}
+                      danger
+                    >
+                      Del
+                    </Button>
                   </>
                 }
               />
