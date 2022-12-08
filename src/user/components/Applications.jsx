@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import { useForm } from "../../hooks/form-hook";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,14 +8,28 @@ import Modal from "../../shared/components/UI-Elements/Modal";
 import { applications } from "../../dummyData/applications";
 import Button from "../../shared/components/Form-Elements/Button";
 import Input from "../../shared/components/Form-Elements/Input";
+import { useApplications } from "../../api/applicationsApi";
+import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
 import styles from "./Applications.module.css";
 const Applications = () => {
+  const stdId = useParams().uid;
   const user = useAuthStore((state) => state.user);
   const [openModal, setOpenModal] = useState(false);
   const { formState, inputHandler } = useForm({
     universityName: { value: "", isValid: false },
   });
-  // get the application by student || use user.applications
+
+  const {
+    data: applications,
+    isLoading,
+    isFetching,
+    isError,
+  } = useApplications(stdId);
+
+  if (isLoading || isFetching) {
+    return <LoadingSpinner asOverlay />;
+  }
+  console.log(applications);
   const addApplicationHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs);
@@ -22,7 +37,7 @@ const Applications = () => {
   };
   return (
     <div className={styles.layout}>
-      {applications.map((application) => {
+      {applications?.map((application) => {
         return (
           <div
             key={application.id}
@@ -34,11 +49,11 @@ const Applications = () => {
                 : styles.accepted
             }`}
           >
-            <img src={application.logo} alt="school" />
+            <img src={application.university.logo} alt="school" />
             <div>{application.name}</div>
             <div>{application.status}</div>
             <div className={styles.applicationDate}>
-              {application.date.toDateString()}
+              {application.createdAt}
             </div>
             {user.role === "admin" && (
               <div className={styles.applicationActions}>

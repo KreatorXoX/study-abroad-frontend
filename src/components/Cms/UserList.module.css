@@ -12,7 +12,7 @@
 }
 .list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(5rem, 7rem));
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 10rem));
   gap: 1rem;
   place-content: center;
 }
@@ -29,4 +29,7 @@
 }
 .addEmp button {
   margin: 0 2rem;
+}
+.noUser {
+  width: 100% !important;
 }

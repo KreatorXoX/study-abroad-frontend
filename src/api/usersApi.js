@@ -26,7 +26,7 @@ const toastErrorOpt = {
 };
 
 const usersApi = axios.create({
-  baseURL: "http://localhost:5000/api/user",
+  baseURL: "http://localhost:5000/api/users",
 });
 
 // get users by their role
@@ -38,6 +38,7 @@ export const useUsersByRole = (role) => {
   return useQuery({
     queryKey: [`users-${role}`],
     queryFn: async ({ signal }) => getUsersByRole(role, { signal }),
+    initialData: [],
   });
 };
 
@@ -50,6 +51,7 @@ export const useUserById = (id) => {
   return useQuery({
     queryKey: [`userID-${id}`],
     queryFn: getUserById.bind(null, id),
+    initialData: {},
   });
 };
 
