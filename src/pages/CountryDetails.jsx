@@ -3,8 +3,10 @@ import { useParams, useHistory } from "react-router-dom";
 import { useForm } from "../hooks/form-hook";
 import Input from "../shared/components/Form-Elements/Input";
 import Button from "../shared/components/Form-Elements/Button";
-import { data } from "../dummyData/countries";
+
+import { useCountryById } from "../api/countriesApi";
 import styles from "./CountryDetails.module.css";
+import { VALIDATOR_REQUIRE_SELECT } from "../shared/utils/validators";
 
 const CountryDetails = () => {
   const { formState, inputHandler } = useForm({
@@ -15,20 +17,23 @@ const CountryDetails = () => {
   });
   const history = useHistory();
   const cId = useParams().cid;
-  const country = data.countries.find((country) => country.id === cId);
-  const selectOptions = country.schools.map((school) => (
-    <>
-      <option key={school.id * Math.random() * 1000} value={school.id}>
-        {school.name}
-      </option>
-    </>
-  ));
+
+  const { isLoading, data: country } = useCountryById(cId);
+
   const universityHandler = (e) => {
     e.preventDefault();
-    history.push(
-      `/universities/${country.id}/${formState.inputs.universityId.value}`
-    );
+    history.push(`/universities/${formState.inputs.universityId.value}`);
   };
+  if (isLoading) {
+    return <LoadingSpinner asOverlay />;
+  }
+
+  const selectOptions = country?.universities?.map((university) => (
+    <option key={university._id} value={university._id}>
+      {university.name}
+    </option>
+  ));
+
   return (
     <div className={styles.rows}>
       <div className={styles.row1}>
@@ -49,9 +54,9 @@ const CountryDetails = () => {
                     element="select"
                     options={selectOptions}
                     type="text"
-                    defaultText={"Please pick a school name"}
+                    defaultText={"Please pick a university name"}
                     onInputChange={inputHandler}
-                    validators={[]}
+                    validators={[VALIDATOR_REQUIRE_SELECT()]}
                   />
                 </div>
                 <div className={styles.formAction}>
@@ -74,9 +79,8 @@ const CountryDetails = () => {
               className={styles.video}
               width="80%"
               height="100%"
-              src="https://www.youtube.com/embed/gfUSAEJINRY"
-              title="BRUSSELS City Tour / Belgium"
-              frameBorder="0"
+              src={country.videoUrl}
+              title="Life In Belgium"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
@@ -92,16 +96,18 @@ const CountryDetails = () => {
           Universities You Can Apply in <span> {country.name}</span>
         </h2>
         <div className={styles.universities}>
-          {country.schools.map((school) => (
-            <div key={school.id} className={styles.schoolCard}>
-              <img alt="school" src={school.logo} />
+          {country?.universities?.map((university) => (
+            <div key={university._id + 1} className={styles.uniCard}>
+              <img alt="university" src={university.logo} />
+              <p className={styles.uniLabel}>{university.name}</p>
               <Button
-                to={`/universities/${country.id}/${school.id}`}
+                to={`/universities/${university._id}`}
                 exact={"true"}
                 style={{
-                  width: "100%",
+                  width: "50%",
                   fontSize: "0.9rem",
                   padding: "0.25rem 0",
+                  margin: "0",
                 }}
               >
                 Apply

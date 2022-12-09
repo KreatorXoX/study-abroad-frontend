@@ -4,7 +4,8 @@ import { data } from "../dummyData/countries";
 import Team from "../assets/images/Team.svg";
 import Handshake from "../assets/images/Handshake.svg";
 import Mortarboard from "../assets/images/Mortarboard.svg";
-
+import { useCountries } from "../api/countriesApi";
+import LoadingSpinner from "../shared/components/UI-Elements/LoadingSpinner";
 import styles from "./Countries.module.css";
 
 const Countries = () => {
@@ -13,6 +14,10 @@ const Countries = () => {
     history.push(`/countries/${id}`);
   };
 
+  const { isLoading, data: countries } = useCountries();
+  if (isLoading) {
+    return <LoadingSpinner asOverlay />;
+  }
   return (
     <div className={styles.bgSec}>
       <div className={styles.content}>
@@ -32,14 +37,20 @@ const Countries = () => {
             Bachelors/Masters Degree <br /> Programmes in Europe
           </h2>
           <div className={styles.countriesContent}>
-            {data.countries.map((country) => (
+            {countries?.map((country) => (
               <div
-                key={country.id}
+                key={country._id}
                 className={styles.country}
                 data-label={country.name}
-                onClick={clickHandler.bind(null, country.id)}
+                onClick={clickHandler.bind(null, country._id)}
               >
-                <img src={country.flag} width="60" alt="flag" />
+                <img
+                  src={country.flag}
+                  width="60"
+                  height="60"
+                  style={{ borderRadius: "50%" }}
+                  alt="flag"
+                />
               </div>
             ))}
           </div>

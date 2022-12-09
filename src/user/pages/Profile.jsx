@@ -40,50 +40,52 @@ const Profile = () => {
           </div>
         </div>
         <div className={styles.profileLinks}>
-          {/* if the user is emp, no show applications */}
-
-          <div
-            className={`${styles.link} ${
-              action === "students" ? styles.active : ""
-            }`}
-            onClick={() => setAction("students")}
-          >
-            <div className={styles.linkTag}>
-              <FontAwesomeIcon
-                icon={faUsers}
-                size="xl"
-                className={styles.icon}
-              />
-              <p>Students</p>
-            </div>
-            <span
-              className={styles.arrow}
+          {user.role === "employee" && (
+            <div
+              className={`${styles.link} ${
+                action === "students" ? styles.active : ""
+              }`}
               onClick={() => setAction("students")}
             >
-              <FontAwesomeIcon size="lg" icon={faGreaterThan} />
-            </span>
-          </div>
-          <div
-            className={`${styles.link} ${
-              action === "applications" ? styles.active : ""
-            }`}
-            onClick={() => setAction("applications")}
-          >
-            <div className={styles.linkTag}>
-              <FontAwesomeIcon
-                icon={faCircleQuestion}
-                size="xl"
-                className={styles.icon}
-              />
-              <p>Applications</p>
+              <div className={styles.linkTag}>
+                <FontAwesomeIcon
+                  icon={faUsers}
+                  size="xl"
+                  className={styles.icon}
+                />
+                <p>Students</p>
+              </div>
+              <span
+                className={styles.arrow}
+                onClick={() => setAction("students")}
+              >
+                <FontAwesomeIcon size="lg" icon={faGreaterThan} />
+              </span>
             </div>
-            <span
-              className={styles.arrow}
+          )}
+          {user.role !== "employee" && (
+            <div
+              className={`${styles.link} ${
+                action === "applications" ? styles.active : ""
+              }`}
               onClick={() => setAction("applications")}
             >
-              <FontAwesomeIcon size="lg" icon={faGreaterThan} />
-            </span>
-          </div>
+              <div className={styles.linkTag}>
+                <FontAwesomeIcon
+                  icon={faCircleQuestion}
+                  size="xl"
+                  className={styles.icon}
+                />
+                <p>Applications</p>
+              </div>
+              <span
+                className={styles.arrow}
+                onClick={() => setAction("applications")}
+              >
+                <FontAwesomeIcon size="lg" icon={faGreaterThan} />
+              </span>
+            </div>
+          )}
           <div
             className={`${styles.link} ${
               action === "tasks" ? styles.active : ""

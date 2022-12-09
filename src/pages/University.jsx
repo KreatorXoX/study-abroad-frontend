@@ -1,21 +1,23 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { data } from "../dummyData/countries";
+import { useUniversityById } from "../api/universitiesApi";
+import LoadingSpinner from "../shared/components/UI-Elements/LoadingSpinner";
 import styles from "./University.module.css";
 
 const University = () => {
   const uid = useParams().uid;
-  const cid = useParams().cid;
-  const country = data.countries.find((c) => c.id === cid);
-  const university = country.schools.find((u) => u.id === uid);
+  const { data: university, isLoading } = useUniversityById(uid);
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
   return (
     <div className={styles.rows}>
       <div className={styles.row1}>
         <div className={styles.col1}>
           <div>
-            <h2>{university.name}</h2>
-            <h3>{university.motto}</h3>
+            <h2>{university?.name}</h2>
+            <h3>{university?.motto}</h3>
             <div className={styles.searchUni}>
               <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
@@ -32,44 +34,46 @@ const University = () => {
               className={styles.video}
               width="80%"
               height="100%"
-              src="https://www.youtube.com/embed/gfUSAEJINRY"
+              src={university?.videoUrl}
               title="BRUSSELS City Tour / Belgium"
-              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
           </div>
 
           <h2>
-            Life in <span>{university.name}</span>
+            Life in <span>{university?.name}</span>
           </h2>
         </div>
       </div>
       <div className={styles.row2}>
         <div className={`${styles.item} ${styles.item1}`}>
           <div className={styles.overlay}>
-            <h5 className={styles.overlayTitle}>education</h5>
+            <h5 className={styles.overlayTitle}>
+              {university?.infoBoxes?.box1.header}
+            </h5>
             <h6 className={styles.overlayDescription}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Temporibus recusandae
+              {university?.infoBoxes?.box1.content}
             </h6>
           </div>
         </div>
         <div className={`${styles.item} ${styles.item2}`}>
           <div className={styles.overlay}>
-            <h5 className={styles.overlayTitle}>research</h5>
+            <h5 className={styles.overlayTitle}>
+              {university?.infoBoxes?.box2.header}
+            </h5>
             <h6 className={styles.overlayDescription}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Temporibus recusandae
+              {university?.infoBoxes?.box2.content}
             </h6>
           </div>
         </div>
         <div className={`${styles.item} ${styles.item3}`}>
           <div className={styles.overlay}>
-            <h5 className={styles.overlayTitle}>engage</h5>
+            <h5 className={styles.overlayTitle}>
+              {university?.infoBoxes?.box3.header}
+            </h5>
             <h6 className={styles.overlayDescription}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Temporibus recusandae
+              {university?.infoBoxes?.box3.content}
             </h6>
           </div>
         </div>

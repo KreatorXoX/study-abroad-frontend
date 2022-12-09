@@ -5,7 +5,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
-  height: calc(100vh - 5rem);
+  /* height: calc(100vh - 5rem); */
   width: 100%;
   max-width: 90rem;
   margin: 0rem auto;
@@ -126,17 +126,26 @@
   display: flex;
   justify-content: center;
   place-items: center;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1rem;
 }
-.schoolCard img {
+.uniCard img {
   height: 100%;
   width: 70%;
 }
-.schoolCard {
-  max-width: 10rem;
-  min-width: 7rem;
-  height: 5rem;
+.uniCard {
   box-shadow: 0 0 2px 1px var(--warning-hover);
   border-radius: 1rem;
   text-align: center;
+  position: relative;
+  padding: 0.5rem 0;
+}
+.uniLabel {
+  position: absolute;
+  width: 100%;
+  top: 10px;
+  font-size: larger;
+  font-weight: bolder;
+  color: var(--success-hover);
 }

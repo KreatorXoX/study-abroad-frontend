@@ -1,46 +1,89 @@
 import React, { useState } from "react";
+import dayjs from "dayjs";
 import { useParams } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import { useForm } from "../../hooks/form-hook";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../shared/components/UI-Elements/Modal";
-import { applications } from "../../dummyData/applications";
 import Button from "../../shared/components/Form-Elements/Button";
 import Input from "../../shared/components/Form-Elements/Input";
-import { useApplications } from "../../api/applicationsApi";
+import {
+  useApplications,
+  useAddApplication,
+  useUpdateApplication,
+  useRemoveApplication,
+} from "../../api/applicationsApi";
+import { useUniversities } from "../../api/universitiesApi";
 import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
+import { VALIDATOR_REQUIRE_SELECT } from "../../shared/utils/validators";
 import styles from "./Applications.module.css";
+
+const statusOptions = ["pending", "accepted", "declined"].map((item, idx) => (
+  <option key={idx} value={item}>
+    {item.toUpperCase()}
+  </option>
+));
 const Applications = () => {
   const stdId = useParams().uid;
   const user = useAuthStore((state) => state.user);
-  const [openModal, setOpenModal] = useState(false);
+  const [addAppModal, setAddAppModal] = useState(false);
+  const [editAppModal, setEditAppModal] = useState(false);
+  const [appId, setAppId] = useState(null);
   const { formState, inputHandler } = useForm({
-    universityName: { value: "", isValid: false },
+    universityId: { value: "", isValid: false },
+  });
+  const { formState: statusState, inputHandler: statusHandler } = useForm({
+    status: { value: "", isValid: false },
   });
 
-  const {
-    data: applications,
-    isLoading,
-    isFetching,
-    isError,
-  } = useApplications(stdId);
+  const { data: applications, isLoading, isFetching } = useApplications(stdId);
+  const { data: universities } = useUniversities();
+  const { mutate: addApplication } = useAddApplication();
+  const { mutate: updateApplication } = useUpdateApplication();
+  const { mutate: removeApplication } = useRemoveApplication();
+
+  const options = (
+    <>
+      {universities?.map((uni) => (
+        <option key={uni._id} value={uni._id}>
+          {uni.name}
+        </option>
+      ))}
+    </>
+  );
+
+  const addApplicationHandler = (e) => {
+    e.preventDefault();
+    setAddAppModal(false);
+    const newApplication = {
+      universityId: formState.inputs.universityId.value,
+      stdId: stdId,
+    };
+    addApplication(newApplication);
+  };
+  const editAppHandler = (e) => {
+    e.preventDefault();
+    setEditAppModal(false);
+    const newStatus = {
+      status: statusState.inputs.status.value,
+      appId: appId,
+      stdId: stdId,
+    };
+    updateApplication(newStatus);
+  };
 
   if (isLoading || isFetching) {
     return <LoadingSpinner asOverlay />;
   }
-  console.log(applications);
-  const addApplicationHandler = (e) => {
-    e.preventDefault();
-    console.log(formState.inputs);
-    setOpenModal(false);
-  };
+
   return (
     <div className={styles.layout}>
       {applications?.map((application) => {
+        const date = dayjs(application.createdAt).format("DD.MM.YYYY");
         return (
           <div
-            key={application.id}
+            key={application._id}
             className={`${styles.applicationDetail} ${
               application.status === "pending"
                 ? styles.pending
@@ -49,16 +92,29 @@ const Applications = () => {
                 : styles.accepted
             }`}
           >
-            <img src={application.university.logo} alt="school" />
-            <div>{application.name}</div>
+            <img src={application?.university?.logo || ""} alt="school" />
+            <div className={styles.applicationId}>{application._id}</div>
             <div>{application.status}</div>
-            <div className={styles.applicationDate}>
-              {application.createdAt}
-            </div>
+            <div className={styles.applicationDate}>{date}</div>
             {user.role === "admin" && (
               <div className={styles.applicationActions}>
-                <FontAwesomeIcon icon={faPen} />
-                <FontAwesomeIcon icon={faXmarkCircle} />
+                <FontAwesomeIcon
+                  className={styles.editIcon}
+                  onClick={() => {
+                    setAppId(application._id);
+                    setEditAppModal(true);
+                  }}
+                  icon={faPen}
+                  size="lg"
+                />
+                <FontAwesomeIcon
+                  className={styles.deleteIcon}
+                  icon={faXmarkCircle}
+                  onClick={() => {
+                    removeApplication(application._id);
+                  }}
+                  size="lg"
+                />
               </div>
             )}
           </div>
@@ -68,15 +124,15 @@ const Applications = () => {
         success
         mid
         onClick={() => {
-          setOpenModal(true);
+          setAddAppModal(true);
         }}
       >
         Add Application +
       </Button>
-      {openModal && (
+      {addAppModal && (
         <Modal
           onSubmit={addApplicationHandler}
-          show={openModal}
+          show={addAppModal}
           header={"Add New Application"}
           headerButton={
             <>
@@ -84,11 +140,82 @@ const Applications = () => {
                 <p
                   style={{ backgroundColor: "transparent" }}
                   onClick={() => {
-                    setOpenModal(false);
+                    setAddAppModal(false);
                   }}
                 >
                   <FontAwesomeIcon
-                    size="2x"
+                    size="lg"
+                    className={styles.deleteIcon}
+                    icon={faXmarkCircle}
+                  />
+                </p>
+              </div>
+            </>
+          }
+          footerStyle={{
+            padding: "0",
+            border: "none",
+            marginBottom: "1rem",
+          }}
+          footer={
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "2rem",
+              }}
+            >
+              <Button
+                style={{ margin: "0" }}
+                mid
+                danger
+                onClick={() => {
+                  setAddAppModal(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                disabled={!formState.inputs.universityId.isValid}
+                success
+                mid
+                style={{ margin: "0" }}
+                type="submit"
+              >
+                Save
+              </Button>
+            </div>
+          }
+        >
+          <div className={styles.singleInput}>
+            <Input
+              id="universityId"
+              element="select"
+              onInputChange={inputHandler}
+              options={options}
+              validators={[VALIDATOR_REQUIRE_SELECT()]}
+              defaultText="Pick a University"
+            />
+          </div>
+        </Modal>
+      )}
+      {editAppModal && (
+        <Modal
+          onSubmit={editAppHandler}
+          show={editAppModal}
+          header={"Add New Application"}
+          headerButton={
+            <>
+              <div>
+                <p
+                  style={{ backgroundColor: "transparent" }}
+                  onClick={() => {
+                    setEditAppModal(false);
+                    setAppId(null);
+                  }}
+                >
+                  <FontAwesomeIcon
+                    size="lg"
                     style={{ color: "white", cursor: "pointer" }}
                     icon={faXmarkCircle}
                   />
@@ -114,12 +241,19 @@ const Applications = () => {
                 mid
                 danger
                 onClick={() => {
-                  setOpenModal(false);
+                  setEditAppModal(false);
+                  setAppId(null);
                 }}
               >
                 Cancel
               </Button>
-              <Button success mid style={{ margin: "0" }} type="submit">
+              <Button
+                disabled={!statusState.inputs.status.isValid}
+                success
+                mid
+                style={{ margin: "0" }}
+                type="submit"
+              >
                 Save
               </Button>
             </div>
@@ -127,12 +261,12 @@ const Applications = () => {
         >
           <div className={styles.singleInput}>
             <Input
-              id="universityName"
-              type="text"
-              value={formState.inputs.universityName.value}
-              onInputChange={inputHandler}
-              placeholder="University Name"
-              validators={[]}
+              id="status"
+              element="select"
+              onInputChange={statusHandler}
+              options={statusOptions}
+              validators={[VALIDATOR_REQUIRE_SELECT()]}
+              defaultText="Change the Status"
             />
           </div>
         </Modal>

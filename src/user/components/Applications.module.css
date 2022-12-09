@@ -21,7 +21,7 @@
 }
 
 .applicationDetail img {
-  width: 3rem;
+  width: 4rem;
   height: 3rem;
 }
 .applicationDetail div {
@@ -30,12 +30,13 @@
   place-items: center;
   text-align: center;
 }
-.applicationDate {
+.applicationDate,
+.applicationId {
   display: none !important;
 }
 .applicationActions {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 .pending {
   background-color: var(--warning-hover);
@@ -101,8 +102,9 @@
     width: 100%;
     gap: 2rem;
   }
-  .applicationDate {
-    display: inline-block;
+  .applicationDate,
+  .applicationId {
+    display: inline !important;
   }
 }
 
@@ -150,4 +152,12 @@
 .stdList {
   width: 100%;
   margin: 2rem auto;
+}
+.editIcon:hover {
+  color: var(--regular-hover);
+  cursor: pointer;
+}
+.deleteIcon:hover {
+  color: var(--danger-hover);
+  cursor: pointer;
 }

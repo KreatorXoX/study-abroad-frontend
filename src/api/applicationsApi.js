@@ -123,6 +123,7 @@ export const useUpdateApplication = () => {
   return useMutation({
     mutationFn: (application) => updateApplication(application),
     onMutate: async (application) => {
+      console.log(application);
       await queryClient.cancelQueries({
         queryKey: [`applications-${application.stdId}`],
       });
@@ -149,6 +150,7 @@ export const useUpdateApplication = () => {
       toast.error(err.message, toastErrorOpt);
     },
     onSettled: ({ stdId, id }) => {
+      console.log(stdId, id);
       queryClient.invalidateQueries({
         queryKey: [`applications-${stdId}`],
       });

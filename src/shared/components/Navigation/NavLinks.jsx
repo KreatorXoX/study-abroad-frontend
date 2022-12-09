@@ -31,7 +31,7 @@ const NavLinks = () => {
       <ul className="nav-links">
         {user.authenticated && (
           <li>
-            <NavLink to="/profile/userId">My Profile</NavLink>
+            <NavLink to={`/profile/${user._id}`}>My Profile</NavLink>
           </li>
         )}
         <li>

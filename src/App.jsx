@@ -39,7 +39,7 @@ function App() {
             <Route path="/countries/:cid" exact>
               <CountryDetails />
             </Route>
-            <Route path="/universities/:cid/:uid" exact>
+            <Route path="/universities/:uid" exact>
               <University />
             </Route>
             <Route path="/cms/employees" exact>
