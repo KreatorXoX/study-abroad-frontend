@@ -39,19 +39,20 @@ export const useCountries = () => {
     queryKey: [`all-countries`],
     queryFn: async ({ signal }) => getCountries({ signal }),
     initialData: [],
-    //select:(countries)=>{countries.map(country=>{})}
+    refetchOnWindowFocus: false,
   });
 };
 
-// get university by id
+// get country by id
 const getCountryById = async (id) => {
   const result = await countryApi.get(`/${id}`);
   return result.data;
 };
 export const useCountryById = (id) => {
   return useQuery({
-    queryKey: [`university-${id}`],
+    queryKey: [`country-${id}`],
     queryFn: getCountryById.bind(null, id),
     initialData: {},
+    refetchOnWindowFocus: false,
   });
 };

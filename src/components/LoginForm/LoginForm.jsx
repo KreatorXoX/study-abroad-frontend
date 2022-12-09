@@ -5,6 +5,7 @@ import Button from "../../shared/components/Form-Elements/Button";
 import Input from "../../shared/components/Form-Elements/Input";
 import {
   VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from "../../shared/utils/validators";
 import { LoginInitials } from "../../shared/utils/form initial data/LoginInitials";
@@ -22,6 +23,7 @@ const LoginForm = () => {
       name: formState.inputs.email.value,
       role: "admin",
       authenticated: true,
+      _id: "639188f900d7598eb06881b6",
     });
     history.replace("/");
   };
@@ -45,7 +47,7 @@ const LoginForm = () => {
             label="Password"
             errorText="This field is required"
             onInputChange={inputHandler}
-            validators={[VALIDATOR_REQUIRE()]}
+            validators={[VALIDATOR_MINLENGTH(6)]}
           />
         </div>
       </div>

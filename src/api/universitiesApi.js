@@ -52,5 +52,6 @@ export const useUniversityById = (id) => {
     queryKey: [`university-${id}`],
     queryFn: getUniversityById.bind(null, id),
     initialData: {},
+    refetchOnWindowFocus: false,
   });
 };

@@ -4,13 +4,15 @@ import Button from "../../shared/components/Form-Elements/Button";
 import Input from "../../shared/components/Form-Elements/Input";
 import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
 import { useForm } from "../../hooks/form-hook";
+import ImageUpload from "../../shared/components/Form-Elements/FileUpload";
 
 const CountryForm = ({ setShowForm }) => {
-  const { formState, inputHandler } = useForm({});
+  const { formState, inputHandler } = useForm();
 
   const addCountryHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs);
+    // implement FormData because there is file input
     setShowForm(false);
   };
   return (
@@ -27,13 +29,12 @@ const CountryForm = ({ setShowForm }) => {
           />
         </div>
         <div>
-          <Input
+          <ImageUpload
             id="flag"
             type="file"
-            placeholder="Upload Image"
-            errorText="This field is required"
+            label="Flag Image"
             onInputChange={inputHandler}
-            validators={[]}
+            validators={[VALIDATOR_REQUIRE()]}
           />
         </div>
       </div>

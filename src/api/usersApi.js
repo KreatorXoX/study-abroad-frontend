@@ -52,6 +52,7 @@ export const useUserById = (id) => {
     queryKey: [`userID-${id}`],
     queryFn: getUserById.bind(null, id),
     initialData: {},
+    refetchOnWindowFocus: false,
   });
 };
 

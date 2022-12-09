@@ -39,6 +39,7 @@ export const useApplications = (id) => {
     queryKey: [`applications-${id}`],
     queryFn: async ({ signal }) => getAppByStd(id, { signal }),
     initialData: [],
+    refetchOnWindowFocus: false,
   });
 };
 

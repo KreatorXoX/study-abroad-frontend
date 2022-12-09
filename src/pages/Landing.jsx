@@ -1,9 +1,10 @@
 import React from "react";
 
+import Slider from "../shared/components/UI-Elements/Slider";
 import Button from "../shared/components/Form-Elements/Button";
 import SidePicture from "../assets/images/BG.jpg";
+
 import styles from "./Landing.module.css";
-import Slider from "../shared/components/UI-Elements/Slider";
 const Landing = () => {
   return (
     <div className={styles.wrapper}>
@@ -40,35 +41,3 @@ const Landing = () => {
 };
 
 export default Landing;
-
-//  <form className={styles.form}>
-//    <h3>Giris Yap</h3>
-//    <div className={styles["form-control"]}>
-//      <Input
-//        id="email"
-//        type="email"
-//        //label="Email"
-//        placeholder="Email : ex@example.com"
-//        v
-//        errorText="Enter a valid email"
-//        onInputChange={() => {}}
-//        validators={[VALIDATOR_EMAIL()]}
-//      />
-//    </div>
-//    <div className={styles["form-control"]}>
-//      <Input
-//        id="password"
-//        type="password"
-//        // label="Password"
-//        placeholder="Password"
-//        errorText="Enter a valid password"
-//        onInputChange={() => {}}
-//        validators={[VALIDATOR_REQUIRE()]}
-//      />
-//    </div>
-//    <div className={styles["form-action"]}>
-//      <Button type="submit" mid>
-//        Login
-//      </Button>
-//    </div>
-//  </form>;

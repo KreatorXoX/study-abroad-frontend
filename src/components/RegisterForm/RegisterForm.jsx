@@ -6,6 +6,7 @@ import Input from "../../shared/components/Form-Elements/Input";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
 } from "../../shared/utils/validators";
 import { registerInitials } from "../../shared/utils/form initial data/RegisterInitials";
 import { useForm } from "../../hooks/form-hook";
@@ -55,7 +56,7 @@ const RegisterForm = () => {
             label="Password"
             errorText="This field is required"
             onInputChange={inputHandler}
-            validators={[VALIDATOR_REQUIRE()]}
+            validators={[VALIDATOR_MINLENGTH(6)]}
           />
         </div>
       </div>
