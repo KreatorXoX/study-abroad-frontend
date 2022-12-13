@@ -1,26 +1,40 @@
 import React, { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 
 import { useAuthStore } from "../../store/authStore";
+
+import {
+  useUserById,
+  useUsersByRole,
+  useAssignUsers,
+  useDeAssignUser,
+  useRemoveUser,
+} from "../../api/usersApi";
+
+import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
+
 import { useForm } from "../../hooks/form-hook";
 import Button from "../../shared/components/Form-Elements/Button";
 import Input from "../../shared/components/Form-Elements/Input";
 
-import { useUserById, useUsersByRole } from "../../api/usersApi";
+import { VALIDATOR_MINLENGTH } from "../../shared/utils/validators";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 
 import styles from "./Applications.module.css";
-import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
-import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCross } from "@fortawesome/free-solid-svg-icons";
-import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
-import { useParams } from "react-router-dom";
-const Settings = () => {
-  const user = useAuthStore((state) => state.user);
-  const stdId = useParams().uid;
-  const { data: student, isLoading: isStudentLoading } = useUserById(stdId);
-  const { data: employees, isLoading, isFetched } = useUsersByRole("employee");
 
-  const [consults, setConsults] = useState(student?.assignedConsultants);
+const Settings = () => {
+  const history = useHistory();
+  const user = useAuthStore((state) => state.user);
+  const userId = useParams().uid;
+  const { data: userData, isLoading: isStudentLoading } = useUserById(userId);
+  const { data: employees, isLoading, isFetched } = useUsersByRole("employee");
+  const { mutate: assignUsers } = useAssignUsers();
+  const { mutate: deAssignUsers } = useDeAssignUser();
+  const { mutate: deleteUser } = useRemoveUser();
+
+  const [consults, setConsults] = useState(userData?.assignedConsultants);
 
   const { formState: consultFormState, arrayInputHandler } = useForm({
     consultId: {
@@ -46,7 +60,7 @@ const Settings = () => {
   const options = (
     <>
       {employees?.map((emp) => (
-        <option key={emp._id} value={emp.username + "," + emp._id}>
+        <option key={emp._id} value={emp._id}>
           {emp.username}
         </option>
       ))}
@@ -61,18 +75,28 @@ const Settings = () => {
   };
   const saveConsultHandler = (e) => {
     e.preventDefault();
-    console.log(
-      consultFormState.inputs.consultId.value.map((id) => id.split(",")[1])
-    );
+
+    const consultIds = consultFormState.inputs.consultId.value;
+    const sentData = { stdId: userId, consultIds: consultIds };
+
+    assignUsers(sentData);
   };
   const passChangeHandler = (e) => {
     e.preventDefault();
-    console.log(formState.inputs);
+    if (formState.inputs.password1.value !== formState.inputs.password2.value) {
+      return;
+    }
+    const passChange = {
+      oldPassword: formState.inputs.oldPassword.value,
+      newPassword: formState.inputs.password1.value,
+    };
+
+    console.log(passChange);
   };
 
   let content;
   if (isLoading || isStudentLoading) {
-    content = <LoadingSpinner />;
+    content = <LoadingSpinner asOverlay />;
   }
 
   if (isFetched) {
@@ -80,13 +104,13 @@ const Settings = () => {
       // admin or the url userId is equal to the logged in user.
       <div className={styles.layout}>
         <div className={styles.settings}>
-          {user.role === "admin" && (
+          {user.role === "admin" && userData.role !== "employee" && (
             <div>
               <h4>Assign Consultant</h4>
               <ul>
                 {consults?.map((cons, idx) => (
-                  <li key={cons} style={{ marginBottom: "0.5rem" }}>
-                    {cons.split(",")[0]}
+                  <li key={cons._id || idx} style={{ marginBottom: "0.5rem" }}>
+                    {cons.username || cons}
                     <FontAwesomeIcon
                       style={{
                         marginLeft: "0.5rem",
@@ -96,6 +120,7 @@ const Settings = () => {
                       size="lg"
                       icon={faCircleXmark}
                       onClick={() => {
+                        deAssignUsers({ stdId: userId, consultId: cons._id });
                         setConsults((prev) =>
                           prev.filter((cons, i) => i !== idx)
                         );
@@ -123,6 +148,7 @@ const Settings = () => {
               </form>
             </div>
           )}
+          {/* userid === uid */}
           <div>
             <h4>Update Password</h4>
             <form onSubmit={passChangeHandler}>
@@ -131,7 +157,8 @@ const Settings = () => {
                 type="password"
                 placeholder="Old Password"
                 onInputChange={inputHandler}
-                validators={[VALIDATOR_REQUIRE()]}
+                validators={[VALIDATOR_MINLENGTH(6)]}
+                errorText="Min Length must be 6"
                 initialValid
               />
               <Input
@@ -139,8 +166,8 @@ const Settings = () => {
                 type="password"
                 placeholder="New Password"
                 onInputChange={inputHandler}
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Required field"
+                validators={[VALIDATOR_MINLENGTH(6)]}
+                errorText="Min Length must be 6"
                 initialValid
               />
               <Input
@@ -148,8 +175,8 @@ const Settings = () => {
                 type="password"
                 placeholder="Repeat Password"
                 onInputChange={inputHandler}
-                errorText="Required field"
-                validators={[VALIDATOR_REQUIRE()]}
+                errorText="Min Length must be 6"
+                validators={[VALIDATOR_MINLENGTH(6)]}
               />
               {!match && <p style={{ color: "red" }}>Password doesnt match</p>}
               <Button disabled={!formState.isValid || !match} type="submit">
@@ -160,7 +187,15 @@ const Settings = () => {
 
           <div>
             <h4>Delete Account</h4>
-            <Button danger>Delete</Button>
+            <Button
+              onClick={() => {
+                history.replace(`/cms/${userData.role}s`);
+                deleteUser({ id: userId, role: userData.role });
+              }}
+              danger
+            >
+              Delete
+            </Button>
           </div>
         </div>
       </div>

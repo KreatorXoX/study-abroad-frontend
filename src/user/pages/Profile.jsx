@@ -114,6 +114,7 @@ const Profile = () => {
                 <FontAwesomeIcon size="lg" icon={faGreaterThan} />
               </span>
             </div>
+            {/* {user.id === uId || user.role !== "employee"} user id has to be equal to profileid or you need to be admin */}
             <div
               className={`${styles.link} ${
                 action === "calendar" ? styles.active : ""

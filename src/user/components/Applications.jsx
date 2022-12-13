@@ -94,7 +94,7 @@ const Applications = () => {
           const date = dayjs(application.createdAt).format("DD.MM.YYYY");
           return (
             <div
-              key={application._id}
+              key={application._id + 1}
               className={`${styles.applicationDetail} ${
                 application.status === "pending"
                   ? styles.pending

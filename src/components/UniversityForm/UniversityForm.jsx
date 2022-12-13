@@ -66,7 +66,6 @@ const UniversityForm = ({ setShowForm }) => {
               onInputChange={inputHandler}
               validators={[VALIDATOR_REQUIRE()]}
             />
-            {/* <ImageUpload label={"University Logo"} /> */}
           </div>
           <div>
             <Input

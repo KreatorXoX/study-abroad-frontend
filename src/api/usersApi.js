@@ -155,20 +155,60 @@ export const useUpdateEmployee = () => {
 };
 
 // DELETE USER
-const deleteEmployee = async (id) => {
-  console.log(id);
-  const result = await usersApi.delete("/", { data: { id: id } });
+const deleteUser = async (id, role) => {
+  const result = await usersApi.delete("/", { data: { id: id, role: role } });
   return result.data;
 };
-export const useRemoveEmployee = () => {
+export const useRemoveUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id) => deleteEmployee(id),
+    mutationFn: ({ id, role }) => deleteUser(id, role),
     onError: (err) => {
       toast.error(err.message, toastErrorOpt);
     },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["users-employee"] });
+    onSettled: ({ id, role }) => {
+      queryClient.invalidateQueries({
+        queryKey: [`users-${role}`],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [`userID-${id}`],
+      });
+    },
+  });
+};
+// Assign USERs
+const assignUsers = async (stdId, consultIds) => {
+  const result = await usersApi.patch("/assign", { stdId, consultIds });
+  return result.data;
+};
+export const useAssignUsers = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ stdId, consultIds }) => {
+      return assignUsers(stdId, consultIds);
+    },
+    onError: (err) => {
+      toast.error(err.message, toastErrorOpt);
+    },
+    onSettled: ({ stdId }) => {
+      queryClient.invalidateQueries({ queryKey: [`userID-${stdId}`] });
+    },
+  });
+};
+// Deassign USERs
+const deAssignUsers = async (stdId, consultId) => {
+  const result = await usersApi.patch("/deassign", { stdId, consultId });
+  return result.data;
+};
+export const useDeAssignUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ stdId, consultId }) => deAssignUsers(stdId, consultId),
+    onError: (err) => {
+      toast.error(err.message, toastErrorOpt);
+    },
+    onSettled: ({ stdId }) => {
+      queryClient.invalidateQueries({ queryKey: [`userID-${stdId}`] });
     },
   });
 };
