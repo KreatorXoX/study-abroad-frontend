@@ -81,10 +81,6 @@ const Tasks = () => {
     }
   };
 
-  const deleteTaskHandler = (id) => {
-    deleteTask(id);
-  };
-
   const addTaskHandler = (e) => {
     e.preventDefault();
     const newTask = {
@@ -111,67 +107,71 @@ const Tasks = () => {
     content = (
       <div className={styles.layout}>
         <form className={styles.taskForm} onSubmit={formHandler}>
-          {tasks?.map((task, idx) => {
-            const classes =
-              task.completed.byStudent && task.completed.byEmployee
-                ? styles.accepted
-                : !task.completed.byStudent && !task.completed.byEmployee
-                ? styles.declined
-                : styles.pending;
-            return (
-              <div
-                data-idx={idx}
-                key={task._id}
-                className={`${styles.taskDetail} ${classes}`}
-              >
-                {idx === 0 && (
-                  <>
-                    <div className={styles.taskLabel2}></div>
-                    <div className={styles.taskLabel1}></div>
-                  </>
-                )}
-                <div className={styles.task}>
-                  <div style={{ display: "flex", placeItems: "center" }}>
-                    {task.title}
-                  </div>
-                  <div className={styles.taskActions}>
-                    <div className={styles.formControl}>
-                      <input value={task._id} hidden readOnly />
-                      <input
-                        id={`stdCheck-${task._id}`}
-                        onChange={changeHandler}
-                        type="checkbox"
-                        defaultChecked={task.completed.byStudent}
-                        disabled={task.completed.byStudent} // or userId === loggedIn userId
-                      />
+          {tasks?.length > 0 ? (
+            tasks?.map((task, idx) => {
+              const classes =
+                task.completed.byStudent && task.completed.byEmployee
+                  ? styles.accepted
+                  : !task.completed.byStudent && !task.completed.byEmployee
+                  ? styles.declined
+                  : styles.pending;
+              return (
+                <div
+                  data-idx={idx}
+                  key={task._id}
+                  className={`${styles.taskDetail} ${classes}`}
+                >
+                  {idx === 0 && (
+                    <>
+                      <div className={styles.taskLabel2}></div>
+                      <div className={styles.taskLabel1}></div>
+                    </>
+                  )}
+                  <div className={styles.task}>
+                    <div style={{ display: "flex", placeItems: "center" }}>
+                      {task.title}
                     </div>
-                    <div className={styles.formControl}>
-                      <input
-                        id={`empCheck-${task._id}`}
-                        onChange={changeHandler}
-                        type="checkbox"
-                        defaultChecked={task.completed.byEmployee}
-                        disabled={task.completed.byEmployee}
-                      />
+                    <div className={styles.taskActions}>
+                      <div className={styles.formControl}>
+                        <input value={task._id} hidden readOnly />
+                        <input
+                          id={`stdCheck-${task._id}`}
+                          onChange={changeHandler}
+                          type="checkbox"
+                          defaultChecked={task.completed.byStudent}
+                          disabled={task.completed.byStudent} // or userId === loggedIn userId
+                        />
+                      </div>
+                      <div className={styles.formControl}>
+                        <input
+                          id={`empCheck-${task._id}`}
+                          onChange={changeHandler}
+                          type="checkbox"
+                          defaultChecked={task.completed.byEmployee}
+                          disabled={task.completed.byEmployee}
+                        />
+                      </div>
                     </div>
                   </div>
+                  {user && user.role === "admin" && (
+                    <Button
+                      style={{
+                        margin: "0",
+                        marginLeft: "1rem",
+                        backgroundColor: "var(--white)",
+                        color: "var(--danger)",
+                      }}
+                      onClick={deleteTask.bind(null, task._id)}
+                    >
+                      Delete
+                    </Button>
+                  )}
                 </div>
-                {user && user.role === "admin" && (
-                  <Button
-                    style={{
-                      margin: "0",
-                      marginLeft: "1rem",
-                      backgroundColor: "var(--white)",
-                      color: "var(--danger)",
-                    }}
-                    onClick={deleteTaskHandler.bind(null, task._id)}
-                  >
-                    Delete
-                  </Button>
-                )}
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <h2 style={{ textAlign: "center" }}>No tasks Found</h2>
+          )}
           <div className={styles.formAction}>
             <Button type="submit" mid>
               Save

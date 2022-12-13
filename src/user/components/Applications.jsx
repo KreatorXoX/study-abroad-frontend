@@ -90,47 +90,51 @@ const Applications = () => {
   if (isUnisFetched || isAppsFetched) {
     content = (
       <div className={styles.layout}>
-        {applications?.map((application) => {
-          const date = dayjs(application.createdAt).format("DD.MM.YYYY");
-          return (
-            <div
-              key={application._id + 1}
-              className={`${styles.applicationDetail} ${
-                application.status === "pending"
-                  ? styles.pending
-                  : application.status === "declined"
-                  ? styles.declined
-                  : styles.accepted
-              }`}
-            >
-              <img src={application?.university?.logo || ""} alt="school" />
-              <div className={styles.applicationId}>{application._id}</div>
-              <div>{application.status}</div>
-              <div className={styles.applicationDate}>{date}</div>
-              {user.role === "admin" && (
-                <div className={styles.applicationActions}>
-                  <FontAwesomeIcon
-                    className={styles.editIcon}
-                    onClick={() => {
-                      setAppId(application._id);
-                      setEditAppModal(true);
-                    }}
-                    icon={faPen}
-                    size="lg"
-                  />
-                  <FontAwesomeIcon
-                    className={styles.deleteIcon}
-                    icon={faXmarkCircle}
-                    onClick={() => {
-                      removeApplication(application._id);
-                    }}
-                    size="lg"
-                  />
-                </div>
-              )}
-            </div>
-          );
-        })}
+        {applications?.length > 0 ? (
+          applications?.map((application) => {
+            const date = dayjs(application.createdAt).format("DD.MM.YYYY");
+            return (
+              <div
+                key={application._id + 1}
+                className={`${styles.applicationDetail} ${
+                  application.status === "pending"
+                    ? styles.pending
+                    : application.status === "declined"
+                    ? styles.declined
+                    : styles.accepted
+                }`}
+              >
+                <img src={application?.university?.logo || ""} alt="school" />
+                <div className={styles.applicationId}>{application._id}</div>
+                <div>{application.status}</div>
+                <div className={styles.applicationDate}>{date}</div>
+                {user.role === "admin" && (
+                  <div className={styles.applicationActions}>
+                    <FontAwesomeIcon
+                      className={styles.editIcon}
+                      onClick={() => {
+                        setAppId(application._id);
+                        setEditAppModal(true);
+                      }}
+                      icon={faPen}
+                      size="lg"
+                    />
+                    <FontAwesomeIcon
+                      className={styles.deleteIcon}
+                      icon={faXmarkCircle}
+                      onClick={() => {
+                        removeApplication(application._id);
+                      }}
+                      size="lg"
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })
+        ) : (
+          <h2 style={{ textAlign: "center" }}>No Applications Found</h2>
+        )}
         <Button
           success
           mid

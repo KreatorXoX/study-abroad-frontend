@@ -191,7 +191,7 @@ export const useAssignUsers = () => {
       toast.error(err.message, toastErrorOpt);
     },
     onSettled: ({ stdId }) => {
-      queryClient.invalidateQueries({ queryKey: [`userID-${stdId}`] });
+      queryClient.resetQueries({ queryKey: [`userID-${stdId}`] });
     },
   });
 };

@@ -59,7 +59,7 @@ const Settings = () => {
 
   const options = (
     <>
-      {employees?.map((emp) => (
+      {employees.map((emp) => (
         <option key={emp._id} value={emp._id}>
           {emp.username}
         </option>

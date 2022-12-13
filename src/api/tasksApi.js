@@ -39,8 +39,8 @@ export const useTasksByUser = (id) => {
     queryKey: ["tasks", id],
     queryFn: async ({ signal }) => getTasksByUser(id, { signal }),
     initialData: [],
-    enabled: !!id,
     refetchOnWindowFocus: false,
+    retry: false,
   });
 };
 
@@ -129,7 +129,9 @@ export const useRemoveTask = () => {
       toast.error(err.message, toastErrorOpt);
     },
     onSettled: () => {
-      queryClient.resetQueries({ queryKey: ["tasks"] });
+      queryClient.resetQueries({
+        queryKey: ["tasks"],
+      });
     },
   });
 };
