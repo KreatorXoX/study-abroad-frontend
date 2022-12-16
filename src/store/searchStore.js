@@ -1,7 +1,7 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 
-export const useDevStore = create(
+export const useSearchStore = create(
   devtools((set, get) => ({
     search: "",
     setSearch: (search) => {

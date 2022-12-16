@@ -13,12 +13,12 @@ import { useForm } from "../../hooks/form-hook";
 import ImageUpload from "../../shared/components/Form-Elements/FileUpload";
 
 const EmployeeForm = ({ setShowForm }) => {
-  const { formState, inputHandler, SetData } = useForm();
+  const { formState, inputHandler, SetData } = useForm(empInitials);
   const { mutate: addEmployee } = useAddEmployee();
 
-  useEffect(() => {
-    SetData(empInitials, false);
-  }, [SetData]);
+  // useEffect(() => {
+  //   SetData(empInitials, false);
+  // }, [SetData]);
 
   const addEmpHandler = (e) => {
     e.preventDefault();
@@ -74,7 +74,7 @@ const EmployeeForm = ({ setShowForm }) => {
               type="file"
               label="Profile Image"
               onInputChange={inputHandler}
-              validators={[VALIDATOR_REQUIRE()]}
+              validators={[]}
             />
           </div>
         </div>

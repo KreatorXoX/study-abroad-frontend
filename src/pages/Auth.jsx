@@ -17,7 +17,7 @@ const Auth = () => {
           <Button
             style={{ borderRadius: "2rem" }}
             mid
-            danger
+            warning
             onClick={() => setIsLogin(!isLogin)}
           >
             <p className={styles.white}>{isLogin ? "Register" : "Login"}</p>
@@ -27,6 +27,7 @@ const Auth = () => {
               backgroundColor: "transparent",
               borderBottom: "1px solid var(--danger)",
               color: "var(--p-dark)",
+              display: "block",
             }}
             to="/"
             warning

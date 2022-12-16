@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useAuthStore } from "../../store/authStore";
 import Button from "../../shared/components/Form-Elements/Button";
 import Input from "../../shared/components/Form-Elements/Input";
 import {
@@ -10,22 +9,30 @@ import {
 } from "../../shared/utils/validators";
 import { LoginInitials } from "../../shared/utils/form initial data/LoginInitials";
 import { useForm } from "../../hooks/form-hook";
+import { useLogin } from "../../api/authApi";
 
 const LoginForm = () => {
-  const setUser = useAuthStore((state) => state.setUser);
+  const { mutateAsync: logUser } = useLogin();
+
   const history = useHistory();
 
   const { formState, inputHandler } = useForm(LoginInitials);
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
-    console.log(formState.inputs);
-    setUser({
-      name: formState.inputs.email.value,
-      role: "admin",
-      authenticated: true,
-      _id: "639188f900d7598eb06881b6",
-    });
-    history.replace("/");
+
+    const credentials = {
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+    };
+
+    let err;
+    try {
+      await logUser(credentials);
+    } catch (error) {
+      err = error.message;
+    } finally {
+      if (!err) history.push("/");
+    }
   };
   return (
     <form onSubmit={loginHandler}>
@@ -58,7 +65,7 @@ const LoginForm = () => {
           gap: "1rem",
         }}
       >
-        <Button large warning disabled={!formState.isValid} type="submit">
+        <Button large success disabled={!formState.isValid} type="submit">
           Login
         </Button>
       </div>

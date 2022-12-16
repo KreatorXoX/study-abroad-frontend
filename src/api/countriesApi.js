@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useAuthStore } from "../store/authStore";
 
 const toastSuccessOpt = {
   position: "top-center",
@@ -27,6 +28,10 @@ const toastErrorOpt = {
 
 const countryApi = axios.create({
   baseURL: "http://localhost:5000/api/countries",
+  withCredentials: true,
+  headers: {
+    Authorization: `Bearer ${useAuthStore.getState().user.token}`,
+  },
 });
 
 // get all countries

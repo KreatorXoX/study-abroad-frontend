@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Applications from "../components/Applications";
 
 import Tasks from "../components/Tasks";
@@ -28,21 +28,43 @@ import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
 const Profile = () => {
   const [action, setAction] = useState("");
   const uId = useParams().uid;
-  const { data: user, isLoading, isFetching, isFetched } = useUserById(uId);
+  const {
+    data: user,
+    isLoading,
+    isFetching,
+    isFetched,
+    isSuccess,
+    error,
+  } = useUserById(uId);
 
   let content;
 
+  if (error) {
+    if (error.response.status === 401 || error.response.status === 403)
+      content = (
+        <div className="authError">
+          <p>{"Authentication Errror !"}</p>
+          <Link to={"/auth"}>Login</Link>
+        </div>
+      );
+  }
   if (isLoading || isFetching) {
     content = <LoadingSpinner asOverlay />;
   }
 
-  if (isFetched) {
+  if (isFetched && isSuccess) {
     content = (
       <div className={styles.content}>
         <div className={styles.profile}>
           <div className={styles.profileDetails}>
             <div className={styles.profileAvatar}>
-              <FontAwesomeIcon style={{ height: "100%" }} icon={faUserCircle} />
+              <img
+                width={75}
+                src={
+                  user.image ||
+                  "https://cdn-icons-png.flaticon.com/512/758/758802.png?w=826&t=st=1671183488~exp=1671184088~hmac=dc55f6fbbe79eba0ea6862ce712dac55fc43f47e918cd22f638b23933cf2db53"
+                }
+              />
             </div>
             <div className={styles.profileInfo}>
               <h2>{user.username}</h2>

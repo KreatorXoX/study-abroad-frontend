@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { axiosApi as universityApi } from "./axios";
 import { toast } from "react-toastify";
+import { useAuthStore } from "../store/authStore";
 
 const toastSuccessOpt = {
   position: "top-center",
@@ -25,13 +26,9 @@ const toastErrorOpt = {
   style: { backgroundColor: "#4d0000" },
 };
 
-const universityApi = axios.create({
-  baseURL: "http://localhost:5000/api/universities",
-});
-
 // get all universities
 const getUniversities = async () => {
-  const result = await universityApi.get(`/`);
+  const result = await universityApi.get(`/universities`);
   return result.data;
 };
 export const useUniversities = () => {
@@ -44,7 +41,7 @@ export const useUniversities = () => {
 
 // get university by id
 const getUniversityById = async (id) => {
-  const result = await universityApi.get(`/${id}`);
+  const result = await universityApi.get(`/universities/${id}`);
   return result.data;
 };
 export const useUniversityById = (id) => {

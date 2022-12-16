@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useUsersByRole, useRemoveUser } from "../../api/usersApi";
+import { useSearchStore } from "../../store/searchStore";
 import Button from "../../shared/components/Form-Elements/Button";
 import Card from "../../shared/components/UI-Elements/Card";
 import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
@@ -8,22 +9,33 @@ import SearchBar from "../../shared/components/UI-Elements/SearchBar";
 import EmployeeForm from "../EmployeeForm/EmployeeForm";
 import styles from "./UserList.module.css";
 const EmployeesList = () => {
-  const history = useHistory();
+  const search = useSearchStore((state) => state.search);
+
   const [showForm, setShowForm] = useState(false);
   const {
     data: emps,
     isLoading,
     isFetching,
     isFetched,
+    isSuccess,
+    error,
   } = useUsersByRole("employee");
   const { mutate: removeEmployee, isLoading: isMutating } = useRemoveUser();
 
   let content;
-
+  if (error) {
+    if (error.response.status === 401 || error.response.status === 403)
+      content = (
+        <div className="authError">
+          <p>{"Authentication Errror !"}</p>
+          <Link to={"/auth"}>Login</Link>
+        </div>
+      );
+  }
   if (isLoading || isFetching || isMutating) {
     content = <LoadingSpinner asOverlay />;
   }
-  if (isFetched) {
+  if (isFetched && isSuccess) {
     content = (
       <div className={styles.listPage}>
         {showForm && (
@@ -51,39 +63,51 @@ const EmployeesList = () => {
             </div>
 
             <div className={styles.list}>
-              {emps?.length > 0 ? (
-                emps.map((emp) => (
-                  <Link to={`/profile/${emp._id}`} key={emp._id + 1}>
-                    <Card
-                      name={emp.username}
-                      image={
-                        "https://img.freepik.com/free-photo/studio-portrait-bearded-man-posing-beige-background-looking-into-camera-with-broad-smile-his-face_295783-16582.jpg?w=1380&t=st=1668962600~exp=1668963200~hmac=1d23c2110f4ae876f45c91e50b56163a351f03060a154d846db3639ed676e04c"
-                      }
-                      actions={
-                        <>
+              {emps
+                .filter((e) =>
+                  e.username.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((emp) => (
+                  <Card
+                    name={emp.username}
+                    key={emp._id + 1}
+                    image={
+                      emp.image ||
+                      "https://cdn-icons-png.flaticon.com/512/758/758802.png?w=826&t=st=1671183488~exp=1671184088~hmac=dc55f6fbbe79eba0ea6862ce712dac55fc43f47e918cd22f638b23933cf2db53"
+                    }
+                    actions={
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Button
+                          onClick={() => {
+                            removeEmployee({ id: emp._id, role: emp.role });
+                          }}
+                          danger
+                        >
+                          Del
+                        </Button>
+                        <div style={{ display: "flex", gap: "0.5rem" }}>
                           <Button
-                            onClick={() => {
-                              history.push(`/cms/employees/${emp._id}`);
-                            }}
+                            style={{ backgroundColor: "var(--white)" }}
+                            to={`/profile/${emp._id}`}
+                          >
+                            Profile
+                          </Button>
+                          <Button
+                            style={{ backgroundColor: "var(--white)" }}
+                            to={`/cms/employees/${emp._id}`}
                           >
                             Edit
                           </Button>
-                          <Button
-                            onClick={() => {
-                              removeEmployee({ id: emp._id, role: emp.role });
-                            }}
-                            danger
-                          >
-                            Del
-                          </Button>
-                        </>
-                      }
-                    />
-                  </Link>
-                ))
-              ) : (
-                <div className={styles.noUser}>No employee present</div>
-              )}
+                        </div>
+                      </div>
+                    }
+                  />
+                ))}
             </div>
           </>
         )}

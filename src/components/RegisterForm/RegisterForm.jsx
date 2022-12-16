@@ -31,9 +31,9 @@ const RegisterForm = () => {
       <div>
         <div>
           <Input
-            id="fullname"
+            id="username"
             type="text"
-            label="Full Name"
+            label="Username"
             errorText="This field is required"
             onInputChange={inputHandler}
             validators={[VALIDATOR_REQUIRE()]}

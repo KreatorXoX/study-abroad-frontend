@@ -160,3 +160,15 @@ main {
 .updateForm h2 {
   color: var(--success);
 }
+.authError {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  padding: 1rem 1rem;
+  background-color: var(--danger);
+  color: var(--off-white);
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

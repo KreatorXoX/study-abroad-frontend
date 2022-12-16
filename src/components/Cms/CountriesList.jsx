@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useCountries } from "../../api/countriesApi";
+import { useSearchStore } from "../../store/searchStore";
 import CountryForm from "../CountryForm/CountryForm";
 import Button from "../../shared/components/Form-Elements/Button";
 import Card from "../../shared/components/UI-Elements/Card";
@@ -8,6 +9,7 @@ import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
 
 import styles from "./UserList.module.css";
 const CountriesList = () => {
+  const search = useSearchStore((state) => state.search);
   const [showForm, setShowForm] = useState(false);
   const { data: countries, isLoading, isFetching, isFetched } = useCountries();
 
@@ -43,21 +45,25 @@ const CountriesList = () => {
               </Button>
             </div>
             <div className={styles.list}>
-              {countries?.map((country) => (
-                <Card
-                  key={country._id}
-                  name={country.name}
-                  image={country.flag}
-                  actions={
-                    <>
-                      <Button warning to={`/cms/countries/${country._id}`}>
-                        Edit
-                      </Button>
-                      <Button danger>Del</Button>
-                    </>
-                  }
-                />
-              ))}
+              {countries
+                ?.filter((c) =>
+                  c.name.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((country) => (
+                  <Card
+                    key={country._id}
+                    name={country.name}
+                    image={country.flag}
+                    actions={
+                      <>
+                        <Button warning to={`/cms/countries/${country._id}`}>
+                          Edit
+                        </Button>
+                        <Button danger>Del</Button>
+                      </>
+                    }
+                  />
+                ))}
             </div>
           </>
         )}

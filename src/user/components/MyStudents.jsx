@@ -6,28 +6,35 @@ import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
 import styles from "./Applications.module.css";
 const MyStudents = () => {
   const empId = useParams().uid;
-  const { data: employee, isLoading } = useUserById(empId);
+  const {
+    data: employee,
+    isLoading,
+    isFetching,
+    isFetched,
+    isSuccess,
+  } = useUserById(empId);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <LoadingSpinner asOverlay />;
   }
-  return (
-    <div className={styles.layout}>
-      <div className={styles.stdList}>
-        {employee?.assignedStudents?.map((std) => (
-          <Link to={`/profile/${std._id}`} key={std._id}>
-            <Card
-              name={std.username}
-              image={
-                std.image ||
-                "https://img.freepik.com/free-photo/studio-portrait-bearded-man-posing-beige-background-looking-into-camera-with-broad-smile-his-face_295783-16582.jpg?w=1380&t=st=1668962600~exp=1668963200~hmac=1d23c2110f4ae876f45c91e50b56163a351f03060a154d846db3639ed676e04c"
-              }
-            />
-          </Link>
-        ))}
+  if (isFetched && isSuccess)
+    return (
+      <div className={styles.layout}>
+        <div className={styles.stdList}>
+          {employee?.assignedStudents?.map((std) => (
+            <Link to={`/profile/${std._id}`} key={std._id}>
+              <Card
+                name={std.username}
+                image={
+                  std.image ||
+                  "https://img.freepik.com/free-photo/studio-portrait-bearded-man-posing-beige-background-looking-into-camera-with-broad-smile-his-face_295783-16582.jpg?w=1380&t=st=1668962600~exp=1668963200~hmac=1d23c2110f4ae876f45c91e50b56163a351f03060a154d846db3639ed676e04c"
+                }
+              />
+            </Link>
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
 };
 
 export default MyStudents;

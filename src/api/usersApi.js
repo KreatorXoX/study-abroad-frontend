@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { axiosApi as usersApi } from "./axios";
 import { toast } from "react-toastify";
 
 const toastSuccessOpt = {
@@ -25,13 +25,9 @@ const toastErrorOpt = {
   style: { backgroundColor: "#4d0000" },
 };
 
-const usersApi = axios.create({
-  baseURL: "http://localhost:5000/api/users",
-});
-
 // get users by their role
 const getUsersByRole = async (role) => {
-  const result = await usersApi.get(`/role/${role}`);
+  const result = await usersApi.get(`/users/role/${role}`);
   return result.data;
 };
 export const useUsersByRole = (role) => {
@@ -39,12 +35,13 @@ export const useUsersByRole = (role) => {
     queryKey: [`users-${role}`],
     queryFn: async ({ signal }) => getUsersByRole(role, { signal }),
     initialData: [],
+    retry: 1,
   });
 };
 
 // get user by id
 const getUserById = async (id) => {
-  const result = await usersApi.get(`/${id}`);
+  const result = await usersApi.get(`/users/${id}`);
   return result.data;
 };
 export const useUserById = (id) => {
@@ -58,7 +55,7 @@ export const useUserById = (id) => {
 
 // post user and optimistic update
 const addEmployee = async (newUser) => {
-  const result = await usersApi.post("/", {
+  const result = await usersApi.post("/users/", {
     ...newUser,
   });
   return result.data;
@@ -114,7 +111,7 @@ export const useAddEmployee = () => {
 
 // PATCH USER
 const updateEmployee = async (updatedUser) => {
-  const result = await usersApi.patch("/", {
+  const result = await usersApi.patch("/users", {
     ...updatedUser,
   });
   return result.data;
@@ -156,7 +153,9 @@ export const useUpdateEmployee = () => {
 
 // DELETE USER
 const deleteUser = async (id, role) => {
-  const result = await usersApi.delete("/", { data: { id: id, role: role } });
+  const result = await usersApi.delete("/users", {
+    data: { id: id, role: role },
+  });
   return result.data;
 };
 export const useRemoveUser = () => {
@@ -178,7 +177,7 @@ export const useRemoveUser = () => {
 };
 // Assign USERs
 const assignUsers = async (stdId, consultIds) => {
-  const result = await usersApi.patch("/assign", { stdId, consultIds });
+  const result = await usersApi.patch("/users/assign", { stdId, consultIds });
   return result.data;
 };
 export const useAssignUsers = () => {
@@ -197,7 +196,7 @@ export const useAssignUsers = () => {
 };
 // Deassign USERs
 const deAssignUsers = async (stdId, consultId) => {
-  const result = await usersApi.patch("/deassign", { stdId, consultId });
+  const result = await usersApi.patch("/users/deassign", { stdId, consultId });
   return result.data;
 };
 export const useDeAssignUser = () => {

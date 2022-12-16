@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { axiosApi as applicationApi } from "./axios";
 import { toast } from "react-toastify";
-
+import { useAuthStore } from "../store/authStore";
 const toastSuccessOpt = {
   position: "top-center",
   autoClose: 1500,
@@ -25,13 +25,9 @@ const toastErrorOpt = {
   style: { backgroundColor: "#4d0000" },
 };
 
-const applicationApi = axios.create({
-  baseURL: "http://localhost:5000/api/applications",
-});
-
 // get applications by student
 const getAppByStd = async (id) => {
-  const result = await applicationApi.get(`/std/${id}`);
+  const result = await applicationApi.get(`/applications/std/${id}`);
   return result.data;
 };
 export const useApplications = (id) => {
@@ -40,12 +36,13 @@ export const useApplications = (id) => {
     queryFn: async ({ signal }) => getAppByStd(id, { signal }),
     initialData: [],
     refetchOnWindowFocus: false,
+    retry: false,
   });
 };
 
 // get application by id
 const getApplicationById = async (id) => {
-  const result = await applicationApi.get(`/${id}`);
+  const result = await applicationApi.get(`/applications/${id}`);
   return result.data;
 };
 export const useApplicationById = (id) => {
@@ -58,7 +55,7 @@ export const useApplicationById = (id) => {
 
 // post application and optimistic update
 const addApplication = async (newApplication) => {
-  const result = await applicationApi.post("/", {
+  const result = await applicationApi.post("/applications/", {
     ...newApplication,
   });
   return result.data;
@@ -114,7 +111,7 @@ export const useAddApplication = () => {
 
 // PATCH Application
 const updateApplication = async (updatedApplication) => {
-  const result = await applicationApi.patch("/", {
+  const result = await applicationApi.patch("/applications", {
     ...updatedApplication,
   });
   return result.data;
@@ -165,7 +162,9 @@ export const useUpdateApplication = () => {
 
 // DELETE Application
 const deleteApplication = async (id) => {
-  const result = await applicationApi.delete("/", { data: { id: id } });
+  const result = await applicationApi.delete("/applications", {
+    data: { id: id },
+  });
   return result.data;
 };
 export const useRemoveApplication = () => {

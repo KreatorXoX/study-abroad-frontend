@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import { useAuthStore } from "../../../store/authStore";
+import { useLogout } from "../../../api/authApi";
 
 import "./NavLinks.css";
 
 const NavLinks = () => {
+  const { mutate: logoutUser } = useLogout();
   const [toggleItems, setToggleItems] = useState(false);
   const user = useAuthStore((state) => state.user);
-  const setUser = useAuthStore((state) => state.setUser);
 
   const items = (
     <>
@@ -58,7 +59,7 @@ const NavLinks = () => {
 
         {user.authenticated && (
           <li>
-            <Link to="/" onClick={() => setUser({})}>
+            <Link to="/" onClick={() => logoutUser()}>
               Logout
             </Link>
           </li>

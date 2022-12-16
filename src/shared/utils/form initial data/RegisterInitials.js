@@ -1,9 +1,8 @@
 export const registerInitials = {
-  fullname: {
+  username: {
     value: "",
     isValid: false,
   },
-
   email: {
     value: "",
     isValid: false,

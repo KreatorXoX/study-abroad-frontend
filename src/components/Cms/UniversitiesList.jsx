@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { useUniversities } from "../../api/universitiesApi";
+import { useSearchStore } from "../../store/searchStore";
 import Button from "../../shared/components/Form-Elements/Button";
 import Card from "../../shared/components/UI-Elements/Card";
 import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
@@ -10,6 +11,7 @@ import UniversityForm from "../UniversityForm/UniversityForm";
 
 import styles from "./UserList.module.css";
 const UniversitiesList = () => {
+  const search = useSearchStore((state) => state.search);
   const [showForm, setShowForm] = useState(false);
 
   const {
@@ -56,27 +58,31 @@ const UniversitiesList = () => {
               </Button>
             </div>
             <div className={styles.list}>
-              {universities?.map((uni) => (
-                <Card
-                  key={uni._id}
-                  name={uni.name}
-                  image={uni.logo}
-                  imgStyle={{ borderRadius: "0", objectFit: "contain" }}
-                  actions={
-                    <>
-                      <Button warning to={`/cms/universities/${uni._id}`}>
-                        Edit
-                      </Button>
-                      <Button
-                        danger
-                        onClick={deleteHandler.bind(null, uni._id)}
-                      >
-                        Del
-                      </Button>
-                    </>
-                  }
-                />
-              ))}
+              {universities
+                ?.filter((u) =>
+                  u.name.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((uni) => (
+                  <Card
+                    key={uni._id}
+                    name={uni.name}
+                    image={uni.logo}
+                    imgStyle={{ borderRadius: "0", objectFit: "contain" }}
+                    actions={
+                      <>
+                        <Button warning to={`/cms/universities/${uni._id}`}>
+                          Edit
+                        </Button>
+                        <Button
+                          danger
+                          onClick={deleteHandler.bind(null, uni._id)}
+                        >
+                          Del
+                        </Button>
+                      </>
+                    }
+                  />
+                ))}
             </div>
           </>
         )}

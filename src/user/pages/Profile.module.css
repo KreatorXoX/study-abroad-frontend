@@ -6,7 +6,8 @@
   color: var(--p-navy);
   width: 100%;
   max-width: 90rem;
-  margin: 1rem auto;
+  /* margin: 1rem auto; */
+  padding-top: 2rem;
 }
 
 .profile {

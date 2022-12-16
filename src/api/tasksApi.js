@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { axiosApi as taskApi } from "./axios";
 import { toast } from "react-toastify";
+import { useAuthStore } from "../store/authStore";
 
 const toastSuccessOpt = {
   position: "top-center",
@@ -25,13 +26,9 @@ const toastErrorOpt = {
   style: { backgroundColor: "#4d0000" },
 };
 
-const taskApi = axios.create({
-  baseURL: "http://localhost:5000/api/tasks",
-});
-
 // get tasks by studentId
 const getTasksByUser = async (id) => {
-  const result = await taskApi.get(`/${id}`);
+  const result = await taskApi.get(`/tasks/${id}`);
   return result.data;
 };
 export const useTasksByUser = (id) => {
@@ -46,7 +43,7 @@ export const useTasksByUser = (id) => {
 
 // post task
 const addTask = async (newTask) => {
-  const result = await taskApi.post("/", {
+  const result = await taskApi.post("/taskApi", {
     ...newTask,
   });
   return result.data;
@@ -77,7 +74,7 @@ export const useAddTask = () => {
 
 // PATCH Task
 const updateTask = async ({ id, ...data }) => {
-  const result = await taskApi.patch("/", { taskId: id, ...data });
+  const result = await taskApi.patch("/taskApi", { taskId: id, ...data });
   return result.data;
 };
 export const useUpdateTask = () => {
@@ -115,7 +112,7 @@ export const useUpdateTask = () => {
 
 // DELETE Application
 const deleteTask = async (id) => {
-  const result = await taskApi.delete("/", { data: { id: id } });
+  const result = await taskApi.delete("/taskApi", { data: { id: id } });
   return result.data;
 };
 export const useRemoveTask = () => {
