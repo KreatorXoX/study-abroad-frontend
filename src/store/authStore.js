@@ -37,50 +37,72 @@ import { persist, devtools } from "zustand/middleware";
 //     }
 //   )
 // );
-
+export const usePersistentStore = create(
+  persist(
+    (set) => ({
+      persist: false,
+      setPersist: (bool) =>
+        set((state) => ({
+          persist: bool,
+        })),
+    }),
+    {
+      name: "persist",
+      getStorage: () => sessionStorage,
+    }
+  )
+);
 export const useAuthStore = create(
   devtools((set) => ({
     user: {
-      token: null,
       _id: null,
       username: null,
       email: null,
       role: null,
       authenticated: false,
     },
+    token: null,
     setCredentials: (token) =>
       set((state) => ({
         ...state,
-        user: { ...state.user, authenticated: true, token },
+        user: { ...state.user, authenticated: true },
+        token: token,
       })),
     setLogout: () =>
-      set((state) => ({
-        ...state,
-        user: {
+      set((state) => {
+        usePersistentStore.getState().setPersist(false);
+        return {
+          ...state,
           token: null,
-          _id: null,
-          username: null,
-          email: null,
-          role: null,
-          authenticated: false,
-        },
-      })),
+          user: {
+            _id: null,
+            username: null,
+            email: null,
+            role: null,
+            authenticated: false,
+          },
+        };
+      }),
   }))
 );
 
-axios
-  .get("http://localhost:5000/api/auth/refresh", {
-    headers: { "Content-Type": "application/json" },
-    withCredentials: true,
-  })
-  .then((response) => {
-    return response.data;
-  })
-  .then((data) => {
-    if (data.accessToken) {
-      useAuthStore.getState().setCredentials(data.accessToken);
-    }
-  })
-  .catch((err) => {
-    useAuthStore.getState().setLogout();
-  });
+const refresh = usePersistentStore.getState().persist;
+
+if (refresh) {
+  axios
+    .get("http://localhost:5000/api/auth/refresh", {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .then((data) => {
+      if (data.accessToken) {
+        useAuthStore.getState().setCredentials(data.accessToken);
+      }
+    })
+    .catch((err) => {
+      useAuthStore.getState().setLogout();
+    });
+}

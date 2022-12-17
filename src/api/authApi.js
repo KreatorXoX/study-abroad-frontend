@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosApi as authApi } from "./axios";
 import { toast } from "react-toastify";
-import { useAuthStore } from "../store/authStore";
+import { useAuthStore, usePersistentStore } from "../store/authStore";
 
 const toastSuccessOpt = {
   position: "top-center",
@@ -74,6 +74,7 @@ export const useLogin = (credentials) => {
     onSuccess: (response) => {
       toast.success("Login is Succesful", toastSuccessOpt);
       useAuthStore.getState().setCredentials(response.accessToken);
+      usePersistentStore.getState().setPersist(true);
     },
     onError: (err, newUser, context) => {
       let errMsg;

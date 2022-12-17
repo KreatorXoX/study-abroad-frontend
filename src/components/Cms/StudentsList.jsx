@@ -7,6 +7,7 @@ import { useUsersByRole } from "../../api/usersApi";
 import { useSearchStore } from "../../store/searchStore";
 import styles from "./UserList.module.css";
 const StudentsList = () => {
+  console.log("rendering");
   const history = useHistory();
   const {
     data: students,
