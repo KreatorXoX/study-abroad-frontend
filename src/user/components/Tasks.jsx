@@ -88,6 +88,7 @@ const Tasks = () => {
       empId: formState.inputs.empId.value,
       title: formState.inputs.title.value,
     };
+
     addTask(newTask);
 
     setOpenModal(false);
@@ -106,9 +107,11 @@ const Tasks = () => {
   if (isEmployeesFetched && isTasksFetched) {
     content = (
       <div className={styles.layout}>
-        <form className={styles.taskForm} onSubmit={formHandler}>
-          {tasks?.length > 0 ? (
-            tasks?.map((task, idx) => {
+        {tasks?.length === 0 ? (
+          <h2>No Tasks Found</h2>
+        ) : (
+          <form className={styles.taskForm} onSubmit={formHandler}>
+            {tasks?.map((task, idx) => {
               const classes =
                 task.completed.byStudent && task.completed.byEmployee
                   ? styles.accepted
@@ -139,7 +142,9 @@ const Tasks = () => {
                           onChange={changeHandler}
                           type="checkbox"
                           defaultChecked={task.completed.byStudent}
-                          disabled={task.completed.byStudent} // or userId === loggedIn userId
+                          disabled={
+                            task.completed.byStudent || user._id !== userId
+                          }
                         />
                       </div>
                       <div className={styles.formControl}>
@@ -168,16 +173,14 @@ const Tasks = () => {
                   )}
                 </div>
               );
-            })
-          ) : (
-            <h2 style={{ textAlign: "center" }}>No tasks Found</h2>
-          )}
-          <div className={styles.formAction}>
-            <Button type="submit" mid>
-              Save
-            </Button>
-          </div>
-        </form>
+            })}
+            <div className={styles.formAction}>
+              <Button type="submit" mid>
+                Save
+              </Button>
+            </div>
+          </form>
+        )}
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             onClick={() => {

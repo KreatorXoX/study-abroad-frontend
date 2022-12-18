@@ -47,7 +47,7 @@ const CountriesList = () => {
             <div className={styles.list}>
               {countries
                 ?.filter((c) =>
-                  c.name.toLowerCase().includes(search.toLowerCase())
+                  c.name?.toLowerCase().includes(search.toLowerCase())
                 )
                 .map((country) => (
                   <Card

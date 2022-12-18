@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Card from "../../shared/components/UI-Elements/Card";
 import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
 import SearchBar from "../../shared/components/UI-Elements/SearchBar";
@@ -7,8 +7,6 @@ import { useUsersByRole } from "../../api/usersApi";
 import { useSearchStore } from "../../store/searchStore";
 import styles from "./UserList.module.css";
 const StudentsList = () => {
-  console.log("rendering");
-  const history = useHistory();
   const {
     data: students,
     error,

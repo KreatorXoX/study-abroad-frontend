@@ -10,7 +10,6 @@ axiosApi.interceptors.request.use(
   async (config) => {
     config.headers = {
       Authorization: `Bearer ${useAuthStore.getState().token}`,
-      "Content-Type": "application/json",
     };
     return config;
   },

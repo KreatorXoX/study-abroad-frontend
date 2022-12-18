@@ -163,7 +163,15 @@ export const useRemoveUser = () => {
   return useMutation({
     mutationFn: ({ id, role }) => deleteUser(id, role),
     onError: (err) => {
-      toast.error(err.message, toastErrorOpt);
+      let errMsg;
+      if (err.response) {
+        errMsg = err.response.data.message;
+      } else if (err.request) {
+        errMsg = err.request.message;
+      } else {
+        errMsg = err.message;
+      }
+      toast.error(errMsg, toastErrorOpt);
     },
     onSettled: ({ id, role }) => {
       queryClient.invalidateQueries({

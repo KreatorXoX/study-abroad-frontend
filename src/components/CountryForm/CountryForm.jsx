@@ -5,14 +5,25 @@ import Input from "../../shared/components/Form-Elements/Input";
 import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
 import { useForm } from "../../hooks/form-hook";
 import ImageUpload from "../../shared/components/Form-Elements/FileUpload";
-
+import { useAddCountry } from "../../api/countriesApi";
+import axios from "axios";
+import { useAuthStore } from "../../store/authStore";
 const CountryForm = ({ setShowForm }) => {
-  const { formState, inputHandler } = useForm();
+  const { formState, inputHandler } = useForm({
+    name: { value: "", isValid: false },
+    videoUrl: { value: "", isValid: false },
+    flag: { value: "", isValid: false },
+  });
+  const { mutate: addCountry } = useAddCountry();
 
-  const addCountryHandler = (e) => {
+  const addCountryHandler = async (e) => {
     e.preventDefault();
-    console.log(formState.inputs);
-    // implement FormData because there is file input
+    const formData = new FormData();
+    formData.append("name", formState.inputs.name.value);
+    formData.append("videoUrl", formState.inputs.videoUrl.value);
+    formData.append("flag", formState.inputs.flag.value);
+    addCountry(formData);
+
     setShowForm(false);
   };
   return (
@@ -23,6 +34,16 @@ const CountryForm = ({ setShowForm }) => {
             id="name"
             type="text"
             placeholder="Country Name"
+            errorText="This field is required"
+            onInputChange={inputHandler}
+            validators={[VALIDATOR_REQUIRE()]}
+          />
+        </div>
+        <div>
+          <Input
+            id="videoUrl"
+            type="text"
+            placeholder="Video Url"
             errorText="This field is required"
             onInputChange={inputHandler}
             validators={[VALIDATOR_REQUIRE()]}

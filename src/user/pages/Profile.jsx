@@ -24,9 +24,11 @@ import {
 import styles from "./Profile.module.css";
 import { useUserById } from "../../api/usersApi";
 import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
+import { useAuthStore } from "../../store/authStore";
 
 const Profile = () => {
   const [action, setAction] = useState("");
+  const loggedUser = useAuthStore((state) => state.user);
   const uId = useParams().uid;
   const {
     data: user,
@@ -136,49 +138,52 @@ const Profile = () => {
                 <FontAwesomeIcon size="lg" icon={faGreaterThan} />
               </span>
             </div>
-            {/* {user.id === uId || user.role !== "employee"} user id has to be equal to profileid or you need to be admin */}
-            <div
-              className={`${styles.link} ${
-                action === "calendar" ? styles.active : ""
-              }`}
-              onClick={() => setAction("calendar")}
-            >
-              <div className={styles.linkTag}>
-                <FontAwesomeIcon
-                  size="xl"
-                  icon={faCalendarCheck}
-                  className={styles.icon}
-                />
-                <p>Calendar</p>
-              </div>
-              <span
-                className={styles.arrow}
-                onClick={() => setAction("calendar")}
-              >
-                <FontAwesomeIcon size="lg" icon={faGreaterThan} />
-              </span>
-            </div>
-            <div
-              className={`${styles.link} ${
-                action === "settings" ? styles.active : ""
-              }`}
-              onClick={() => setAction("settings")}
-            >
-              <div className={styles.linkTag}>
-                <FontAwesomeIcon
-                  size="xl"
-                  icon={faGear}
-                  className={styles.icon}
-                />
-                <p>Settings</p>
-              </div>
-              <span
-                className={styles.arrow}
-                onClick={() => setAction("settings")}
-              >
-                <FontAwesomeIcon size="lg" icon={faGreaterThan} />
-              </span>
-            </div>
+            {(loggedUser._id === uId || loggedUser.role === "admin") && (
+              <>
+                <div
+                  className={`${styles.link} ${
+                    action === "calendar" ? styles.active : ""
+                  }`}
+                  onClick={() => setAction("calendar")}
+                >
+                  <div className={styles.linkTag}>
+                    <FontAwesomeIcon
+                      size="xl"
+                      icon={faCalendarCheck}
+                      className={styles.icon}
+                    />
+                    <p>Calendar</p>
+                  </div>
+                  <span
+                    className={styles.arrow}
+                    onClick={() => setAction("calendar")}
+                  >
+                    <FontAwesomeIcon size="lg" icon={faGreaterThan} />
+                  </span>
+                </div>
+                <div
+                  className={`${styles.link} ${
+                    action === "settings" ? styles.active : ""
+                  }`}
+                  onClick={() => setAction("settings")}
+                >
+                  <div className={styles.linkTag}>
+                    <FontAwesomeIcon
+                      size="xl"
+                      icon={faGear}
+                      className={styles.icon}
+                    />
+                    <p>Settings</p>
+                  </div>
+                  <span
+                    className={styles.arrow}
+                    onClick={() => setAction("settings")}
+                  >
+                    <FontAwesomeIcon size="lg" icon={faGreaterThan} />
+                  </span>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className={styles.application}>

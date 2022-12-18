@@ -19,7 +19,7 @@ import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
 import { VALIDATOR_REQUIRE_SELECT } from "../../shared/utils/validators";
 import styles from "./Applications.module.css";
 
-const statusOptions = ["pending", "accepted", "declined"].map((item, idx) => (
+const statusOptions = ["accepted", "declined"].map((item, idx) => (
   <option key={idx} value={item}>
     {item.toUpperCase()}
   </option>

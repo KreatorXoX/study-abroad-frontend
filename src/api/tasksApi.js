@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosApi as taskApi } from "./axios";
 import { toast } from "react-toastify";
-import { useAuthStore } from "../store/authStore";
 
 const toastSuccessOpt = {
   position: "top-center",
@@ -43,7 +42,7 @@ export const useTasksByUser = (id) => {
 
 // post task
 const addTask = async (newTask) => {
-  const result = await taskApi.post("/taskApi", {
+  const result = await taskApi.post("/tasks", {
     ...newTask,
   });
   return result.data;
@@ -74,7 +73,7 @@ export const useAddTask = () => {
 
 // PATCH Task
 const updateTask = async ({ id, ...data }) => {
-  const result = await taskApi.patch("/taskApi", { taskId: id, ...data });
+  const result = await taskApi.patch("/tasks", { taskId: id, ...data });
   return result.data;
 };
 export const useUpdateTask = () => {
@@ -112,7 +111,7 @@ export const useUpdateTask = () => {
 
 // DELETE Application
 const deleteTask = async (id) => {
-  const result = await taskApi.delete("/taskApi", { data: { id: id } });
+  const result = await taskApi.delete("/tasks", { data: { id: id } });
   return result.data;
 };
 export const useRemoveTask = () => {
