@@ -15,13 +15,10 @@ const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (err) => {
       let errMsg;
-      if (err.response) {
-        errMsg = err.response.data.message;
-      } else if (err.request) {
-        errMsg = err.request.message;
-      } else {
-        errMsg = err.message;
-      }
+      if (err.response) errMsg = err.response.data.message;
+      else if (err.request) errMsg = err.request.message;
+      else errMsg = err.message;
+
       toast.error(errMsg, {
         position: "top-center",
         autoClose: 1500,

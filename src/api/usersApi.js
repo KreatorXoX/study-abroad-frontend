@@ -1,29 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosApi as usersApi } from "./axios";
 import { toast } from "react-toastify";
-
-const toastSuccessOpt = {
-  position: "top-center",
-  autoClose: 1500,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "colored",
-  style: { backgroundColor: "#08313A" },
-};
-const toastErrorOpt = {
-  position: "top-center",
-  autoClose: 1500,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "colored",
-  style: { backgroundColor: "#4d0000" },
-};
+import { toastSuccessOpt, toastErrorOpt } from "../shared/utils/toastOptions";
 
 // get users by their role
 const getUsersByRole = async (role) => {
@@ -55,8 +33,8 @@ export const useUserById = (id) => {
 
 // post user and optimistic update
 const addEmployee = async (newUser) => {
-  const result = await usersApi.post("/users/", {
-    ...newUser,
+  const result = await usersApi.post("/users/", newUser, {
+    headers: { "Content-Type": "multipart/form-data" },
   });
   return result.data;
 };
@@ -111,11 +89,13 @@ export const useAddEmployee = () => {
 
 // PATCH USER
 const updateEmployee = async (updatedUser) => {
-  const result = await usersApi.patch("/users", {
-    ...updatedUser,
+  const result = await usersApi.patch("/users", updatedUser, {
+    headers: { "Content-Type": "multipart/form-data" },
   });
+
   return result.data;
 };
+
 export const useUpdateEmployee = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -137,7 +117,13 @@ export const useUpdateEmployee = () => {
     },
     onError: (err, user, context) => {
       queryClient.setQueryData(["users-employee"], context.previousUserslist);
-      toast.error(err.message, toastErrorOpt);
+
+      let errMsg;
+      if (err.response) errMsg = err.response.data.message;
+      else if (err.request) errMsg = err.request.message;
+      else errMsg = err.message;
+
+      toast.error(errMsg, toastErrorOpt);
     },
     onSettled: ({ id }) => {
       console.log(id);
@@ -164,13 +150,10 @@ export const useRemoveUser = () => {
     mutationFn: ({ id, role }) => deleteUser(id, role),
     onError: (err) => {
       let errMsg;
-      if (err.response) {
-        errMsg = err.response.data.message;
-      } else if (err.request) {
-        errMsg = err.request.message;
-      } else {
-        errMsg = err.message;
-      }
+      if (err.response) errMsg = err.response.data.message;
+      else if (err.request) errMsg = err.request.message;
+      else errMsg = err.message;
+
       toast.error(errMsg, toastErrorOpt);
     },
     onSettled: ({ id, role }) => {
@@ -195,7 +178,12 @@ export const useAssignUsers = () => {
       return assignUsers(stdId, consultIds);
     },
     onError: (err) => {
-      toast.error(err.message, toastErrorOpt);
+      let errMsg;
+      if (err.response) errMsg = err.response.data.message;
+      else if (err.request) errMsg = err.request.message;
+      else errMsg = err.message;
+
+      toast.error(errMsg, toastErrorOpt);
     },
     onSettled: ({ stdId }) => {
       queryClient.resetQueries({ queryKey: [`userID-${stdId}`] });
@@ -212,7 +200,11 @@ export const useDeAssignUser = () => {
   return useMutation({
     mutationFn: ({ stdId, consultId }) => deAssignUsers(stdId, consultId),
     onError: (err) => {
-      toast.error(err.message, toastErrorOpt);
+      let errMsg;
+      if (err.response) errMsg = err.response.data.message;
+      else if (err.request) errMsg = err.request.message;
+      else errMsg = err.message;
+      toast.error(errMsg, toastErrorOpt);
     },
     onSettled: ({ stdId }) => {
       queryClient.invalidateQueries({ queryKey: [`userID-${stdId}`] });

@@ -16,22 +16,17 @@ const EmployeeForm = ({ setShowForm }) => {
   const { formState, inputHandler, SetData } = useForm(empInitials);
   const { mutate: addEmployee } = useAddEmployee();
 
-  // useEffect(() => {
-  //   SetData(empInitials, false);
-  // }, [SetData]);
-
   const addEmpHandler = (e) => {
     e.preventDefault();
+    const formData = new FormData();
 
-    const newUser = {
-      username: formState.inputs.username.value,
-      email: formState.inputs.email.value,
-      password: formState.inputs.password.value,
-      image: formState.inputs.image.value,
-      role: "employee",
-    };
+    formData.append("username", formState.inputs.username.value);
+    formData.append("email", formState.inputs.email.value);
+    formData.append("password", formState.inputs.password.value);
+    formData.append("image", formState.inputs.image.value);
+    formData.append("role", "employee");
 
-    addEmployee(newUser);
+    addEmployee(formData);
     setShowForm(false);
   };
   return (

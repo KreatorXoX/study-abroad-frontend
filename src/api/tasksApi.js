@@ -1,29 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosApi as taskApi } from "./axios";
 import { toast } from "react-toastify";
-
-const toastSuccessOpt = {
-  position: "top-center",
-  autoClose: 1500,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "colored",
-  style: { backgroundColor: "#08313A" },
-};
-const toastErrorOpt = {
-  position: "top-center",
-  autoClose: 1500,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "colored",
-  style: { backgroundColor: "#4d0000" },
-};
+import { toastSuccessOpt, toastErrorOpt } from "../shared/utils/toastOptions";
 
 // get tasks by studentId
 const getTasksByUser = async (id) => {
@@ -56,13 +34,11 @@ export const useAddTask = () => {
     },
     onError: (err) => {
       let errMsg;
-      if (err.response) {
-        errMsg = err.response.data.message;
-      } else if (err.request) {
-        errMsg = err.request.message;
-      } else {
-        errMsg = err.message;
-      }
+
+      if (err.response) errMsg = err.response.data.message;
+      else if (err.request) errMsg = err.request.message;
+      else errMsg = err.message;
+
       toast.error(errMsg, toastErrorOpt);
     },
     onSettled: () => {
@@ -99,7 +75,12 @@ export const useUpdateTask = () => {
     },
     onError: (err, context) => {
       queryClient.setQueryData([`tasks`], context.previousTaskslist);
-      toast.error(err.message, toastErrorOpt);
+      let errMsg;
+
+      if (err.response) errMsg = err.response.data.message;
+      else if (err.request) errMsg = err.request.message;
+      else errMsg = err.message;
+      toast.error(errMsg, toastErrorOpt);
     },
     onSettled: () => {
       queryClient.invalidateQueries({
@@ -122,7 +103,13 @@ export const useRemoveTask = () => {
       toast.success(message, toastSuccessOpt);
     },
     onError: (err) => {
-      toast.error(err.message, toastErrorOpt);
+      let errMsg;
+
+      if (err.response) errMsg = err.response.data.message;
+      else if (err.request) errMsg = err.request.message;
+      else errMsg = err.message;
+
+      toast.error(errMsg, toastErrorOpt);
     },
     onSettled: () => {
       queryClient.resetQueries({

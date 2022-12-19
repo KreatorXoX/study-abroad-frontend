@@ -10,27 +10,34 @@ import {
 } from "../../shared/utils/validators";
 import { useForm } from "../../hooks/form-hook";
 import { useUserById, useUpdateEmployee } from "../../api/usersApi";
+import { empInitials } from "../../shared/utils/form initial data/EmployeeInitials";
 
 const EmployeeUpdateForm = () => {
-  const { formState, inputHandler } = useForm();
+  const { formState, inputHandler } = useForm(empInitials);
 
   const history = useHistory();
   const empId = useParams().eid;
 
-  const { data: empl, isLoading, isFetched, isFetching } = useUserById(empId);
+  const {
+    data: empl,
+    isLoading,
+    isFetched,
+    isFetching,
+    isSuccess,
+  } = useUserById(empId);
   const { mutate: updateEmployee } = useUpdateEmployee();
 
   const updateEmpHandler = (e) => {
     e.preventDefault();
-    const updatedUser = {
-      id: empl._id,
-      username: formState.inputs.username.value,
-      email: formState.inputs.email.value,
-      password: formState.inputs.password.value,
-      active: empl.active,
-    };
 
-    updateEmployee(updatedUser);
+    const formData = new FormData();
+    formData.append("id", empl._id);
+    formData.append("username", formState.inputs.username.value);
+    formData.append("email", formState.inputs.email.value);
+    formData.append("password", formState.inputs.password.value);
+    formData.append("active", empl.active);
+
+    updateEmployee(formData);
     history.goBack();
   };
 
@@ -40,7 +47,7 @@ const EmployeeUpdateForm = () => {
     content = <LoadingSpinner asOverlay />;
   }
 
-  if (isFetched) {
+  if (isFetched && isSuccess) {
     content = (
       <div className="updateForm">
         <h2>Update {empl.username}</h2>
@@ -65,7 +72,7 @@ const EmployeeUpdateForm = () => {
                 label="Email"
                 errorText="This field is required"
                 onInputChange={inputHandler}
-                validators={[VALIDATOR_REQUIRE()]}
+                validators={[VALIDATOR_EMAIL()]}
                 initialValue={empl?.email}
                 initialValid={true}
               />

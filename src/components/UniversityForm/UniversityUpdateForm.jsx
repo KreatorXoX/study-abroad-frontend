@@ -12,6 +12,7 @@ import { useForm } from "../../hooks/form-hook";
 import ImageUpload from "../../shared/components/Form-Elements/FileUpload";
 import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
 import { useCountries } from "../../api/countriesApi";
+import { useUpdateUniversity } from "../../api/universitiesApi";
 
 const UniversityUpdateForm = () => {
   const { formState, inputHandler } = useForm();
@@ -19,6 +20,7 @@ const UniversityUpdateForm = () => {
   const uId = useParams().uid;
   const history = useHistory();
 
+  const { mutate: updateUniversity } = useUpdateUniversity();
   const {
     data: university,
     isLoading: universitiesLoading,
@@ -38,11 +40,24 @@ const UniversityUpdateForm = () => {
     </option>
   ));
 
-  const updateUniversity = (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("universityId", uId);
+    formData.append("name", formState.inputs.name.value);
+    formData.append("countryId", formState.inputs.countryId.value);
+    formData.append("info", formState.inputs.info.value);
+    formData.append("logo", formState.inputs.logo.value);
+    formData.append("motto", formState.inputs.motto.value);
+    formData.append("videoUrl", formState.inputs.videoUrl.value);
+    formData.append("infoBox1Header", formState.inputs.infoBox1Header.value);
+    formData.append("infoBox1Content", formState.inputs.infoBox1Content.value);
+    formData.append("infoBox2Header", formState.inputs.infoBox2Header.value);
+    formData.append("infoBox2Content", formState.inputs.infoBox2Content.value);
+    formData.append("infoBox3Header", formState.inputs.infoBox3Header.value);
+    formData.append("infoBox3Content", formState.inputs.infoBox3Content.value);
 
-    console.log(formState.inputs);
+    updateUniversity(formData);
   };
 
   let content;
@@ -59,7 +74,7 @@ const UniversityUpdateForm = () => {
     content = (
       <div className="updateForm">
         <h2>Update {university.name}</h2>
-        <form onSubmit={updateUniversity}>
+        <form onSubmit={handleUpdate}>
           <div>
             <div>
               <Input
@@ -75,7 +90,7 @@ const UniversityUpdateForm = () => {
             </div>
             <div>
               <Input
-                id="country"
+                id="countryId"
                 element="select"
                 options={selectOptions}
                 type="text"
@@ -112,7 +127,19 @@ const UniversityUpdateForm = () => {
             </div>
             <div>
               <Input
-                id="video"
+                id="motto"
+                type="text"
+                placeholder="School Motto"
+                errorText="This field is required"
+                onInputChange={inputHandler}
+                validators={[VALIDATOR_REQUIRE()]}
+                initialValue={university.motto}
+                initialValid={true}
+              />
+            </div>
+            <div>
+              <Input
+                id="videoUrl"
                 type="text"
                 placeholder="School Youtube Url"
                 errorText="This field is required"
@@ -212,7 +239,7 @@ const UniversityUpdateForm = () => {
               Back
             </Button>
             <Button mid success disabled={!formState.isValid} type="submit">
-              Save Country
+              Save University
             </Button>
           </div>
         </form>

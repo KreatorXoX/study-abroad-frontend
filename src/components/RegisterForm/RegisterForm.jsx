@@ -10,24 +10,28 @@ import {
 } from "../../shared/utils/validators";
 import { registerInitials } from "../../shared/utils/form initial data/RegisterInitials";
 import { useForm } from "../../hooks/form-hook";
+import { useRegister } from "../../api/authApi";
 
 const RegisterForm = () => {
   const history = useHistory();
-  const setUser = useAuthStore((state) => state.setUser);
+
+  const { mutate: registerUser } = useRegister();
 
   const { formState, inputHandler } = useForm(registerInitials);
-  const loginHandler = (e) => {
+
+  const registerHandler = (e) => {
     e.preventDefault();
-    console.log(formState.inputs);
-    setUser({
-      name: formState.inputs.email.value,
-      role: "user",
-      authenticated: true,
-    });
+
+    const newUser = {
+      username: formState.inputs.username.value,
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+    };
+    registerUser(newUser);
     history.replace("/");
   };
   return (
-    <form onSubmit={loginHandler}>
+    <form onSubmit={registerHandler}>
       <div>
         <div>
           <Input

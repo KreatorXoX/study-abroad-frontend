@@ -1,29 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosApi as applicationApi } from "./axios";
 import { toast } from "react-toastify";
-import { useAuthStore } from "../store/authStore";
-const toastSuccessOpt = {
-  position: "top-center",
-  autoClose: 1500,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "colored",
-  style: { backgroundColor: "#08313A" },
-};
-const toastErrorOpt = {
-  position: "top-center",
-  autoClose: 1500,
-  hideProgressBar: true,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "colored",
-  style: { backgroundColor: "#4d0000" },
-};
+import { toastSuccessOpt, toastErrorOpt } from "../shared/utils/toastOptions";
 
 // get applications by student
 const getAppByStd = async (id) => {
