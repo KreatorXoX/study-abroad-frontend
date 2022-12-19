@@ -1,54 +1,185 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { axiosApi as universityApi } from "./axios";
-import { toast } from "react-toastify";
-import { useAuthStore } from "../store/authStore";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { axiosApi as universityApi } from './axios'
+import { toast } from 'react-toastify'
+import { useAuthStore } from '../store/authStore'
 
 const toastSuccessOpt = {
-  position: "top-center",
+  position: 'top-center',
   autoClose: 1500,
   hideProgressBar: true,
   closeOnClick: true,
   pauseOnHover: true,
   draggable: true,
   progress: undefined,
-  theme: "colored",
-  style: { backgroundColor: "#08313A" },
-};
+  theme: 'colored',
+  style: { backgroundColor: '#08313A' }
+}
 const toastErrorOpt = {
-  position: "top-center",
+  position: 'top-center',
   autoClose: 1500,
   hideProgressBar: true,
   closeOnClick: true,
   pauseOnHover: true,
   draggable: true,
   progress: undefined,
-  theme: "colored",
-  style: { backgroundColor: "#4d0000" },
-};
+  theme: 'colored',
+  style: { backgroundColor: '#4d0000' }
+}
 
 // get all universities
 const getUniversities = async () => {
-  const result = await universityApi.get(`/universities`);
-  return result.data;
-};
+  const result = await universityApi.get(`/universities`)
+  return result.data
+}
 export const useUniversities = () => {
   return useQuery({
     queryKey: [`all-universities`],
     queryFn: async ({ signal }) => getUniversities({ signal }),
-    initialData: [],
-  });
-};
+    initialData: []
+  })
+}
 
 // get university by id
-const getUniversityById = async (id) => {
-  const result = await universityApi.get(`/universities/${id}`);
-  return result.data;
-};
-export const useUniversityById = (id) => {
+const getUniversityById = async id => {
+  const result = await universityApi.get(`/universities/${id}`)
+  return result.data
+}
+export const useUniversityById = id => {
   return useQuery({
     queryKey: [`university-${id}`],
     queryFn: getUniversityById.bind(null, id),
     initialData: {},
-    refetchOnWindowFocus: false,
-  });
-};
+    refetchOnWindowFocus: false
+  })
+}
+
+// post university and optimistic update
+const addUniversity = async newUniversity => {
+  const result = await universityApi.post('/universities', newUniversity, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
+  return result.data
+}
+export const useAddUniversity = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: newUniversity => addUniversity(newUniversity),
+    onMutate: async newUniversity => {
+      await queryClient.cancelQueries({ queryKey: ['all-universities'] })
+
+      const previousUniversitylist = queryClient.getQueryData([
+        'all-universities'
+      ])
+
+      queryClient.setQueryData(['all-universities'], old => {
+        if (old) {
+          return [...old, newUniversity]
+        }
+        return [newUniversity]
+      })
+
+      return { previousUniversitylist }
+    },
+    onSuccess: response => {
+      toast.success(response.message, toastSuccessOpt)
+    },
+    onError: (err, newUniversity, context) => {
+      queryClient.setQueryData(
+        ['all-universities'],
+        context.previousUniversitylist
+      )
+
+      let errMsg
+
+      if (err.response) errMsg = err.response.data.message
+      else if (err.request) errMsg = err.request.message
+      else errMsg = err.message
+
+      toast.error(errMsg, toastErrorOpt)
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['all-universities'] })
+    }
+  })
+}
+
+// update country and optimistic update
+const updateUniversity = async updatedUniversity => {
+  const result = await universityApi.patch('/universities', updatedUniversity, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
+  return result.data
+}
+export const useUpdateUniversity = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: updatedUniversity => updateUniversity(updatedUniversity),
+    onMutate: async updatedUniversity => {
+      await queryClient.cancelQueries({ queryKey: ['all-universities'] })
+
+      const previousCountrylist = queryClient.getQueryData(['all-universities'])
+
+      queryClient.setQueryData(['all-universities'], old => {
+        if (old) {
+          return [...old, updatedUniversity]
+        }
+        return [updatedUniversity]
+      })
+
+      return { previousCountrylist }
+    },
+    onSuccess: response => {
+      toast.success(response.message, toastSuccessOpt)
+    },
+    onError: (err, updatedUniversity, context) => {
+      queryClient.setQueryData(
+        ['all-universities'],
+        context.previousCountrylist
+      )
+
+      let errMsg
+
+      if (err.response) errMsg = err.response.data.message
+      else if (err.request) errMsg = err.request.message
+      else errMsg = err.message
+
+      toast.error(errMsg, toastErrorOpt)
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['all-universities'] })
+    }
+  })
+}
+
+// DELETE University
+const deleteUniversity = async id => {
+  const result = await universityApi.delete('/universities', {
+    data: { id: id }
+  })
+  return result.data
+}
+export const useRemoveUniversity = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: id => deleteUniversity(id),
+    onError: err => {
+      let errMsg
+      if (err.response) {
+        errMsg = err.response.data.message
+      } else if (err.request) {
+        errMsg = err.request.message
+      } else {
+        errMsg = err.message
+      }
+      toast.error(errMsg, toastErrorOpt)
+    },
+    onSettled: id => {
+      queryClient.invalidateQueries({
+        queryKey: ['all-universities']
+      })
+      queryClient.invalidateQueries({
+        queryKey: [`university-${id}`]
+      })
+    }
+  })
+}

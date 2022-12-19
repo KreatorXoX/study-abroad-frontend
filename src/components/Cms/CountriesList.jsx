@@ -1,21 +1,28 @@
-import React, { useState } from "react";
-import { useCountries } from "../../api/countriesApi";
-import { useSearchStore } from "../../store/searchStore";
-import CountryForm from "../CountryForm/CountryForm";
-import Button from "../../shared/components/Form-Elements/Button";
-import Card from "../../shared/components/UI-Elements/Card";
-import SearchBar from "../../shared/components/UI-Elements/SearchBar";
-import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
+import React, { useState } from 'react'
+import { useCountries, useRemoveCountry } from '../../api/countriesApi'
+import { useSearchStore } from '../../store/searchStore'
+import CountryForm from '../CountryForm/CountryForm'
+import Button from '../../shared/components/Form-Elements/Button'
+import Card from '../../shared/components/UI-Elements/Card'
+import SearchBar from '../../shared/components/UI-Elements/SearchBar'
+import LoadingSpinner from '../../shared/components/UI-Elements/LoadingSpinner'
 
-import styles from "./UserList.module.css";
+import styles from './UserList.module.css'
 const CountriesList = () => {
-  const search = useSearchStore((state) => state.search);
-  const [showForm, setShowForm] = useState(false);
-  const { data: countries, isLoading, isFetching, isFetched } = useCountries();
+  const search = useSearchStore(state => state.search)
 
-  let content;
+  const [showForm, setShowForm] = useState(false)
+
+  const { data: countries, isLoading, isFetching, isFetched } = useCountries()
+  const { mutate: removeCountry } = useRemoveCountry()
+  const deleteCountryHandler = id => {
+    removeCountry(id)
+  }
+
+  let content
+
   if (isLoading || isFetching) {
-    content = <LoadingSpinner asOverlay />;
+    content = <LoadingSpinner asOverlay />
   }
 
   if (isFetched) {
@@ -23,7 +30,7 @@ const CountriesList = () => {
       <div className={styles.listPage}>
         {showForm && (
           <div
-            style={{ width: "100%", display: "flex", placeContent: "center" }}
+            style={{ width: '100%', display: 'flex', placeContent: 'center' }}
           >
             <CountryForm setShowForm={setShowForm} />
           </div>
@@ -36,7 +43,7 @@ const CountriesList = () => {
             <div className={styles.addEmp}>
               <Button
                 onClick={() => {
-                  setShowForm(true);
+                  setShowForm(true)
                 }}
                 mid
                 success
@@ -46,10 +53,10 @@ const CountriesList = () => {
             </div>
             <div className={styles.list}>
               {countries
-                ?.filter((c) =>
+                ?.filter(c =>
                   c.name?.toLowerCase().includes(search.toLowerCase())
                 )
-                .map((country) => (
+                .map(country => (
                   <Card
                     key={country._id}
                     name={country.name}
@@ -59,7 +66,14 @@ const CountriesList = () => {
                         <Button warning to={`/cms/countries/${country._id}`}>
                           Edit
                         </Button>
-                        <Button danger>Del</Button>
+                        <Button
+                          onClick={() => {
+                            deleteCountryHandler(country._id)
+                          }}
+                          danger
+                        >
+                          Del
+                        </Button>
                       </>
                     }
                   />
@@ -68,9 +82,9 @@ const CountriesList = () => {
           </>
         )}
       </div>
-    );
+    )
   }
-  return content;
-};
+  return content
+}
 
-export default CountriesList;
+export default CountriesList

@@ -1,50 +1,54 @@
-import React from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React from 'react'
+import { useParams, useHistory } from 'react-router-dom'
 
-import { useCountryById } from "../../api/countriesApi";
-import { useForm } from "../../hooks/form-hook";
-import Button from "../../shared/components/Form-Elements/Button";
-import ImageUpload from "../../shared/components/Form-Elements/FileUpload";
-import Input from "../../shared/components/Form-Elements/Input";
-import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
-import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
+import { useCountryById, useUpdateCountry } from '../../api/countriesApi'
+import { useForm } from '../../hooks/form-hook'
+import Button from '../../shared/components/Form-Elements/Button'
+import ImageUpload from '../../shared/components/Form-Elements/FileUpload'
+import Input from '../../shared/components/Form-Elements/Input'
+import LoadingSpinner from '../../shared/components/UI-Elements/LoadingSpinner'
+import { VALIDATOR_REQUIRE } from '../../shared/utils/validators'
 
 const CountryUpdateForm = () => {
-  const { formState, inputHandler } = useForm();
+  const { formState, inputHandler } = useForm()
 
-  const history = useHistory();
-  const cId = useParams().cid;
+  const history = useHistory()
+  const cId = useParams().cid
 
-  const {
-    data: country,
-    isLoading,
-    isFetching,
-    isFetched,
-  } = useCountryById(cId);
+  const { data: country, isLoading, isFetching, isFetched } = useCountryById(
+    cId
+  )
+  const { mutate: updateCountry } = useUpdateCountry()
 
-  const updateHandler = (e) => {
-    e.preventDefault();
-    console.log(formState.inputs);
-    // implement FormData because there is file input
-  };
+  const updateHandler = e => {
+    e.preventDefault()
 
-  let content;
+    const formData = new FormData()
+
+    formData.append('name', formState.inputs.name.value)
+    formData.append('videoUrl', formState.inputs.videoUrl.value)
+    formData.append('flag', formState.inputs.flag.value)
+    updateCountry(formData)
+    history.replace('/cms/countries')
+  }
+
+  let content
 
   if (isLoading || isFetching) {
-    content = <LoadingSpinner asOverlay />;
+    content = <LoadingSpinner asOverlay />
   }
   if (isFetched) {
     content = (
-      <div className="updateForm">
+      <div className='updateForm'>
         <h2>Update {country.name}</h2>
         <form onSubmit={updateHandler}>
           <div>
             <div>
               <Input
-                id="name"
-                type="text"
-                placeholder="Country Name"
-                errorText="This field is required"
+                id='name'
+                type='text'
+                placeholder='Country Name'
+                errorText='This field is required'
                 onInputChange={inputHandler}
                 validators={[VALIDATOR_REQUIRE()]}
                 initialValue={country.name}
@@ -53,10 +57,10 @@ const CountryUpdateForm = () => {
             </div>
             <div>
               <Input
-                id="videoUrl"
-                type="text"
-                placeholder="Country Name"
-                errorText="This field is required"
+                id='videoUrl'
+                type='text'
+                placeholder='Country Name'
+                errorText='This field is required'
                 onInputChange={inputHandler}
                 validators={[VALIDATOR_REQUIRE()]}
                 initialValue={country.videoUrl}
@@ -65,42 +69,42 @@ const CountryUpdateForm = () => {
             </div>
             <div>
               <ImageUpload
-                id="flag"
-                type="file"
+                id='flag'
+                type='file'
                 onInputChange={inputHandler}
                 validators={[VALIDATOR_REQUIRE()]}
-                label="Country Flag"
-                errorText="Supported extensions are : .jpg, .png, .jpeg"
+                label='Country Flag'
+                errorText='Supported extensions are : .jpg, .png, .jpeg'
                 initialValid={true}
               />
             </div>
           </div>
           <div
             style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "1rem",
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '1rem'
             }}
           >
             <Button
               mid
               warning
               onClick={() => {
-                history.goBack();
+                history.goBack()
               }}
             >
               Back
             </Button>
-            <Button mid success disabled={!formState.isValid} type="submit">
+            <Button mid success disabled={!formState.isValid} type='submit'>
               Update Country
             </Button>
           </div>
         </form>
       </div>
-    );
+    )
   }
 
-  return content;
-};
+  return content
+}
 
-export default CountryUpdateForm;
+export default CountryUpdateForm
