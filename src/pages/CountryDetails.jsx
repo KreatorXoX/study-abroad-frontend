@@ -112,7 +112,7 @@ const CountryDetails = () => {
             ) : (
               country?.universities?.map((university) => (
                 <div key={university._id + 1} className={styles.uniCard}>
-                  <img alt="university" src={university.logo} />
+                  <img alt="university" src={university.logo.url} />
                   <p className={styles.uniLabel}>{university.name}</p>
                   <Button
                     to={`/universities/${university._id}`}
@@ -124,7 +124,7 @@ const CountryDetails = () => {
                       margin: "0",
                     }}
                   >
-                    Apply
+                    Details
                   </Button>
                 </div>
               ))

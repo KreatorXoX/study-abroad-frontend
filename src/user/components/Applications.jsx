@@ -135,15 +135,17 @@ const Applications = () => {
         ) : (
           <h2 style={{ textAlign: "center" }}>No Applications Found</h2>
         )}
-        <Button
-          success
-          mid
-          onClick={() => {
-            setAddAppModal(true);
-          }}
-        >
-          Add Application +
-        </Button>
+        {user.role !== "user" && (
+          <Button
+            success
+            mid
+            onClick={() => {
+              setAddAppModal(true);
+            }}
+          >
+            Add Application +
+          </Button>
+        )}
         {addAppModal && (
           <Modal
             onSubmit={addApplicationHandler}

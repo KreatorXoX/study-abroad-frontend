@@ -42,7 +42,9 @@ export const useAddEmployee = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (newUser) => addEmployee(newUser),
-    onMutate: async (newUser) => {
+    onMutate: async (newUserFormData) => {
+      const newUser = Object.fromEntries(newUserFormData.entries());
+
       await queryClient.cancelQueries({ queryKey: ["users-employee"] });
 
       const previousEmployeelist = queryClient.getQueryData(["users-employee"]);
@@ -100,18 +102,6 @@ export const useUpdateEmployee = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (user) => updateEmployee(user),
-    onMutate: async (user) => {
-      await queryClient.cancelQueries({ queryKey: ["users-employee"] });
-      const previousUserslist = queryClient.getQueryData(["users-employee"]);
-      queryClient.setQueryData(["users-employee"], (old) => {
-        if (old) {
-          return [...old, user];
-        } else {
-          return [user];
-        }
-      });
-      return { previousUserslist };
-    },
     onSuccess: ({ message }) => {
       toast.success(message, toastSuccessOpt);
     },
@@ -126,11 +116,10 @@ export const useUpdateEmployee = () => {
       toast.error(errMsg, toastErrorOpt);
     },
     onSettled: ({ id }) => {
-      console.log(id);
       queryClient.invalidateQueries({
         queryKey: ["users-employee"],
       });
-      queryClient.invalidateQueries({
+      queryClient.refetchQueries({
         queryKey: [`userID-${id}`],
       });
     },

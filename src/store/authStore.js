@@ -9,9 +9,18 @@ export const usePersistentStore = create(
   persist(
     (set) => ({
       persist: false,
+      authenticated: false,
+      role: "",
       setPersist: (bool) =>
         set((state) => ({
+          ...state,
           persist: bool,
+        })),
+      setAuth: (bool, role) =>
+        set((state) => ({
+          ...state,
+          role: role,
+          authenticated: bool,
         })),
     }),
     {
@@ -48,6 +57,8 @@ export const useAuthStore = create(
             authenticated: true,
           };
         }
+        usePersistentStore.getState().setAuth(true, logUser?.role);
+
         return {
           ...state,
           user: logUser ? logUser : state.user,
@@ -57,6 +68,7 @@ export const useAuthStore = create(
     setLogout: () =>
       set((state) => {
         usePersistentStore.getState().setPersist(false);
+        usePersistentStore.getState().setAuth(false, null);
         return {
           ...state,
           token: null,
@@ -81,50 +93,12 @@ if (refresh) {
       withCredentials: true,
     })
     .then((response) => {
-      return response.data;
-    })
-    .then((data) => {
-      if (data.accessToken) {
-        useAuthStore.getState().setCredentials(data.accessToken);
+      if (response.data?.accessToken) {
+        useAuthStore.getState().setCredentials(response.data.accessToken);
       }
     })
     .catch((err) => {
+      console.log("Refresh Token Expired");
       useAuthStore.getState().setLogout();
     });
 }
-
-// export const useAuthStore = create(
-//   persist(
-//     (set) => ({
-//       user: {
-//         token: null,
-//         _id: null,
-//         username: null,
-//         email: null,
-//         role: null,
-//         authenticated: false,
-//       },
-//       setCredentials: (token) =>
-//         set((state) => ({
-//           ...state,
-//           user: { ...state.user, authenticated: true, token },
-//         })),
-//       setLogout: () =>
-//         set((state) => ({
-//           ...state,
-//           user: {
-//             token: null,
-//             _id: null,
-//             username: null,
-//             email: null,
-//             role: null,
-//             authenticated: false,
-//           },
-//         })),
-//     }),
-//     {
-//       name: "authStorage",
-//       getStorage: () => sessionStorage,
-//     }
-//   )
-// );

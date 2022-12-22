@@ -182,15 +182,17 @@ const Tasks = () => {
           </form>
         )}
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button
-            onClick={() => {
-              setOpenModal(true);
-            }}
-            mid
-            success
-          >
-            Add Task
-          </Button>
+          {user.role !== "user" && (
+            <Button
+              onClick={() => {
+                setOpenModal(true);
+              }}
+              mid
+              success
+            >
+              Add Task
+            </Button>
+          )}
           {openModal && (
             <Modal
               onSubmit={addTaskHandler}

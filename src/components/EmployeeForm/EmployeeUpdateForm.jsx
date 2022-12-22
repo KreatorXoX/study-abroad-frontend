@@ -13,7 +13,7 @@ import { useUserById, useUpdateEmployee } from "../../api/usersApi";
 import { empInitials } from "../../shared/utils/form initial data/EmployeeInitials";
 
 const EmployeeUpdateForm = () => {
-  const { formState, inputHandler } = useForm(empInitials);
+  const { formState, inputHandler } = useForm();
 
   const history = useHistory();
   const empId = useParams().eid;

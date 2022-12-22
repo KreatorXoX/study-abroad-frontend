@@ -64,18 +64,18 @@ const UniversitiesList = () => {
                 )
                 .map((uni) => (
                   <Card
-                    key={uni._id}
+                    key={uni?._id}
                     name={uni.name}
-                    image={uni.logo}
+                    image={uni.logo.url}
                     imgStyle={{ borderRadius: "0", objectFit: "contain" }}
                     actions={
                       <>
-                        <Button warning to={`/cms/universities/${uni._id}`}>
+                        <Button warning to={`/cms/universities/${uni?._id}`}>
                           Edit
                         </Button>
                         <Button
                           danger
-                          onClick={deleteHandler.bind(null, uni._id)}
+                          onClick={deleteHandler.bind(null, uni?._id)}
                         >
                           Del
                         </Button>

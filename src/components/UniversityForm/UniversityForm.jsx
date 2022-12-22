@@ -11,9 +11,9 @@ import { useCountries } from "../../api/countriesApi";
 import { useAddUniversity } from "../../api/universitiesApi";
 import ImageUpload from "../../shared/components/Form-Elements/FileUpload";
 import LoadingSpinner from "../../shared/components/UI-Elements/LoadingSpinner";
-
+import { universityInitials } from "../../shared/utils/form initial data/UniversityInitials";
 const UniversityForm = ({ setShowForm }) => {
-  const { formState, inputHandler } = useForm();
+  const { formState, inputHandler } = useForm(universityInitials);
 
   const { mutate: addUniversity } = useAddUniversity();
   const {
@@ -25,11 +25,9 @@ const UniversityForm = ({ setShowForm }) => {
   } = useCountries();
 
   const selectOptions = countries?.map((country) => (
-    <>
-      <option key={country._id} value={country._id}>
-        {country.name}
-      </option>
-    </>
+    <option key={country._id} value={country._id}>
+      {country.name}
+    </option>
   ));
 
   const addCountryHandler = (e) => {

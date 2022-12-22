@@ -16,6 +16,9 @@ import UniversityUpdateForm from "./components/UniversityForm/UniversityUpdateFo
 import CountryUpdateForm from "./components/CountryForm/CountryUpdateForm";
 import EmployeeUpdateForm from "./components/EmployeeForm/EmployeeUpdateForm";
 
+import PrivateRoute from "./shared/utils/PrivateRoute";
+import AdminRoute from "./shared/utils/AdminRoute";
+
 function App() {
   return (
     <>
@@ -30,8 +33,8 @@ function App() {
             <Route path="/auth" exact>
               <Auth />
             </Route>
-            <Route path="/profile/:uid" exact>
-              <Profile />
+            <Route path="/contact" exact>
+              <Contact />
             </Route>
             <Route path="/countries" exact>
               <Countries />
@@ -42,30 +45,30 @@ function App() {
             <Route path="/universities/:uid" exact>
               <University />
             </Route>
-            <Route path="/cms/employees" exact>
+            <PrivateRoute path="/profile/:uid" exact>
+              <Profile />
+            </PrivateRoute>
+            <AdminRoute path="/cms/employees" exact>
               <EmployeesList />
-            </Route>
-            <Route path="/cms/students" exact>
+            </AdminRoute>
+            <AdminRoute path="/cms/students" exact>
               <StudentsList />
-            </Route>
-            <Route path="/cms/countries" exact>
+            </AdminRoute>
+            <AdminRoute path="/cms/countries" exact>
               <CountriesList />
-            </Route>
-            <Route path="/cms/universities" exact>
+            </AdminRoute>
+            <AdminRoute path="/cms/universities" exact>
               <UniversitiesList />
-            </Route>
-            <Route path="/cms/universities/:uid" exact>
+            </AdminRoute>
+            <AdminRoute path="/cms/universities/:uid" exact>
               <UniversityUpdateForm />
-            </Route>
-            <Route path="/cms/countries/:cid" exact>
+            </AdminRoute>
+            <AdminRoute path="/cms/countries/:cid" exact>
               <CountryUpdateForm />
-            </Route>
-            <Route path="/cms/employees/:eid" exact>
+            </AdminRoute>
+            <AdminRoute path="/cms/employees/:eid" exact>
               <EmployeeUpdateForm />
-            </Route>
-            <Route path="/contact" exact>
-              <Contact />
-            </Route>
+            </AdminRoute>
 
             <Redirect to="/" />
           </Switch>

@@ -42,7 +42,8 @@ export const useAddCountry = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (newCountry) => addCountry(newCountry),
-    onMutate: async (newCountry) => {
+    onMutate: async (countryFormData) => {
+      const newCountry = Object.fromEntries(countryFormData.entries());
       await queryClient.cancelQueries({ queryKey: ["all-countries"] });
 
       const previousCountrylist = queryClient.getQueryData(["all-countries"]);
@@ -87,20 +88,6 @@ export const useUpdateCountry = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (updatedCountry) => updateCountry(updatedCountry),
-    onMutate: async (updatedCountry) => {
-      await queryClient.cancelQueries({ queryKey: ["all-countries"] });
-
-      const previousCountrylist = queryClient.getQueryData(["all-countries"]);
-
-      queryClient.setQueryData(["all-countries"], (old) => {
-        if (old) {
-          return [...old, updatedCountry];
-        }
-        return [updatedCountry];
-      });
-
-      return { previousCountrylist };
-    },
     onSuccess: (response) => {
       toast.success(response.message, toastSuccessOpt);
     },
@@ -115,8 +102,9 @@ export const useUpdateCountry = () => {
 
       toast.error(errMsg, toastErrorOpt);
     },
-    onSettled: () => {
+    onSettled: ({ id }) => {
       queryClient.invalidateQueries({ queryKey: ["all-countries"] });
+      queryClient.refetchQueries({ queryKey: [`country-${id}`] });
     },
   });
 };
@@ -132,6 +120,9 @@ export const useRemoveCountry = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id) => deleteCountry(id),
+    onSuccess: ({ message }) => {
+      toast.success(message, toastSuccessOpt);
+    },
     onError: (err) => {
       let errMsg;
 

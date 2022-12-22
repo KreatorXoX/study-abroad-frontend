@@ -47,7 +47,6 @@ const UniversityUpdateForm = () => {
     formData.append("name", formState.inputs.name.value);
     formData.append("countryId", formState.inputs.countryId.value);
     formData.append("info", formState.inputs.info.value);
-    formData.append("logo", formState.inputs.logo.value);
     formData.append("motto", formState.inputs.motto.value);
     formData.append("videoUrl", formState.inputs.videoUrl.value);
     formData.append("infoBox1Header", formState.inputs.infoBox1Header.value);
@@ -57,7 +56,12 @@ const UniversityUpdateForm = () => {
     formData.append("infoBox3Header", formState.inputs.infoBox3Header.value);
     formData.append("infoBox3Content", formState.inputs.infoBox3Content.value);
 
+    if (formState.inputs.logo?.value) {
+      formData.append("logo", formState.inputs.logo.value);
+    }
+
     updateUniversity(formData);
+    history.goBack();
   };
 
   let content;
@@ -104,7 +108,7 @@ const UniversityUpdateForm = () => {
             </div>
             <div>
               <Input
-                id="generalInfo"
+                id="info"
                 type="text"
                 placeholder="School Info"
                 errorText="This field is required"

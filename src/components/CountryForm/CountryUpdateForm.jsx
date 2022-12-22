@@ -31,7 +31,9 @@ const CountryUpdateForm = () => {
     formData.append("cid", cId);
     formData.append("name", formState.inputs.name.value);
     formData.append("videoUrl", formState.inputs.videoUrl.value);
-    formData.append("flag", formState.inputs.flag.value);
+    if (formState.inputs.flag?.value) {
+      formData.append("flag", formState.inputs.flag.value);
+    }
     updateCountry(formData);
     history.replace("/cms/countries");
   };

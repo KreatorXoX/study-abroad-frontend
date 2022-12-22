@@ -13,6 +13,7 @@ export const useUniversities = () => {
     queryKey: [`all-universities`],
     queryFn: async ({ signal }) => getUniversities({ signal }),
     initialData: [],
+    refetchOnWindowFocus: false,
   });
 };
 
@@ -41,7 +42,9 @@ export const useAddUniversity = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (newUniversity) => addUniversity(newUniversity),
-    onMutate: async (newUniversity) => {
+    onMutate: async (universityFormData) => {
+      const newUniversity = Object.fromEntries(universityFormData.entries());
+
       await queryClient.cancelQueries({ queryKey: ["all-universities"] });
 
       const previousUniversitylist = queryClient.getQueryData([
@@ -91,31 +94,11 @@ export const useUpdateUniversity = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (updatedUniversity) => updateUniversity(updatedUniversity),
-    onMutate: async (updatedUniversity) => {
-      await queryClient.cancelQueries({ queryKey: ["all-universities"] });
 
-      const previousCountrylist = queryClient.getQueryData([
-        "all-universities",
-      ]);
-
-      queryClient.setQueryData(["all-universities"], (old) => {
-        if (old) {
-          return [...old, updatedUniversity];
-        }
-        return [updatedUniversity];
-      });
-
-      return { previousCountrylist };
-    },
     onSuccess: (response) => {
       toast.success(response.message, toastSuccessOpt);
     },
-    onError: (err, updatedUniversity, context) => {
-      queryClient.setQueryData(
-        ["all-universities"],
-        context.previousCountrylist
-      );
-
+    onError: (err) => {
       let errMsg;
 
       if (err.response) errMsg = err.response.data.message;
@@ -124,8 +107,9 @@ export const useUpdateUniversity = () => {
 
       toast.error(errMsg, toastErrorOpt);
     },
-    onSettled: () => {
+    onSettled: ({ id }) => {
       queryClient.invalidateQueries({ queryKey: ["all-universities"] });
+      queryClient.refetchQueries({ queryKey: [`university-${id}`] });
     },
   });
 };

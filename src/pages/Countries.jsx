@@ -51,7 +51,7 @@ const Countries = () => {
                   onClick={clickHandler.bind(null, country._id)}
                 >
                   <img
-                    src={country.flag}
+                    src={country.flag.url}
                     width="60"
                     height="60"
                     style={{ borderRadius: "50%" }}

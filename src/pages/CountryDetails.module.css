@@ -131,10 +131,12 @@
   margin-top: 1rem;
 }
 .uniCard img {
-  height: 100%;
   width: 70%;
+  height: 6rem;
 }
 .uniCard {
+  height: 10rem;
+  width: 10rem;
   box-shadow: 0 0 2px 1px var(--warning-hover);
   border-radius: 1rem;
   text-align: center;
@@ -144,8 +146,8 @@
 .uniLabel {
   position: absolute;
   width: 100%;
-  top: 10px;
-  font-size: larger;
+  bottom: -15px;
+  font-size: x-small;
   font-weight: bolder;
   color: var(--success-hover);
 }
