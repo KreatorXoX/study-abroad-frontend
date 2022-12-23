@@ -38,7 +38,7 @@ const EmployeeUpdateForm = () => {
     formData.append("password", formState.inputs.password.value);
     formData.append("active", empl.active);
 
-    if (formState.inputs.image.value) {
+    if (formState.inputs.image?.value) {
       formData.append("image", formState.inputs.image.value);
     }
 
