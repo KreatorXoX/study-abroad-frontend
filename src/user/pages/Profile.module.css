@@ -87,6 +87,11 @@
     place-content: center;
     place-items: center;
   }
+  .profileAvatar img {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+  }
   .profile h2 {
     font-size: 1rem;
   }

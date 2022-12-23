@@ -72,7 +72,7 @@ const EmployeesList = () => {
                     name={emp.username}
                     key={emp._id + 1}
                     image={
-                      emp.image ||
+                      emp.image?.url ||
                       "https://cdn-icons-png.flaticon.com/512/758/758802.png?w=826&t=st=1671183488~exp=1671184088~hmac=dc55f6fbbe79eba0ea6862ce712dac55fc43f47e918cd22f638b23933cf2db53"
                     }
                     actions={

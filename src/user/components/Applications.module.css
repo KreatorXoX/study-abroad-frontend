@@ -13,8 +13,8 @@
   display: flex;
   justify-content: space-between;
   place-items: center;
-  width: 100%;
-  margin: 1rem 0;
+  width: 90%;
+  margin: 2rem 0;
   padding: 0.25rem 0.5rem;
   border-radius: 2rem;
   color: var(--white);
@@ -49,7 +49,6 @@
 }
 
 .task {
-  display: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -67,6 +66,7 @@
   gap: 4em;
 }
 .formAction {
+  padding-top: 1rem;
   display: flex;
   justify-content: flex-end;
 }
@@ -123,22 +123,18 @@
   object-fit: cover;
 }
 .taskLabel1 {
-  right: 4.5em;
+  display: flex;
+  place-items: center;
+  place-content: center;
+  right: -0.4em;
   top: -3.2em;
-  background-image: url("https://img.freepik.com/free-photo/studio-portrait-bearded-man-posing-beige-background-looking-into-camera-with-broad-smile-his-face_295783-16582.jpg?w=1380&t=st=1668962600~exp=1668963200~hmac=1d23c2110f4ae876f45c91e50b56163a351f03060a154d846db3639ed676e04c");
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 .taskLabel2 {
-  right: 9.7em;
+  display: flex;
+  place-items: center;
+  place-content: center;
+  right: 5em;
   top: -3.2em;
-  background-image: url("https://img.freepik.com/free-photo/pretty-smiling-joyfully-female-with-fair-hair-dressed-casually-looking-with-satisfaction_176420-15187.jpg?w=740&t=st=1668963674~exp=1668964274~hmac=8104b8139626cf939865b37bb2d568a409924a3695a24f835e591f89cb9d91fa");
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .stdList {
@@ -155,4 +151,12 @@
 .deleteIcon:hover {
   color: var(--danger-hover);
   cursor: pointer;
+}
+.delBtn {
+  position: relative;
+}
+.delBtn button {
+  position: absolute;
+  bottom: -2.3rem;
+  right: 0.2rem;
 }

@@ -7,6 +7,7 @@ import ImageUpload from "../../shared/components/Form-Elements/FileUpload";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
 } from "../../shared/utils/validators";
 import { useForm } from "../../hooks/form-hook";
 import { useUserById, useUpdateEmployee } from "../../api/usersApi";
@@ -36,6 +37,10 @@ const EmployeeUpdateForm = () => {
     formData.append("email", formState.inputs.email.value);
     formData.append("password", formState.inputs.password.value);
     formData.append("active", empl.active);
+
+    if (formState.inputs.image.value) {
+      formData.append("image", formState.inputs.image.value);
+    }
 
     updateEmployee(formData);
     history.goBack();
@@ -85,7 +90,7 @@ const EmployeeUpdateForm = () => {
                 placeholder="**********"
                 errorText="This field is required"
                 onInputChange={inputHandler}
-                validators={[VALIDATOR_REQUIRE()]}
+                validators={[VALIDATOR_MINLENGTH(6)]}
                 initialValid={true}
               />
             </div>

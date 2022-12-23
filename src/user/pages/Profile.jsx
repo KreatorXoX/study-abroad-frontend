@@ -61,9 +61,9 @@ const Profile = () => {
           <div className={styles.profileDetails}>
             <div className={styles.profileAvatar}>
               <img
-                width={75}
+                style={{ borderRadius: "50%" }}
                 src={
-                  user.image ||
+                  user.image?.url ||
                   "https://cdn-icons-png.flaticon.com/512/758/758802.png?w=826&t=st=1671183488~exp=1671184088~hmac=dc55f6fbbe79eba0ea6862ce712dac55fc43f47e918cd22f638b23933cf2db53"
                 }
               />
@@ -192,7 +192,7 @@ const Profile = () => {
           {action === "tasks" && <Tasks />}
           {action === "calendar" && <Calendar />}
           {action === "settings" && <Settings />}
-          {action === "students" && <MyStudents />}
+          {action === "students" && <MyStudents setProfile={setAction} />}
         </div>
       </div>
     );

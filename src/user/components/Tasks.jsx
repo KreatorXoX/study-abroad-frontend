@@ -126,8 +126,20 @@ const Tasks = () => {
                 >
                   {idx === 0 && (
                     <>
-                      <div className={styles.taskLabel2}></div>
-                      <div className={styles.taskLabel1}></div>
+                      <div className={styles.taskLabel2}>
+                        {task?.users[1].image?.url ? (
+                          <img src={task.users[1].image?.url} />
+                        ) : (
+                          "Std"
+                        )}
+                      </div>
+                      <div className={styles.taskLabel1}>
+                        {task?.users[0].image?.url ? (
+                          <img src={task.users[0].image?.url} />
+                        ) : (
+                          "Cslt"
+                        )}
+                      </div>
                     </>
                   )}
                   <div className={styles.task}>
@@ -143,7 +155,7 @@ const Tasks = () => {
                           type="checkbox"
                           defaultChecked={task.completed.byStudent}
                           disabled={
-                            task.completed.byStudent || user._id !== userId
+                            task.completed.byStudent || user.role !== "user"
                           }
                         />
                       </div>
@@ -153,23 +165,20 @@ const Tasks = () => {
                           onChange={changeHandler}
                           type="checkbox"
                           defaultChecked={task.completed.byEmployee}
-                          disabled={task.completed.byEmployee}
+                          disabled={
+                            task.completed.byEmployee ||
+                            user.role !== "employee"
+                          }
                         />
                       </div>
                     </div>
                   </div>
                   {user && user.role === "admin" && (
-                    <Button
-                      style={{
-                        margin: "0",
-                        marginLeft: "1rem",
-                        backgroundColor: "var(--white)",
-                        color: "var(--danger)",
-                      }}
-                      onClick={deleteTask.bind(null, task._id)}
-                    >
-                      Delete
-                    </Button>
+                    <div className={styles.delBtn}>
+                      <Button danger onClick={deleteTask.bind(null, task._id)}>
+                        Delete
+                      </Button>
+                    </div>
                   )}
                 </div>
               );
@@ -182,7 +191,7 @@ const Tasks = () => {
           </form>
         )}
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          {user.role !== "user" && (
+          {user.role !== "user" && tasks[0]?.users[0] !== userId && (
             <Button
               onClick={() => {
                 setOpenModal(true);

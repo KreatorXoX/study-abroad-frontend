@@ -25,8 +25,12 @@ const statusOptions = ["accepted", "declined"].map((item, idx) => (
   </option>
 ));
 const Applications = () => {
-  const { formState, inputHandler } = useForm();
-  const { formState: statusState, inputHandler: statusHandler } = useForm();
+  const { formState, inputHandler } = useForm({
+    universityId: { value: "", isValid: false },
+  });
+  const { formState: statusState, inputHandler: statusHandler } = useForm({
+    status: { value: "", isValid: false },
+  });
 
   const user = useAuthStore((state) => state.user);
 
@@ -104,7 +108,10 @@ const Applications = () => {
                     : styles.accepted
                 }`}
               >
-                <img src={application?.university?.logo || ""} alt="school" />
+                <img
+                  src={application?.university?.logo.url || ""}
+                  alt="school"
+                />
                 <div className={styles.applicationId}>{application._id}</div>
                 <div>{application.status}</div>
                 <div className={styles.applicationDate}>{date}</div>

@@ -137,6 +137,9 @@ export const useRemoveUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, role }) => deleteUser(id, role),
+    onSuccess: ({ message }) => {
+      toast.success(message, toastSuccessOpt);
+    },
     onError: (err) => {
       let errMsg;
       if (err.response) errMsg = err.response.data.message;
