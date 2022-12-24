@@ -1,4 +1,5 @@
 import React from "react";
+import emailjs from "@emailjs/browser";
 import { useForm } from "../hooks/form-hook";
 import { ContactInitials } from "../shared/utils/form initial data/ContactUsInitials";
 import Input from "../shared/components/Form-Elements/Input";
@@ -6,11 +7,34 @@ import Button from "../shared/components/Form-Elements/Button";
 import contactUs from "../assets/images/contactUs.jpg";
 import { VALIDATOR_EMAIL, VALIDATOR_REQUIRE } from "../shared/utils/validators";
 import styles from "./Contact.module.css";
+import { toast } from "react-toastify";
+import { toastSuccessOpt } from "../shared/utils/toastOptions";
 const Contact = () => {
   const { formState, inputHandler } = useForm(ContactInitials);
+
   const contactSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(formState.inputs);
+
+    const templateParams = {
+      email: formState.inputs.email.value,
+      fullname: formState.inputs.fullname.value,
+      message: formState.inputs.message.value,
+    };
+    emailjs
+      .send(
+        "service_79sivws",
+        "template_9vi5fpi",
+        templateParams,
+        import.meta.env.VITE_EMAILJS_API_KEY
+      )
+      .then((response) => {
+        if (response.status === 200)
+          toast.success(
+            "We recieved your email and we will get back to you ASAP!",
+            toastSuccessOpt
+          );
+      })
+      .catch((err) => toast.error(err.message));
   };
   return (
     <div className={styles.content}>
