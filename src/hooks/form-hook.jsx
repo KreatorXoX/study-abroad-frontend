@@ -61,12 +61,7 @@ const formReducer = (state, action) => {
   }
 };
 export const useForm = (initialInputs, initialValidity) => {
-  // const [page, setPage] = useState(0)
-  // const [title, setTitle] = useState({
-  //   0: 'User Info',
-  //   1: 'Required Files',
-  //   2: 'Review'
-  // })
+
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: initialInputs,
     isValid: initialValidity,
@@ -98,5 +93,5 @@ export const useForm = (initialInputs, initialValidity) => {
   }, []);
 
   return { formState, inputHandler, SetData, arrayInputHandler };
-  // return { formState, inputHandler, SetData, page, setPage, title, setTitle }
+  
 };
