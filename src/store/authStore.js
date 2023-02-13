@@ -88,7 +88,7 @@ const refresh = usePersistentStore.getState().persist;
 
 if (refresh) {
   axios
-    .get("http://localhost:5000/api/auth/refresh", {
+    .get(`${import.meta.env.VITE_BASE_URL}/auth/refresh`, {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
     })

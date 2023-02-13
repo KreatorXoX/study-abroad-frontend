@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { useUniversities } from "../../api/universitiesApi";
+import { useRemoveUniversity } from "../../api/universitiesApi";
 import { useSearchStore } from "../../store/searchStore";
 import Button from "../../shared/components/Form-Elements/Button";
 import Card from "../../shared/components/UI-Elements/Card";
@@ -10,10 +11,12 @@ import SearchBar from "../../shared/components/UI-Elements/SearchBar";
 import UniversityForm from "../UniversityForm/UniversityForm";
 
 import styles from "./UserList.module.css";
+import { toast } from "react-toastify";
 const UniversitiesList = () => {
   const search = useSearchStore((state) => state.search);
   const [showForm, setShowForm] = useState(false);
 
+  const { mutateAsync: deleteUniversity } = useRemoveUniversity();
   const {
     data: universities,
     isLoading,
@@ -21,8 +24,12 @@ const UniversitiesList = () => {
     isFetched,
   } = useUniversities();
 
-  const deleteHandler = (sId) => {
-    console.log(`delete ${sId} school`);
+  const deleteHandler = async (sId) => {
+    deleteUniversity(sId, {
+      onSuccess: () => {
+        toast.success("university deleted successfully");
+      },
+    });
   };
 
   let content;

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "../store/authStore";
 
 export const axiosApi = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: `${import.meta.env.VITE_BASE_URL}`,
   withCredentials: true,
 });
 
@@ -27,7 +27,7 @@ axiosApi.interceptors.response.use(
     if (error.response.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       const response = await axios.get(
-        "http://localhost:5000/api/auth/refresh",
+        `${import.meta.env.VITE_BASE_URL}/auth/refresh`,
         {
           withCredentials: true,
         }

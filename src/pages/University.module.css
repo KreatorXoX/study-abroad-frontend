@@ -173,6 +173,10 @@
   color: var(--white);
   opacity: 1;
 }
+.searchUni {
+  margin-top: 1rem;
+  line-height: 1.4;
+}
 
 @media (min-width: 968px) {
   .rows {

@@ -46,6 +46,9 @@
   transition: box-shadow 0.2s ease-in;
   font-weight: 600;
 }
+.country img {
+  object-fit: cover;
+}
 .country:hover {
   box-shadow: 0 0 4px 1px var(--p-navy);
 }

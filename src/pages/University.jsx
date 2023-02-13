@@ -27,12 +27,7 @@ const University = () => {
               <h2>{university?.name}</h2>
               <h3>{university?.motto}</h3>
               <div className={styles.searchUni}>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Dolore asperiores totam in omnis vel amet ea molestiae, soluta
-                  tenetur deserunt magni ratione fugit a? Laudantium libero nemo
-                  fugiat labore sit.
-                </p>
+                <p>{university?.generalInfo}</p>
               </div>
             </div>
           </div>

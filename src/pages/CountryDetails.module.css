@@ -133,6 +133,7 @@
 .uniCard img {
   width: 70%;
   height: 6rem;
+  object-fit: contain;
 }
 .uniCard {
   height: 10rem;
