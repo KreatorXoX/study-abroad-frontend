@@ -10,8 +10,10 @@ import { VALIDATOR_REQUIRE_SELECT } from "../shared/utils/validators";
 import styles from "./CountryDetails.module.css";
 
 const CountryDetails = () => {
-  const { formState, inputHandler } = useForm();
-
+  const { formState, inputHandler } = useForm(
+    { universityId: { value: "", isValid: false } },
+    false
+  );
   const history = useHistory();
   const cId = useParams().cid;
 

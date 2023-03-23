@@ -191,7 +191,7 @@ const Tasks = () => {
           </form>
         )}
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          {user.role !== "user" && tasks[0]?.users[0] !== userId && (
+          {user.role === "admin" && tasks[0]?.users[0] !== userId && (
             <Button
               onClick={() => {
                 setOpenModal(true);
